@@ -47,7 +47,7 @@ mysql -udeploy -e "$db"
 #service apache2 restart
 #
 # Execute Drush Make
-cd /$www/$sitedomain
-chown -R deploy:deploy /$www/$sitedomain
-chmod 775 /$www/$sitedomain
-drush make https://raw.github.com/randull/hackrobats/master/hackrobats.make -y
+cd /$www/$domain
+chown -R deploy:deploy /$www/$domain
+chmod 775 /$www/$domain
+drush make https://raw.github.com/randull/createsite/master/createsite.make -y
