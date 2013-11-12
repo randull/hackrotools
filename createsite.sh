@@ -1,32 +1,15 @@
 #!/bin/bash
 #
-# This script creates virtual hosts and prepares your drupal directory.
-#
-# Set the path to your localhost
-www=/var/www/drupal
-echo "Enter directory name under $www"
-read -p "Site domain name: " sitedomain
-mkdir $www/$sitedomain
-echo "/var/www/drupal/$sitedomain created"
-#
-# Create a database
-sitetld=`echo $sitedomain |cut -c 5-`
-sitename=`echo $sitedomain |rev |cut -c 5-|rev`
-machinename=`echo $sitename|tr '-' '_'`
-dbuser=`echo $machinename`
-dbname=`echo $machinename`
+# This script creates virtual hosts and prepares your drupal directory and database.
+read -p "Domain Name: " domain
+www=/var/www/drupal7
+name=`echo $domain |rev |cut -c 5-|rev`
+tld=`echo $domain |cut -c 5-`
+machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
-db="create database $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+mkdir $www/$sitedomain $www/$sitedomain/sites $www/$sitedomain/sites/default $www/$sitedomain/sites/default/files
 mysql -udeploy -e "$db"
-#
-# Check if Database Creation Failed
-if [ $? != "0" ]; then
- echo "[Error]: Database creation failed"
- exit 1
-else
- echo " Database has been created successfully "
- echo " DB Info: $dbname, $dbuser, $dbpw"
-fi
 #
 # Create Settings.php /files and .htaccess
 #mkdir $www/$sitedomain/sites $www/$sitedomain/sites/default $www/$sitedomain/sites/default/files
