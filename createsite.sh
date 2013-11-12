@@ -29,15 +29,15 @@ else
 fi
 #
 # Create Settings.php /files and .htaccess
-mkdir $www/$sitedomain/sites $www/$sitedomain/sites/default $www/$sitedomain/sites/default/files
-cd $www/$sitedomain/sites/default
-curl -o $www/$sitedomain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
-chmod 777 $www/$sitedomain/sites/default/settings.php 
-chmod 775 $www/$sitedomain/sites/default/files
+#mkdir $www/$sitedomain/sites $www/$sitedomain/sites/default $www/$sitedomain/sites/default/files
+#cd $www/$sitedomain/sites/default
+#curl -o $www/$sitedomain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
+#chmod 777 $www/$sitedomain/sites/default/settings.php 
+#chmod 775 $www/$sitedomain/sites/default/files
 #
 # Add Database Info to Settings.php: Replace line 213 with the following
-perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$dbname',\n      'username' => '$dbuser',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
-perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://\\$sitename\.cascadiaweb.net';~g" settings.php
+#perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$dbname',\n      'username' => '$dbuser',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
+#perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://\\$sitename\.cascadiaweb.net';~g" settings.php
 #
 # Create .htaccess inside of sites/default/files
 #cd $www/$sitedomain/sites/default/files
