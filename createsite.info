@@ -1,4 +1,4 @@
-name = Hackrobats Demo Site
+name = Hackrobats Create Site
 description = Custom Installation Profile for Hackrobats Clients
 version = "7.x-0.1"
 core = 7.x
@@ -23,20 +23,3 @@ dependencies[] = rdf
 dependencies[] = search
 dependencies[] = shortcut
 dependencies[] = taxonomy
-
-; Contrib Modules
-dependencies[] = admin_menu
-dependencies[] = breakpoints
-dependencies[] = ckeditor
-dependencies[] = ctools
-dependencies[] = flexslider
-dependencies[] = flexslider_fields
-dependencies[] = flexslider_picture
-dependencies[] = flexslider_views
-dependencies[] = libraries
-dependencies[] = module_filter
-dependencies[] = picture
-dependencies[] = prod_check
-dependencies[] = security_review
-dependencies[] = views
-dependencies[] = views_ui
