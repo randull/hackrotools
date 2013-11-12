@@ -3,7 +3,9 @@
 # This script creates virtual hosts and prepares your drupal directory and database.
 read -p "Domain Name: " domain
 www=/var/www/drupal7
+echo "$www"
 name=`echo $domain |rev |cut -c 5-|rev`
+echo "$name"
 tld=`echo $domain |cut -c 5-`
 machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
