@@ -8,7 +8,7 @@ tld=`echo $domain |cut -c 5-`
 machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-mkdir $www/$sitedomain $www/$sitedomain/sites $www/$sitedomain/sites/default $www/$sitedomain/sites/default/files
+mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 mysql -udeploy -e "$db"
 #
 # Create Settings.php /files and .htaccess
