@@ -2,16 +2,24 @@
 #
 # This script creates virtual hosts and prepares your drupal directory and database.
 read -p "Domain Name: " domain
+
 www=/var/www/drupal7
-echo "$www"
+echo "$domain"
 name=`echo $domain |rev |cut -c 5-|rev`
 echo "$name"
 tld=`echo $domain |cut -c 5-`
+echo "$tld"
 machine=`echo $name |tr '-' '_'`
+echo "$machine"
 dbpw=$(pwgen -n 16)
+echo "$dbpw"
 db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+echo "$db"
+
 mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
+echo "Created sites sites/default sites/default/files"
 mysql -udeploy -e "$db"
+
 #
 # Create Settings.php /files and .htaccess
 #mkdir $www/$sitedomain/sites $www/$sitedomain/sites/default $www/$sitedomain/sites/default/files
