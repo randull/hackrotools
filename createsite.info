@@ -1,0 +1,42 @@
+name = Hackrobats Demo Site
+description = Custom Installation Profile for Hackrobats Clients
+version = "7.x-0.1"
+core = 7.x
+
+; Core Modules
+dependencies[] = block
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = dblog
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = overlay
+dependencies[] = path
+dependencies[] = rdf
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = taxonomy
+
+; Contrib Modules
+dependencies[] = admin_menu
+dependencies[] = breakpoints
+dependencies[] = ckeditor
+dependencies[] = ctools
+dependencies[] = flexslider
+dependencies[] = flexslider_fields
+dependencies[] = flexslider_picture
+dependencies[] = flexslider_views
+dependencies[] = libraries
+dependencies[] = module_filter
+dependencies[] = picture
+dependencies[] = prod_check
+dependencies[] = security_review
+dependencies[] = views
+dependencies[] = views_ui
