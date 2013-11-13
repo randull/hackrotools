@@ -1,6 +1,5 @@
 #!/bin/bash
-#
-# This script creates virtual hosts and prepares your drupal directory and database.
+
 read -p "Domain Name: " domain
 
 www=/var/www/drupal7
@@ -17,25 +16,25 @@ db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@loca
 mysql -udeploy -e "$db"
 
 mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-echo "Created: $domain/sites 
-$domain/sites/default 
-$domain/sites/default/files"
+echo "Created: sites 
+sites/default 
+sites/default/files"
 
 cd $www/$domain/sites/default
-curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
 chmod 775 $www/$domain/sites/default/files
+cd $www/$domain/sites/default/files
+echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
+Options None
+Options +FollowSymLinks" > .htaccess
+
+curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
 chmod 777 $www/$domain/sites/default/settings.php 
 echo "Copied: default.settings.php
 From: github.com/drupal
-To: $domain/sites/default/settings.php"
+To: sites/default/settings.php"
 
 #perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$dbname',\n      'username' => '$dbuser',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
 #perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://\\$sitename\.cascadiaweb.net';~g" settings.php
-
-#cd $www/$sitedomain/sites/default/files
-#echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
-#Options None
-#Options +FollowSymLinks" > .htaccess
 
 echo "<VirtualHost *:80>
         DirectoryIndex index.php
