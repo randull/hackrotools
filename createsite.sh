@@ -4,29 +4,23 @@
 read -p "Domain Name: " domain
 
 www=/var/www/drupal7
-echo "$domain"
 name=`echo $domain |rev |cut -c 5-|rev`
-echo "$name"
 tld=`echo $domain |cut -c 5-`
-echo "$tld"
 machine=`echo $name |tr '-' '_'`
-echo "$machine"
 dbpw=$(pwgen -n 16)
-echo "$dbpw"
-db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-echo "$db"
+echo "$name created at /$www/$domain w/ machine name of $machine and password $dbpw"
 
-mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-echo "Created sites sites/default sites/default/files"
+db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 mysql -udeploy -e "$db"
 
-#
-# Create Settings.php /files and .htaccess
-#mkdir $www/$sitedomain/sites $www/$sitedomain/sites/default $www/$sitedomain/sites/default/files
-#cd $www/$sitedomain/sites/default
-#curl -o $www/$sitedomain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
-#chmod 777 $www/$sitedomain/sites/default/settings.php 
-#chmod 775 $www/$sitedomain/sites/default/files
+mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
+echo "Created $domain/sites $domain/sites/default $domain/sites/default/files"
+
+cd $www/$domain/sites/default
+curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
+chmod 775 $www/$domain/sites/default/files
+chmod 777 $www/$domain/sites/default/settings.php 
+
 #
 # Add Database Info to Settings.php: Replace line 213 with the following
 #perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$dbname',\n      'username' => '$dbuser',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
