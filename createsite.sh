@@ -17,9 +17,10 @@ mysql -udeploy -e "$db"
 
 mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod 775 $www/$domain/sites/default/files
+cd $www/$domain/sites/default/files
 echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
 Options None
-Options +FollowSymLinks" > $www/$domain/sites/files/.htaccess
+Options +FollowSymLinks" > .htaccess
 
 cd $www/$domain/sites/default
 curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
