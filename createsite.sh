@@ -21,17 +21,14 @@ sites/default
 sites/default/files"
 
 cd $www/$domain/sites/default
-chmod 775 $www/$domain/sites/default/files
+curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
+chmod 777 $www/$domain/sites/default/settings.php 
+
 cd $www/$domain/sites/default/files
+chmod 775 $www/$domain/sites/default/files
 echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
 Options None
 Options +FollowSymLinks" > .htaccess
-
-curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
-chmod 777 $www/$domain/sites/default/settings.php 
-echo "Copied: default.settings.php
-From: github.com/drupal
-To: sites/default/settings.php"
 
 #perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$dbname',\n      'username' => '$dbuser',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
 #perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://\\$sitename\.cascadiaweb.net';~g" settings.php
