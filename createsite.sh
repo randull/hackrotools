@@ -37,13 +37,13 @@ To: $domain/sites/default/settings.php"
 #Options None
 #Options +FollowSymLinks" > .htaccess
 
-#echo "<VirtualHost *:80>
-#        DirectoryIndex index.php
-#        DocumentRoot $www/$sitedomain
-#        ServerAdmin maintenance@hackrobats.net
-#        ServerAlias $sitename.cascadiaweb.net $sitename.hackrobats.net
-#        ServerName $sitedomain
-#</VirtualHost>" > /etc/apache2/sites-available/$sitedomain
+echo "<VirtualHost *:80>
+        DirectoryIndex index.php
+        DocumentRoot $www/$domain
+        ServerAdmin maintenance@hackrobats.net
+        ServerAlias $name.cascadiaweb.net $name.hackrobats.net
+        ServerName $domain
+</VirtualHost>" > /etc/apache2/sites-available/$domain
 
 #a2ensite $domain
 #service apache2 reload
