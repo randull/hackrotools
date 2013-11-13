@@ -27,7 +27,7 @@ curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/d
 chmod 777 $www/$domain/sites/default/settings.php 
 
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
-perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://\\$name\.cascadiaweb.net';~g" $www/$domain/sites/default/settings.php
+perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://$name\.cascadiaweb.net';~g" $www/$domain/sites/default/settings.php
 
 echo "<VirtualHost *:80>
         DirectoryIndex index.php
