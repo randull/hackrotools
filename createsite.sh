@@ -16,22 +16,17 @@ db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@loca
 mysql -udeploy -e "$db"
 
 mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-echo "Created: sites 
-sites/default 
-sites/default/files"
-
-cd $www/$domain/sites/default
-curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
-chmod 777 $www/$domain/sites/default/settings.php 
-
-cd $www/$domain/sites/default/files
 chmod 775 $www/$domain/sites/default/files
 echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
 Options None
 Options +FollowSymLinks" > .htaccess
 
+cd $www/$domain/sites/default
+curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
+chmod 777 $www/$domain/sites/default/settings.php 
+
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
-perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://\\$name\.cascadiaweb.net';~g" settings.php
+perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://\\$name\.cascadiaweb.net';~g" $www/$domain/sites/default/settings.php
 
 echo "<VirtualHost *:80>
         DirectoryIndex index.php
