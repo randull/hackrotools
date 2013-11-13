@@ -8,7 +8,10 @@ name=`echo $domain |rev |cut -c 5-|rev`
 tld=`echo $domain |cut -c 5-`
 machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
-echo "$name created at /$www/$domain w/ machine name of $machine and password $dbpw"
+echo "Site name: $name 
+Created at: $www/$domain 
+Machine name: $machine 
+Password: $dbpw"
 
 db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 mysql -udeploy -e "$db"
