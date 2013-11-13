@@ -20,6 +20,28 @@ projects[] = prod_check
 projects[] = security_review
 projects[] = views
 
+; Themes
+projects[omega][type] = theme
+projects[omega][version] = 4
+projects[omega][download][type] = git
+projects[omega][download][url] = http://git.drupal.org/project/omega.git
+projects[omega][download][branch] = 7.x-4.x
+projects[shiny][type] = theme
+projects[shiny][version = 1.3
+projects[shiny][download][type] = git
+projects[shiny][download][url] = http://git.drupal.org/project/shiny.git
+projects[shiny][download][branch] = 7.x-1.x
+
+; Libraries
+libraries[ckeditor][directory_name] = "ckeditor"
+libraries[ckeditor][destination] = "libraries"
+libraries[ckeditor][download][type] = "get"
+libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.2.2/ckeditor_4.2.2_standard.tar.gz"
+libraries[flexslider][directory_name] = "flexslider"
+libraries[flexslider][destination] = "libraries"
+libraries[flexslider][download][type] = "get"
+libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/master.tar.gz"
+
 ; Custom Install Profile
 projects[createsite][type] = "profile"
 projects[createsite][download][type] = "git"
