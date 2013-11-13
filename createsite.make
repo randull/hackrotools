@@ -21,6 +21,6 @@ projects[] = security_review
 projects[] = views
 
 ; Custom Install Profile
-projects[hackrobats][type] = "profile"
-projects[hackrobats][download][type] = "git"
-projects[hackrobats][download][url] = "git://github.com/randull/createsite.git"
+projects[craetesite][type] = "profile"
+projects[createsite][download][type] = "git"
+projects[createsite][download][url] = "git://github.com/randull/createsite.git"
