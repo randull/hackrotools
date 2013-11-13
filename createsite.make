@@ -12,6 +12,7 @@ projects[] = admin_menu
 projects[] = breakpoints
 projects[] = ckeditor
 projects[] = ctools
+projects[] = devel
 projects[] = flexslider
 projects[] = libraries
 projects[] = module_filter
