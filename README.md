@@ -4,4 +4,4 @@ sudo bash -c "$(curl -fsSL https://raw.github.com/randull/hackrobats/master/crea
 
 2.) Enter Domain Name
 
-3.) go to http://SITENAME.cascadiaweb.net/install.php?profile=hackrobats&locale=en
+3.) go to http://SITENAME.cascadiaweb.net/install.php?profile=createsite&locale=en
