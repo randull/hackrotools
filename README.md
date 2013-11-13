@@ -9,15 +9,27 @@ CONTENTS OF THIS FILE
 
 PREREQUISITS
 --------------------------
-LAMP stack
-Git
-Drush
-Pwgen
+ * LAMP stack
+ * Git
+ * Drush
+ * Pwgen
 
 INSTALLATION PROFILE
 ---------------------
 
 Modules Included:
+ * admin_menu
+ * breakpoints
+ * ckeditor
+ * ctools
+ * devel
+ * flexslider
+ * libraries
+ * module_filter
+ * picture
+ * prod_check
+ * security_review
+ * views
 
 
 APPEARANCE
