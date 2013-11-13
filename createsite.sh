@@ -43,9 +43,7 @@ echo "<VirtualHost *:80>
         ServerAlias $name.cascadiaweb.net $name.hackrobats.net
         ServerName $domain
 </VirtualHost>" > /etc/apache2/sites-available/$domain
-a2ensite $domain
-service apache2 reload
-service apache2 restart
+a2ensite $domain && service apache2 reload && service apache2 restart
 
 cd $www/$domain
 chown -R deploy:deploy $www/$domain
