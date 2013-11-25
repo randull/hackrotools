@@ -12,7 +12,7 @@ dbpw=$(pwgen -n 16)
 db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 mysql -udeploy -e "$db"
 # Create directories necessary for Drupal installation
-mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
+sudo -udeploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod 775 $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
 echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
