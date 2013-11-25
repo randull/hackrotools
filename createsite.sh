@@ -20,7 +20,7 @@ Options None
 Options +FollowSymLinks" > .htaccess
 # Copy settings.php from github.com/drupal/*
 cd $www/$domain/sites/default
-sudo -udeploy curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
+curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
 chmod 777 $www/$domain/sites/default/settings.php 
 # Populate database information in settings.php
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
