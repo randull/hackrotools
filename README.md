@@ -43,7 +43,7 @@ INSTALLATION INSTRUCTIONS
 
 1.) Execute the follow line in your terminal:
 
-sudo bash -c "$(curl -fsSL https://raw.github.com/randull/hackrobats/master/createsite.sh)" -y
+sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/createsite.sh)" -y
 
 2.) Enter Domain Name
 
