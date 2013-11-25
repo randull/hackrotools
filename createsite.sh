@@ -10,9 +10,9 @@ machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 # Create database and user
 db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-mysql -udeploy -e "$db"
+mysql -u deploy -e "$db"
 # Create directories necessary for Drupal installation
-sudo -udeploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
+sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod 775 $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
 echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
@@ -20,7 +20,7 @@ Options None
 Options +FollowSymLinks" > .htaccess
 # Copy settings.php from github.com/drupal/*
 cd $www/$domain/sites/default
-curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
+sudo -u deploy curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
 chmod 777 $www/$domain/sites/default/settings.php 
 # Populate database information in settings.php
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
@@ -38,4 +38,4 @@ a2ensite $domain && service apache2 reload && service apache2 restart
 cd $www/$domain
 chown -R deploy:deploy $www/$domain
 chmod 775 $www/$domain
-sudo -udeploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+sudo -u deploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
