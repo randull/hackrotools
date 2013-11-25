@@ -20,7 +20,7 @@ Options None
 Options +FollowSymLinks" > .htaccess
 # Copy settings.php from github.com/drupal/*
 cd $www/$domain/sites/default
-curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
+sudo -udeploy curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
 chmod 777 $www/$domain/sites/default/settings.php 
 # Populate database information in settings.php
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
@@ -38,4 +38,4 @@ a2ensite $domain && service apache2 reload && service apache2 restart
 cd $www/$domain
 chown -R deploy:deploy $www/$domain
 chmod 775 $www/$domain
-drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+sudo -udeploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
