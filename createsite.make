@@ -11,14 +11,17 @@ projects[drupal][download][url] = http://ftp.drupal.org/files/projects/drupal-7.
 projects[] = admin_menu
 projects[] = breakpoints
 projects[] = ckeditor
+projects[] = context
 projects[] = ctools
 projects[] = devel
+projects[] = features
 projects[] = flexslider
 projects[] = libraries
 projects[] = module_filter
 projects[] = picture
 projects[] = prod_check
 projects[] = security_review
+projects[] = strongarm
 projects[] = views
 
 ; Themes
