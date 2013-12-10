@@ -427,15 +427,15 @@ function createsite_install() {
   db_update('system')
     ->fields(array('status' => 1))
     ->condition('type', 'theme')
-    ->condition('name', 'shiny')
+    ->condition('name', 'rubik')
     ->execute();
-  variable_set('admin_theme', 'shiny');
+  variable_set('admin_theme', 'rubik');
   variable_set('node_admin_theme', '1');
   
   // Enable the default theme.
   $enable = array(
     'theme_default' => 'omega',
-    'admin_theme' => 'shiny',
+    'admin_theme' => 'rubik',
     //'zen'
   );
   theme_enable($enable);
