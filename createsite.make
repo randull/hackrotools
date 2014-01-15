@@ -3,9 +3,9 @@ api = 2
 
 ; Drupal Core
 projects[drupal][type] = core
-projects[drupal][version] = 7.24
+projects[drupal][version] = 7.25
 projects[drupal][download][type] = get
-projects[drupal][download][url] = http://ftp.drupal.org/files/projects/drupal-7.24.tar.gz
+projects[drupal][download][url] = http://ftp.drupal.org/files/projects/drupal-7.25.tar.gz
 
 ; Modules
 projects[] = admin_menu
