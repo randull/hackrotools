@@ -8,21 +8,47 @@ projects[drupal][download][type] = get
 projects[drupal][download][url] = http://ftp.drupal.org/files/projects/drupal-7.25.tar.gz
 
 ; Modules
+
 projects[] = admin_menu
+projects[] = backup_migrate
+projects[] = better_formats
+projects[] = blockreference
 projects[] = breakpoints
 projects[] = ckeditor
 projects[] = context
 projects[] = ctools
+projects[] = date
 projects[] = devel
+projects[] = ds
+projects[] = ds_bootstrap_layouts
+projects[] = entity
 projects[] = features
+projects[] = field_group
 projects[] = flexslider
+projects[] = google_analytics
+projects[] = imagecache_actions
+projects[] = imce
+projects[] = jquery_update
 projects[] = libraries
+projects[] = link
+projects[] = linkit
+projects[] = menu_block
+projects[] = menu_position
+projects[] = metatag
 projects[] = module_filter
+projects[] = nodeformsettings
+projects[] = nodereference_url
+projects[] = pathauto
+projects[] = pathologic
 projects[] = picture
 projects[] = prod_check
+projects[] = profile2
+projects[] = references
 projects[] = security_review
 projects[] = strongarm
+projects[] = token
 projects[] = views
+projects[] = views_bulk_operations
 
 ; Themes
 projects[omega][type] = theme
