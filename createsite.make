@@ -17,7 +17,6 @@ projects[] = breakpoints
 projects[] = ckeditor
 projects[] = context
 projects[] = ctools
-projects[] = date
 projects[] = devel
 projects[] = ds
 projects[] = ds_bootstrap_layouts
