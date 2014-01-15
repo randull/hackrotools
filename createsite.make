@@ -23,7 +23,6 @@ projects[] = ds
 projects[] = ds_bootstrap_layouts
 projects[] = entity
 projects[] = entityform
-projects[] = entityform_notifications
 projects[] = features
 projects[] = field_group
 projects[] = flexslider
