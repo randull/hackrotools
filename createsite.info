@@ -82,6 +82,7 @@ dependencies[] = pathauto
 dependencies[] = pathologic
 dependencies[] = picture
 dependencies[] = prod_check
+dependencies[] = profile2
 dependencies[] = references
 dependencies[] = security_review
 dependecnies[] = strongarm
