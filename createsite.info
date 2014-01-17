@@ -37,6 +37,7 @@ dependencies[] = flexslider
 dependencies[] = flexslider_fields
 dependencies[] = flexslider_picture
 dependencies[] = flexslider_views
+dependencies[] = fontyourface
 dependencies[] = libraries
 dependencies[] = module_filter
 dependencies[] = picture
