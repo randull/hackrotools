@@ -3,9 +3,9 @@ api = 2
 
 ; Drupal Core
 projects[drupal][type] = core
-projects[drupal][version] = 7.25
+projects[drupal][version] = 7.26
 projects[drupal][download][type] = get
-projects[drupal][download][url] = http://ftp.drupal.org/files/projects/drupal-7.25.tar.gz
+projects[drupal][download][url] = http://ftp.drupal.org/files/projects/drupal-7.26.tar.gz
 
 ; Modules
 
@@ -24,6 +24,7 @@ projects[] = entity
 projects[] = features
 projects[] = field_group
 projects[] = flexslider
+projects[] = fontyourface
 projects[] = google_analytics
 projects[] = imagecache_actions
 projects[] = imce
