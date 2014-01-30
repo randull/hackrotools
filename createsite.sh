@@ -13,11 +13,7 @@ db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@loca
 mysql -u deploy -e "$db"
 # Create directories necessary for Drupal installation
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-chmod 775 $www/$domain/sites/default/files
-cd $www/$domain/sites/default/files
-echo -n "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
-Options None
-Options +FollowSymLinks" > .htaccess
+chmod -R 775 $www/$domain/sites/default/files
 # Copy settings.php from github.com/drupal/*
 cd $www/$domain/sites/default
 sudo -u deploy curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
