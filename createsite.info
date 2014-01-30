@@ -24,6 +24,9 @@ dependencies[] = taxonomy
 
 ; Contrib Modules
 dependencies[] = admin_menu
+dependencies[] = backup_migrate
+dependencies[] = better_formats
+dependencies[] = blockreference
 dependencies[] = breakpoints
 dependencies[] = ckeditor
 dependencies[] = context
@@ -36,6 +39,7 @@ dependencies[] = flexslider_fields
 dependencies[] = flexslider_picture
 dependencies[] = flexslider_views
 dependencies[] = fontyourface
+dependencies[] = fontyourface_ui
 dependencies[] = libraries
 dependencies[] = module_filter
 dependencies[] = picture
