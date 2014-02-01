@@ -25,6 +25,8 @@ dependencies[] = taxonomy
 
 ; Contrib Modules
 dependencies[] = admin_menu
+dependencies[] = backup_migrate
+dependencies[] = better_formats
 dependencies[] = breakpoints
 dependencies[] = ckeditor
 dependencies[] = context
@@ -32,6 +34,14 @@ dependencies[] = ctools
 dependencies[] = devel
 dependencies[] = devel_generate
 dependencies[] = devel_node_access
+dependencies[] = ds
+dependencies[] = ds_devel
+dependencies[] = ds_extras
+dependencies[] = ds_format
+dependencies[] = ds_forms
+dependencies[] = ds_search
+dependencies[] = ds_ui
+dependencies[] = edit
 dependencies[] = flexslider
 dependencies[] = flexslider_fields
 dependencies[] = flexslider_picture
