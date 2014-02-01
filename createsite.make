@@ -20,6 +20,7 @@ projects[] = ctools
 projects[devel] = 1.x-dev
 projects[] = ds
 projects[] = ds_bootstrap_layouts
+projects[] = edit
 projects[] = entity
 projects[] = features
 projects[] = field_group
