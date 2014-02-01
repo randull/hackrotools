@@ -4,9 +4,11 @@
 read -p "Domain Name: " domain
 # Create variables from Domain Name
 www=/var/www/drupal7
+name=`echo $domain |rev |cut -c 5-|rev`
+machine=`echo $name |tr '-' '_'`
 # Change permissions for settings.php to 644
 cd $www/$domain/sites/default
 chmod 644 $www/$domain/sites/default/settings.php
-# Change temporary directory from /tmp to tmp
-db="UPDATE files SET file_directory_temp = REPLACE(file_directory_temp,'/tmp','tmp');"
-mysql -u deploy -e "$db"
+# Create omega 4 sub-theme and set default
+drush omega-subtheme $machine
+drush vset theme_default $machine
