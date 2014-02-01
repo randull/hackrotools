@@ -41,7 +41,6 @@ dependencies[] = ds_format
 dependencies[] = ds_forms
 dependencies[] = ds_search
 dependencies[] = ds_ui
-dependencies[] = edit
 dependencies[] = flexslider
 dependencies[] = flexslider_fields
 dependencies[] = flexslider_picture
