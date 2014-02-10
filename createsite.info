@@ -52,6 +52,7 @@ dependencies[] = flexslider
 dependencies[] = flexslider_fields
 dependencies[] = flexslider_picture
 dependencies[] = flexslider_views
+dependencies[] = font_reference
 dependencies[] = fontyourface
 dependencies[] = fontyourface_ui
 dependencies[] = googleanalytics
