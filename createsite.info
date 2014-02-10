@@ -49,7 +49,6 @@ dependencies[] = entity_token
 dependencies[] = features
 dependencies[] = field_group
 dependencies[] = flexslider
-dependencies[] = flexslider_example
 dependencies[] = flexslider_fields
 dependencies[] = flexslider_picture
 dependencies[] = flexslider_views
