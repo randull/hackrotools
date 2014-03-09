@@ -52,15 +52,20 @@ projects[] = views_bulk_operations
 
 ; Themes
 projects[omega][type] = theme
-projects[omega][version] = 4.2
+projects[omega][version] = 4
 projects[omega][download][type] = git
 projects[omega][download][url] = http://git.drupal.org/project/omega.git
 projects[omega][download][branch] = 7.x-4.x
-projects[shiny][type] = theme
-projects[shiny][version = 1.4
-projects[shiny][download][type] = git
-projects[shiny][download][url] = http://git.drupal.org/project/shiny.git
-projects[shiny][download][branch] = 7.x-1.x
+projects[rubik][type] = theme
+projects[rubik][version] = 4
+projects[rubik][download][type] = git
+projects[rubik][download][url] = http://git.drupal.org/project/rubik.git
+projects[rubik][download][branch] = 7.x-4.x
+projects[tao][type] = theme
+projects[tao][version] = 3
+projects[tao][download][type] = git
+projects[tao][download][url] = http://git.drupal.org/project/tao.git
+projects[tao][download][branch] = 7.x-3.x
 
 ; Libraries
 libraries[ckeditor][directory_name] = "ckeditor"
