@@ -5,6 +5,7 @@ core = 7.x
 
 ; Core Modules
 dependencies[] = block
+dependencies[] = comment
 dependencies[] = contextual
 dependencies[] = dashboard
 dependencies[] = dblog
@@ -90,9 +91,7 @@ dependencies[] = references
 dependencies[] = security_review
 dependencies[] = strongarm
 dependencies[] = user_reference
-dependencies[] = token
 dependencies[] = views
 dependencies[] = views_bulk_operations
 dependencies[] = views_content
 dependencies[] = views_ui
-
