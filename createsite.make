@@ -66,6 +66,11 @@ projects[tao][version] = 3
 projects[tao][download][type] = git
 projects[tao][download][url] = http://git.drupal.org/project/tao.git
 projects[tao][download][branch] = 7.x-3.x
+projects[shiny][type] = theme
+projects[shiny][version] = 1.4
+projects[shiny][download][type] = git
+projects[shiny][download][url] = http://git.drupal.org/project/shiny.git
+projects[shiny][download][branch] = 7.x-1.x
 
 ; Libraries
 libraries[ckeditor][directory_name] = "ckeditor"
