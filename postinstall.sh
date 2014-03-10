@@ -11,7 +11,7 @@ name=`echo $domain |rev |cut -c 5-|rev`
 machine=`echo $name |tr '-' '_'`
 # Execute Drupal /install.php
 #
-php $www/$domain/install.php
+require_once '$www/$domain/install.php';
 # Change permissions for settings.php to 644
 #
 cd $www/$domain/sites/default
