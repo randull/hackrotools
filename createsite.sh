@@ -13,7 +13,7 @@ db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@loca
 mysql -u deploy -e "$db"
 # Create directories necessary for Drupal installation
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-chmod 775 $www/$domain/sites/default/files
+chmod 777 $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
 # Copy settings.php from github.com/drupal/*
 cd $www/$domain/sites/default
