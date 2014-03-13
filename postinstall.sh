@@ -9,9 +9,10 @@ read -p "Domain Name: " domain
 www=/var/www/drupal7
 name=`echo $domain |rev |cut -c 5-|rev`
 machine=`echo $name |tr '-' '_'`
-# Execute Drupal /install.php
+# Remove Drupal Install files
 #
-php -f $www/$domain/install.php
+cd $www/$domain
+rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
 # Change permissions for settings.php to 644
 #
 cd $www/$domain/sites/default
