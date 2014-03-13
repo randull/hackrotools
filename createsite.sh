@@ -13,7 +13,7 @@ db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@loca
 mysql -u deploy -e "$db"
 # Create directories necessary for Drupal installation
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-chmod 777 $www/$domain/sites/default/files
+chmod 775 $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
 # Copy settings.php from github.com/drupal/*
 cd $www/$domain/sites/default
@@ -26,7 +26,7 @@ echo "<VirtualHost *:80>
         DirectoryIndex index.php
         DocumentRoot $www/$domain
         ServerAdmin maintenance@hackrobats.net
-        ServerAlias $name.cascadiaweb.net $name.cascadiacollective.net $name.hackrobats.net
+        ServerAlias $name.cascadiaweb.net $name.hackrobats.net
         ServerName $domain
 </VirtualHost>" > /etc/apache2/sites-available/$domain
 a2ensite $domain && service apache2 reload && service apache2 restart
