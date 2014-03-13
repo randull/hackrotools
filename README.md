@@ -10,6 +10,7 @@ CONTENTS OF THIS FILE
 PREREQUISITS
 --------------------------
  * LAMP stack
+ * cURL
  * Git
  * Drush
  * Pwgen
