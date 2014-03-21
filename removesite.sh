@@ -21,8 +21,8 @@ echo "$hosts/$domain disabled and removed"
 tld=`echo $domain |cut -c 5-`
 name=`echo $domain |rev |cut -c 5-|rev`
 machine=`echo $name|tr '-' '_'`
-mysql -u deploy -e "drop database $machine;"
-mysql -u deploy -e "drop user $machine@localhost;"
+mysql -u deploy -p -e "drop database $machine;"
+mysql -u deploy -p -e "drop user $machine@localhost;"
 #
 # Delete File Structure
 cd $www
