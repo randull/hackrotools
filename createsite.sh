@@ -10,7 +10,7 @@ machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 # Create database and user
 db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-mysql -u deploy -e "$db"
+mysql -u deploy -p -e "$db"
 # Create directories necessary for Drupal installation
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod 775 $www/$domain/sites/default/files
