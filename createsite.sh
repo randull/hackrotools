@@ -10,7 +10,7 @@ machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 # Create database and user
 db="create database $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-mysql -u root -e "$db"
+mysql -u deploy -e "$db"
 # Create directories necessary for Drupal installation
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod 775 $www/$domain/sites/default/files
@@ -21,6 +21,7 @@ sudo -u deploy curl -o $www/$domain/sites/default/settings.php 'https://raw.gith
 chmod 777 $www/$domain/sites/default/settings.php 
 # Populate database information in settings.php
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
+perl -pi -e "s~# .base_url = 'http://www.example.com';~\\\$base_url = 'http://$name\.cascadiaweb.net';~g" $www/$domain/sites/default/settings.php
 # Create virtual host file, enable and restart apache
 echo "<VirtualHost *:80>
         DirectoryIndex index.php
