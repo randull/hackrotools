@@ -42,7 +42,6 @@ projects[] = pathauto
 projects[] = pathologic
 projects[] = picture
 projects[] = prod_check
-projects[] = profile2
 projects[] = references
 projects[] = security_review
 projects[] = strongarm
