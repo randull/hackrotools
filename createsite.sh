@@ -6,9 +6,9 @@ read -p "Domain Name: " domain
 # Create variables from Domain Name
 #
 www=/var/www/drupal7
-tld=`echo $domain |rev |cut -c -3 |rev`
+tld=`echo $domain |cut -c -3`
 echo "\$tld = $tld"
-name=`echo $domain |cut -d"." -f2,3`
+name=`echo $domain |rev |cut -c 5- |rev`
 echo "\$name = $name"
 shortname=`echo $name |cut -c -15`
 echo "\$shortname = $shortname"
