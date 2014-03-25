@@ -8,7 +8,7 @@ read -p "Domain Name: " domain
 www=/var/www/drupal7
 name=`echo $domain |rev |cut -c 5- |rev`
 echo "\$name = $name"
-shortname=`echo $name |rev |cut -c 15- |rev`
+shortname=`echo $name |rev |cut -c -15 |rev`
 echo "\$shortname = $shortname"
 tld=`echo $domain |cut -c 5-`
 machine=`echo $name |tr '-' '_'`
