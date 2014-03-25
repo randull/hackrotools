@@ -2,10 +2,18 @@
 #
 # This script deletes virtual hosts and drupal directory.
 #
-# Disable sites-enabled symlink
-www=/var/www/drupal7
-hosts=/etc/apache2/sites-available
+# Prompt user to enter Domain Name
+#
 read -p "Site domain to remove: " domain
+# Create variables from Domain Name
+#
+hosts=/etc/apache2/sites-available
+www=/var/www/drupal7
+tld=`echo $domain  |cut -d"." -f2,3`
+name=`echo $domain |cut -f1 -d"."`
+shortname=`echo $name |cut -c -15`
+machine=`echo $shortname |tr '-' '_'`
+# Disable sites-enabled symlink
 a2dissite $domain
 #
 # Reload Apache2
@@ -18,9 +26,6 @@ rm $hosts/$domain
 echo "$hosts/$domain disabled and removed"
 #
 # Delete Database & User
-tld=`echo $domain |cut -c 5-`
-name=`echo $domain |rev |cut -c 5-|rev`
-machine=`echo $name|tr '-' '_'`
 mysql -u deploy -p -e "drop database $machine;drop user $machine@localhost;"
 #
 # Delete File Structure
