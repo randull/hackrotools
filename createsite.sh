@@ -23,11 +23,12 @@ chmod 777 $www/$domain/sites/default/settings.php
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
 # Create virtual host file, enable and restart apache
 echo "<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
         DirectoryIndex index.php
         DocumentRoot $www/$domain
-        ServerAdmin maintenance@hackrobats.net
-        ServerAlias $domain *.$domain $name.5ten.co $name.cascadiaweb.net $name.hackrobats.net
         ServerName www.$domain
+        ServerAlias $domain *.$domain 
+        ServerAlias $name.5ten.co $name.cascadiaweb.net $name.hackrobats.net
 </VirtualHost>" > /etc/apache2/sites-available/$domain
 a2ensite $domain && service apache2 reload && service apache2 restart
 # Deploy site using Drush Make
