@@ -26,8 +26,8 @@ echo "<VirtualHost *:80>
         DirectoryIndex index.php
         DocumentRoot $www/$domain
         ServerAdmin maintenance@hackrobats.net
-        ServerAlias $name.cascadiaweb.net $name.hackrobats.net
-        ServerName $domain
+        ServerAlias $domain *.$domain $name.5ten.co $name.cascadiaweb.net $name.hackrobats.net
+        ServerName www.$domain
 </VirtualHost>" > /etc/apache2/sites-available/$domain
 a2ensite $domain && service apache2 reload && service apache2 restart
 # Deploy site using Drush Make
