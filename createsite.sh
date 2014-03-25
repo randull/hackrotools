@@ -3,19 +3,19 @@
 # Prompt user to enter Domain Name
 #
 read -p "Domain Name: " domain
-# Notify user of MySQL password requirement
-#
-echo "MySQL verification required below!"
 # Create variables from Domain Name
 #
 www=/var/www/drupal7
 name=`echo $domain |rev |cut -c 5-|rev`
 echo "\$name = $name"
-shortname=`echo $name |cut -c 15+|rev`
+shortname=`echo $name |cut -c 15|rev`
 echo "\$shortname = $shortname"
 tld=`echo $domain |cut -c 5-`
 machine=`echo $name |tr '-' '_'`
 dbpw=$(pwgen -n 16)
+# Notify user of MySQL password requirement
+#
+echo "MySQL verification required below!"
 # Create database and user
 #
 db="CREATE DATABASE $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
