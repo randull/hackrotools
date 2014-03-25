@@ -16,7 +16,7 @@ dbpw=$(pwgen -n 16)
 echo "MySQL verification required below!"
 # Create database and user
 #
-db="CREATE DATABASE $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 mysql -u deploy -p -e "$db"
 # Create directories necessary for Drupal installation
 #
