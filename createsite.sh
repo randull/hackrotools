@@ -13,7 +13,7 @@ machine=`echo $shortname |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 # Notify user of MySQL password requirement
 #
-echo "MySQL verification required below!"
+echo "MySQL verification required."
 # Create database and user
 #
 db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
