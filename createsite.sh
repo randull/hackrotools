@@ -28,7 +28,8 @@ echo "<VirtualHost *:80>
         DocumentRoot $www/$domain
         ServerName www.$domain
         ServerAlias $domain *.$domain 
-        ServerAlias $name.5ten.co $name.cascadiaweb.net $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiacollective.net $name.cascadiaweb.net 
+        ServerAlias $name.510interactive.com $name.hackrobats.net
 </VirtualHost>" > /etc/apache2/sites-available/$domain
 a2ensite $domain && service apache2 reload && service apache2 restart
 # Deploy site using Drush Make
