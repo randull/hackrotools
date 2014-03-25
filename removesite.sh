@@ -23,10 +23,11 @@ service apache2 reload
 service apache2 restart
 #
 rm $hosts/$domain
-echo "$hosts/$domain disabled and removed"
+echo "$hosts/$domain Virtualhost disabled and removed"
 #
 # Delete Database & User
 mysql -u deploy -p -e "drop database $machine;drop user $machine@localhost;"
+echo "$machine database and user dropped"
 #
 # Delete File Structure
 cd $www
