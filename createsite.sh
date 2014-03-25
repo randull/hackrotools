@@ -6,7 +6,7 @@ read -p "Domain Name: " domain
 # Create variables from Domain Name
 #
 www=/var/www/drupal7
-tld=`echo $domain.split('.')[-1]`
+tld=`echo $domain  |cut -d"." -f2,3`
 echo "\$tld = $tld"
 name=`echo $domain |cut -f1 -d"."`
 echo "\$name = $name"
