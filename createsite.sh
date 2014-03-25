@@ -7,13 +7,9 @@ read -p "Domain Name: " domain
 #
 www=/var/www/drupal7
 tld=`echo $domain  |cut -d"." -f2,3`
-echo "\$tld = $tld"
 name=`echo $domain |cut -f1 -d"."`
-echo "\$name = $name"
 shortname=`echo $name |cut -c -15`
-echo "\$shortname = $shortname"
 machine=`echo $shortname |tr '-' '_'`
-echo "\$machine = $machine"
 dbpw=$(pwgen -n 16)
 # Notify user of MySQL password requirement
 #
