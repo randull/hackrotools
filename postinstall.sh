@@ -12,7 +12,9 @@ machine=`echo $name |tr '-' '_'`
 # Remove Drupal Install files
 #
 cd $www/$domain
-rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
+rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd $www/$domain/sites
+rm README.txt all/modules/README.txt all/themes/README.txt
 # Change permissions for settings.php to 644
 #
 cd $www/$domain/sites/default
