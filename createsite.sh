@@ -36,7 +36,6 @@ perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \
 sudo -u deploy mkdir $www/$domain/logs
 touch $www/$domain/logs/access.log $www/$domain/logs/error.log
 echo "<?php
-        // Show all information, defaults to INFO_ALL
         phpinfo();
 ?>" > $www/$domain/info.php
 # Create virtual host file, enable and restart apache
