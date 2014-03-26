@@ -20,8 +20,7 @@ db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO
 mysql -u deploy -p -e "$db"
 # Create directories necessary for Drupal installation
 #
-sudo -u deploy mkdir $www/$domain $www/$domain/logs $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-touch $www/$domain/logs/access.log $www/$domain/logs/error.log
+sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod 777 $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
 # Copy settings.php from github.com/drupal/*
@@ -32,6 +31,14 @@ chmod 777 $www/$domain/sites/default/settings.php
 # Populate database information in settings.php
 #
 perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
+# Create log files and folders, as well as info.php
+#
+sudo -u deploy mkdir $www/$domain/logs
+touch $www/$domain/logs/access.log $www/$domain/logs/error.log
+echo "<?php
+        // Show all information, defaults to INFO_ALL
+        phpinfo();
+?>" $www/$domain/info.php
 # Create virtual host file, enable and restart apache
 #
 echo "<VirtualHost *:80>
