@@ -20,7 +20,8 @@ db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO
 mysql -u deploy -p -e "$db"
 # Create directories necessary for Drupal installation
 #
-sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
+sudo -u deploy mkdir $www/$domain $www/$domain/logs $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
+touch $www/$domain/logs/access.log $www/$domain/logs/error.log
 chmod 777 $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
 # Copy settings.php from github.com/drupal/*
