@@ -23,6 +23,9 @@ mysql -u deploy -p -e "$db"
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod 777 $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
+# Download favicon.ico
+#
+sudo -u deploy curl -o $www/$domain/favicon.ico 'http://hackrobats.net/favicon.ico'
 # Copy settings.php from github.com/drupal/*
 #
 cd $www/$domain/sites/default
