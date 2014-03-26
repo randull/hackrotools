@@ -46,7 +46,7 @@ INSTALLATION INSTRUCTIONS
 
     sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/createsite.sh)" -y
 
-2.) Enter Domain Name
+2.) Enter Domain Name and MySQL password when prompted.
 
 3.) Navigate your browser to:
 
