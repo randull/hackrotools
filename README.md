@@ -44,12 +44,14 @@ INSTALLATION INSTRUCTIONS
 
 1.) Execute the following line in your terminal:
 
-    sudo bash -c "$(curl -fsSL https://raw.github.com/randull/hackrobats/master/createsite.sh)" -y
+    sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/createsite.sh)" -y
 
 2.) Enter Domain Name
 
-3.) Navigate your browser to http://SITENAME.cascadiaweb.net/install.php?profile=createsite&locale=en
+3.) Navigate your browser to:
+
+    http://SITENAME.cascadiaweb.net/install.php?profile=createsite$locale=en
 
 4.) Execute the following line in your terminal:
 
-  sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/postinstall.sh)" -y
+    sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/postinstall.sh)" -y
