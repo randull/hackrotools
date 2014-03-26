@@ -7,8 +7,10 @@ read -p "Domain Name: " domain
 # Create variables from Domain Name
 #
 www=/var/www/drupal7
-name=`echo $domain |rev |cut -c 5-|rev`
-machine=`echo $name |tr '-' '_'`
+tld=`echo $domain  |cut -d"." -f2,3`
+name=`echo $domain |cut -f1 -d"."`
+shortname=`echo $name |cut -c -15`
+machine=`echo $shortname |tr '-' '_'`
 # Remove Drupal Install files
 #
 cd $www/$domain
