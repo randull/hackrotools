@@ -52,4 +52,4 @@ sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/crea
 
 4.) Execute the following line in your terminal:
 
-sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/postinstall.sh)" -y
+  sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/postinstall.sh)" -y
