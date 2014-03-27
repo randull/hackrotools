@@ -24,6 +24,9 @@ service apache2 restart
 #
 rm $hosts/$domain
 echo "$hosts/$domain Virtualhost disabled and removed"
+# Notify user of MySQL password requirement
+#
+echo "MySQL verification required."
 #
 # Delete Database & User
 mysql -u deploy -p -e "drop database $machine;drop user $machine@localhost;"
