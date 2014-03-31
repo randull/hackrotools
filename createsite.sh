@@ -19,11 +19,11 @@ dbpw=$(pwgen -n 16)
 echo "MySQL verification required."
 # Prompt user to provide MySQL Password for Deploy
 #
-read -p "Deploy's MySQL Password: " deploypass
+#read -p "Deploy's MySQL Password: " deploypass
 # Create database and user
 #
-#db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-#mysql -u deploy -p -e "$db"
+db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+mysql -u deploy -p -e "$db"
 # Create directories necessary for Drupal installation
 #
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
@@ -67,4 +67,3 @@ cd $www/$domain
 chmod 775 $www/$domain
 sudo -u deploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 sudo -u deploy drush si createsite --db-url=mysql://deploy:$deploypass@localhost/$machine --account-name=hackrobats --account-pass="$drupalpass" --account-mail=maintenance@hackrobats.net -y
-
