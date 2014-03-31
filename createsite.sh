@@ -16,7 +16,10 @@ machine=`echo $shortname |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 # Notify user of MySQL password requirement
 #
-#echo "MySQL verification required."
+echo "MySQL verification required."
+# Prompt user to provide MySQL Password for Deploy
+#
+read -p "Deploy's MySQL Password: " deploypass
 # Create database and user
 #
 #db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
@@ -63,5 +66,6 @@ a2ensite $domain && service apache2 reload && service apache2 restart
 cd $www/$domain
 chmod 775 $www/$domain
 sudo -u deploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
-sudo -u deploy drush si createsite --account-name=hackrobats --account-pass="$drupalpass" --account-mail=maintenance@hackrobats.net -y
+sudo -u deploy drush si createsite --db-url=mysql://deploy:$@localhost/$machine -y
+--account-name=hackrobats --account-pass="$drupalpass" --account-mail=maintenance@hackrobats.net
 
