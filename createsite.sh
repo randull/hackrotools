@@ -32,14 +32,6 @@ cd $www/$domain/sites/default/files
 # Download favicon.ico
 #
 sudo -u deploy curl -o $www/$domain/favicon.ico 'http://hackrobats.net/favicon.ico'
-# Copy settings.php from github.com/drupal/*
-#
-#cd $www/$domain/sites/default
-#sudo -u deploy curl -o $www/$domain/sites/default/settings.php 'https://raw.github.com/drupal/drupal/7.x/sites/default/default.settings.php'
-#chmod 777 $www/$domain/sites/default/settings.php 
-# Populate database information in settings.php
-#
-#perl -pi -e "s~\$databases = array\(\);~\$databases = array ( \n  'default' => \n  array ( \n    'default' => \n    array (\n      'database' => '$machine',\n      'username' => '$machine',\n      'password' => '$dbpw', \n      'host' => 'localhost', \n      'port' => '', \n      'driver' => 'mysql', \n      'prefix' => '', \n    ),\n  ),\n);~g" settings.php
 # Create log files and folders, as well as info.php
 #
 sudo -u deploy mkdir $www/$domain/logs
@@ -61,9 +53,21 @@ echo "<VirtualHost *:80>
         DirectoryIndex index.php
 </VirtualHost>" > /etc/apache2/sites-available/$domain
 a2ensite $domain && service apache2 reload && service apache2 restart
-# Deploy site using Drush Make
+# Create site structure using Drush Make
 #
 cd $www/$domain
 chmod 775 $www/$domain
 sudo -u deploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+# Deploy site using Drush Site-Install
+#
 sudo -u deploy drush si createsite --db-url=mysql://$machine:$dbpw@localhost/$machine --site-name=$sitename --account-name=hackrobats --account-pass=$drupalpass --account-mail=maintenance@hackrobats.net -y
+# Remove Drupal Install files after installation
+#
+cd $www/$domain
+rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd $www/$domain/sites
+rm README.txt all/modules/README.txt all/themes/README.txt
+# Create omega 4 sub-theme and set default
+#
+drush omega-subtheme $machine
+drush vset theme_default $machine
