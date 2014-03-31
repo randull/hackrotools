@@ -3,6 +3,9 @@
 # Prompt user to enter Domain Name
 #
 read -p "Domain Name: " domain
+# Prompt user to enter Password for User1(Hackrobats)
+#
+read -p "Hackrobats Password: " drupalpass
 # Create variables from Domain Name
 #
 www=/var/www/drupal7
@@ -60,3 +63,7 @@ a2ensite $domain && service apache2 reload && service apache2 restart
 cd $www/$domain
 chmod 775 $www/$domain
 sudo -u deploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+sudo -u deploy drush site-install createsite --db-url=mysql://$shortname:$dbpw\@localhost/$domain \
+--site-name=$domain --account-name=hackrobats --account-pass="$drupalpass" \
+--account-mail=maintenance@hackrobats.net -y
+
