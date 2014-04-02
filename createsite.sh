@@ -39,6 +39,7 @@ touch $www/$domain/logs/access.log $www/$domain/logs/error.log
 echo "<?php
         phpinfo();
 ?>" > $www/$domain/info.php
+sudo chown deploy:deploy $www/$domain/info.php
 # Create virtual host file, enable and restart apache
 #
 echo "<VirtualHost *:80>
