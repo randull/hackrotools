@@ -70,5 +70,7 @@ cd $www/$domain/sites
 rm README.txt all/modules/README.txt all/themes/README.txt
 # Create omega 4 sub-theme and set default
 #
-sudo drush omega-subtheme "omega_hackrobats" --enable
-sudo drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --enable
+drush omega-subtheme "omega_hackrobats"
+drush pm-enable "omega_hackrobats" -y
+drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --enable
+drush pm-enable "$sitename" -y 
