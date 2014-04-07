@@ -53,7 +53,7 @@ echo "<VirtualHost *:80>
         CustomLog $www/$domain/logs/access.log combined
         DirectoryIndex index.php
 </VirtualHost>" > /etc/apache2/sites-available/$domain
-a2ensite $domain && service apache2 reload && service apache2 restart
+a2ensite $domain && service apache2 reload
 # Create site structure using Drush Make
 #
 cd $www/$domain
@@ -71,4 +71,4 @@ rm README.txt all/modules/README.txt all/themes/README.txt
 # Create omega 4 sub-theme and set default
 #
 drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
-drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="Hackrobats Omega Subtheme" --set-default
+drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
