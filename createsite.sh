@@ -72,3 +72,4 @@ rm README.txt all/modules/README.txt all/themes/README.txt
 #
 drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
+drush omega-export "omega_$machine" --revert -y
