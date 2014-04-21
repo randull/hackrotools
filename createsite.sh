@@ -27,7 +27,7 @@ mysql -u deploy -p -e "$db"
 # Create directories necessary for Drupal installation
 #
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
-chmod 777 $www/$domain/sites/default/files
+chmod a+w $www/$domain/sites/default/files
 cd $www/$domain/sites/default/files
 # Download favicon.ico
 #
