@@ -58,7 +58,7 @@ a2ensite $domain && service apache2 reload
 #
 cd $www/$domain
 chmod 775 $www/$domain
-sudo -u deploy drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 # Deploy site using Drush Site-Install
 #
 sudo -u deploy drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
