@@ -28,6 +28,7 @@ mysql -u deploy -p -e "$db"
 #
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod a+w $www/$domain/sites/default/files
+chgrp -R www-data $www/$domain
 cd $www/$domain/sites/default/files
 # Download favicon.ico
 #
