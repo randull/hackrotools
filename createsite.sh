@@ -40,7 +40,7 @@ touch $www/$domain/logs/access.log $www/$domain/logs/error.log
 echo "<?php
         phpinfo();
 ?>" > $www/$domain/info.php
-sudo chown deploy:deploy $www/$domain/info.php
+sudo chown deploy:www-data $www/$domain/info.php
 # Create virtual host file, enable and restart apache
 #
 echo "<VirtualHost *:80>
@@ -58,7 +58,6 @@ a2ensite $domain && service apache2 reload
 # Create site structure using Drush Make
 #
 cd $www/$domain
-chmod 775 $www/$domain
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 # Deploy site using Drush Site-Install
 #
