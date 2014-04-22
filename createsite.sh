@@ -8,7 +8,15 @@ read -p "Site Name: " sitename
 read -p "Domain Name: " domain
 # Prompt user to enter Password for User1(Hackrobats)
 #
-read -p "Hackrobats Password: " -s drupalpass
+while true
+do
+    read -s -p "User1 Password: " drupalpass
+    echo
+    read -s -p "User1 Password (again): " drupalpass2
+    echo
+    [ "$drupalpass" = "$drupalpass2" ] && break
+    echo "Please try again"
+done
 # Create variables from Domain Name
 #
 www=/var/www/drupal7
