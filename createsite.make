@@ -4,6 +4,11 @@ api = 2
 ; Drupal Core
 projects[] = drupal
 
+; Dev Modules
+projects[backup_migrate] = 3.x-dev
+projects[features] = 2.x-dev
+projects[jquery_update] = 2.x-dev
+
 ; Prod Modules
 projects[] = admin_menu
 projects[] = backup_migrate_files
@@ -55,11 +60,6 @@ projects[] = uuid
 projects[] = uuid_features
 projects[] = views
 projects[] = views_bulk_operations
-
-; Dev Modules
-projects[backup_migrate] = 3.x-dev
-projects[features] = 2.x-dev
-projects[jquery_update] = 2.x-dev
 
 ; Themes
 projects[omega][type] = theme
