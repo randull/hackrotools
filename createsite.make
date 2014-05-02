@@ -20,7 +20,6 @@ projects[] = devel
 projects[] = ds
 projects[] = entity
 projects[] = entityreference
-projects[] = features
 projects[] = features_extra
 projects[] = field_group
 projects[] = flexslider
