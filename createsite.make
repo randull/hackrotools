@@ -88,7 +88,7 @@ libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/
 libraries[plupload][directory_name] = "plupload"
 libraries[plupload][destination] = "libraries"
 libraries[plupload][download][type] = "get"
-libraries[plupload][download][url] = "https://github.com/moxiecode/plupload/archive/v1.5.8.zip"
+libraries[plupload][download][url] = "https://github.com/moxiecode/plupload/archive/v1.5.8.tar.gz"
 
 
 ; Custom Install Profile
