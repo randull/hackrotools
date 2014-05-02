@@ -4,10 +4,8 @@ api = 2
 ; Drupal Core
 projects[] = drupal
 
-; Modules
-
+; Prod Modules
 projects[] = admin_menu
-projects[] = backup_migrate
 projects[] = backup_migrate_files
 projects[] = better_formats
 projects[] = blockreference
@@ -33,7 +31,6 @@ projects[] = imce
 projects[] = imce_plupload
 projects[] = inline_entity_form
 projects[] = job_scheduler
-projects[jquery_update] = 2.x-dev
 projects[] = libraries
 projects[] = link
 projects[] = linkit
@@ -59,6 +56,11 @@ projects[] = uuid
 projects[] = uuid_features
 projects[] = views
 projects[] = views_bulk_operations
+
+; Dev Modules
+projects[backup_migrate] = 3.x-dev
+projects[features] = 2.x-dev
+projects[jquery_update] = 2.x-dev
 
 ; Themes
 projects[omega][type] = theme
