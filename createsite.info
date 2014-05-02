@@ -23,6 +23,7 @@ dependencies[] = path
 dependencies[] = rdf
 dependencies[] = shortcut
 dependencies[] = taxonomy
+dependencies[] = trigger
 
 ; Contrib Modules
 dependencies[] = admin_menu
