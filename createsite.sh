@@ -49,8 +49,8 @@ cd $www/$domain/sites/default/files
 ####                                                            ####
 ####    Create Private directory and setup Backup directories   ####
 ####                                                            ####
-sudo -u deploy mkdir -p $www/$domain/sites/default/files/private/backup_migrate/scheduled/hourly $www/$domain/sites/default/files/private/backup_migrate/scheduled/daily $www/$domain/sites/default/files/private/backup_migrate/scheduled/weekly  $www/$domain/sites/default/files/private/backup_migrate/scheduled/monthly
-chown -R www-data:www-data $www/$domain/sites/default/files/private
+sudo -u deploy mkdir -p $www/$domain/private/backup_migrate/scheduled/hourly $www/$domain/private/backup_migrate/scheduled/daily $www/$domain/private/backup_migrate/scheduled/weekly  $www/$domain/private/backup_migrate/scheduled/monthly
+chown -R deploy:www-data $www/$domain/private
 ####                                                            ####
 ####    Download favicon.ico                                    ####
 ####                                                            ####
@@ -63,7 +63,7 @@ touch $www/$domain/logs/access.log $www/$domain/logs/error.log
 echo "<?php
         phpinfo();
 ?>" > $www/$domain/info.php
-sudo chown www-data:www-data $www/$domain/info.php
+sudo chown deploy:www-data $www/$domain/info.php
 ####                                                            ####
 ####    Create virtual host file, enable and restart apache     ####
 ####                                                            ####
