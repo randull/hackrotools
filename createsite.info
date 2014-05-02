@@ -31,6 +31,7 @@ dependencies[] = better_formats
 dependencies[] = blockreference
 dependencies[] = breakpoints
 dependencies[] = bulk_export
+dependencies[] = calendar
 dependencies[] = ckeditor
 dependencies[] = colorbox
 dependencies[] = context
