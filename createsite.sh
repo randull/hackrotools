@@ -44,8 +44,13 @@ mysql -u deploy -p -e "$db"
 ####                                                            ####
 sudo -u deploy mkdir $www/$domain $www/$domain/sites $www/$domain/sites/default $www/$domain/sites/default/files
 chmod a+w $www/$domain/sites/default/files
-chgrp -R www-data $www/$domain
+chown -R www-data:www-data $www/$domain
 cd $www/$domain/sites/default/files
+####                                                            ####
+####    Create Private directory and setup Backup directories   ####
+####                                                            ####
+sudo -u deploy mkdir sites/default/files/private sites/default/files/private/hourly sites/default/files/private/daily sites/default/files/private/weekly  sites/default/files/private/monthly
+chown -R www-data:www-data private
 ####                                                            ####
 ####    Download favicon.ico                                    ####
 ####                                                            ####
