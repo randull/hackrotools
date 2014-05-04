@@ -95,8 +95,8 @@ cd $www/$domain
 rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
 cd $www/$domain/sites
 rm README.txt all/modules/README.txt all/themes/README.txt
-cd $www/$domain/sites/all/libraries/plupload
-rm -R examples
+sudo chown -R deploy:www-data all/libraries/plupload
+rm -R all/libraries/plupload/examples
 ####                                                            ####
 ####    Create omega 4 sub-theme and set default                ####
 ####                                                            ####
