@@ -22,6 +22,7 @@ projects[] = context
 projects[] = ctools
 projects[] = date
 projects[] = devel
+projects[] = disqus
 projects[] = ds
 projects[] = entity
 projects[] = entityform
