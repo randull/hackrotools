@@ -103,3 +103,12 @@ rm -R examples
 drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 drush omega-export "omega_$machine" --revert -y
+####                                                            ####
+####    Initialize Git directory                                ####
+####                                                            ####
+sudo -u deploy git init
+####                                                            ####
+####    Set owner of entire directory to deploy:www-data        ####
+####                                                            ####
+cd $www
+sudo chown -R deploy:www-data $domain
