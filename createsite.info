@@ -6,6 +6,7 @@ core = 7.x
 ; Core Modules
 dependencies[] = block
 dependencies[] = blog
+dependencies[] = comments
 dependencies[] = contextual
 dependencies[] = dblog
 dependencies[] = field_ui
