@@ -128,6 +128,7 @@ dependencies[] = services
 dependencies[] = smartqueue
 dependencies[] = strongarm
 dependencies[] = term_depth
+dependencies[] = term_reference_tree
 dependencies[] = token
 dependencies[] = user_reference
 dependencies[] = uuid
