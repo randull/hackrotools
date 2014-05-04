@@ -60,6 +60,7 @@ projects[] = rules
 projects[] = security_review
 projects[] = services
 projects[] = strongarm
+projects[] = term_reference_tree
 projects[] = token
 projects[] = uuid
 projects[] = uuid_features
