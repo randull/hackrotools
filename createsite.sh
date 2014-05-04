@@ -106,9 +106,10 @@ drush omega-export "omega_$machine" --revert -y
 ####                                                            ####
 ####    Initialize Git directory                                ####
 ####                                                            ####
-cd $www
+cd $www/$domain
 sudo -u deploy git init
 ####                                                            ####
 ####    Set owner of entire directory to deploy:www-data        ####
 ####                                                            ####
+cd $www
 sudo chown -R deploy:www-data $domain
