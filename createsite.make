@@ -24,6 +24,7 @@ projects[] = date
 projects[] = devel
 projects[] = ds
 projects[] = entity
+projects[] = entityform
 projects[] = entityreference
 projects[] = features_extra
 projects[] = field_group
