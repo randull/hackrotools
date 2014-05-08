@@ -11,6 +11,7 @@ PREREQUISITS
 --------------------------
  * LAMP stack
  * cURL
+ * wget
  * Git
  * Drush
  * Pwgen
@@ -46,12 +47,6 @@ INSTALLATION INSTRUCTIONS
 
     sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/createsite.sh)" -y
 
-2.) Enter Domain Name and MySQL password when prompted.
+2.) Navigate your browser to:
 
-3.) Navigate your browser to:
-
-    http://SITENAME.cascadiaweb.net/install.php?profile=createsite$locale=en
-
-4.) Execute the following line in your terminal:
-
-    sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/postinstall.sh)" -y
+    http://SITENAME.cascadiaweb.net/
