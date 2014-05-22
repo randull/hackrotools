@@ -5,7 +5,7 @@ api = 2
 projects[] = drupal
 
 ; Dev Modules
-projects[backup_migrate] = 2.x-dev
+projects[backup_migrate] = 3.x-dev
 projects[features] = 2.x-dev
 projects[jquery_update] = 2.x-dev
 
