@@ -19,9 +19,8 @@ a2dissite $domain
 # Reload Apache2
 #
 service apache2 reload
-# Restart Apache2 and remove Virtual Host entry
+# Remove Virtual Host entry
 #
-service apache2 restart
 rm $hosts/$domain
 echo "$hosts/$domain Virtualhost disabled and removed"
 # Notify user of MySQL password requirement
