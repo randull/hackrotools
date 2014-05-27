@@ -28,7 +28,6 @@ dependencies[] = trigger
 ; Contrib Modules
 dependencies[] = admin_menu
 dependencies[] = backup_migrate
-dependencies[] = backup_migrate_files
 dependencies[] = better_formats
 dependencies[] = blockreference
 dependencies[] = breakpoints
