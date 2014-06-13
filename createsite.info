@@ -95,6 +95,7 @@ dependencies[] = jquery_update
 dependencies[] = libraries
 dependencies[] = link
 dependencies[] = linkit
+dependecnies[] = logintoboggan
 dependencies[] = media
 dependencies[] = media_internet
 dependencies[] = menu_block
