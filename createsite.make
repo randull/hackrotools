@@ -42,6 +42,7 @@ projects[] = job_scheduler
 projects[] = libraries
 projects[] = link
 projects[] = linkit
+projects[] = logintoboggan
 projects[] = media
 projects[] = menu_block
 projects[] = menu_position
