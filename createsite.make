@@ -5,13 +5,11 @@ api = 2
 projects[] = drupal
 
 ; Dev Modules
-projects[backup_migrate] = 3.x-dev
 projects[features] = 2.x-dev
-projects[jquery_update] = 2.x-dev
 
 ; Prod Modules
 projects[] = admin_menu
-projects[] = backup_migrate_files
+projects[] = backup_migrate
 projects[] = better_formats
 projects[] = blockreference
 projects[] = breakpoints
@@ -39,6 +37,7 @@ projects[] = imce
 projects[] = imce_plupload
 projects[] = inline_entity_form
 projects[] = job_scheduler
+projects[] = jquery_update
 projects[] = libraries
 projects[] = link
 projects[] = linkit
@@ -93,6 +92,10 @@ libraries[flexslider][directory_name] = "flexslider"
 libraries[flexslider][destination] = "libraries"
 libraries[flexslider][download][type] = "get"
 libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/master.tar.gz"
+libraries[html5shiv][directory_name] = "html5shiv"
+libraries[html5shiv][destination] = "libraries"
+libraries[html5shiv][download][type] = "get"
+libraries[html5shiv][download][url] = "https://github.com/fubhy/html5shiv/archive/master.zip"
 libraries[plupload][directory_name] = "plupload"
 libraries[plupload][destination] = "libraries"
 libraries[plupload][download][type] = "get"
