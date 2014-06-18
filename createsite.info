@@ -126,6 +126,7 @@ dependencies[] = rules_scheduler
 dependencies[] = security_review
 dependencies[] = services
 dependencies[] = smartqueue
+dependencies[] = special_menu_items
 dependencies[] = strongarm
 dependencies[] = term_depth
 dependencies[] = term_reference_tree
