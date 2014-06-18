@@ -59,6 +59,7 @@ projects[] = references
 projects[] = rules
 projects[] = security_review
 projects[] = services
+projects[] = special_menu_items
 projects[] = strongarm
 projects[] = term_reference_tree
 projects[] = token
