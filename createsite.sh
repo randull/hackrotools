@@ -49,7 +49,8 @@ cd $www/$domain/sites/default/files
 ####                                                            ####
 ####    Create Private directory and setup Backup directories   ####
 ####                                                            ####
-sudo -u deploy mkdir -p $www/$domain/private/backup_migrate/scheduled/hourly $www/$domain/private/backup_migrate/scheduled/daily $www/$domain/private/backup_migrate/scheduled/weekly  $www/$domain/private/backup_migrate/scheduled/monthly
+sudo -u deploy mkdir -p $www/$domain/private/backup_migrate/scheduled $www/$domain/private/backup_migrate/manual
+chmod 2774 -R $www/$domain/private
 chown -R deploy:www-data $www/$domain/private
 ####                                                            ####
 ####    Download favicon.ico                                    ####
