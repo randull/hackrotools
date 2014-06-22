@@ -58,6 +58,7 @@ dependencies[] = ds_forms
 dependencies[] = ds_search
 dependencies[] = ds_ui
 dependencies[] = disqus
+dependencies[] = elysia_cron
 dependencies[] = entity
 dependencies[] = entity_rules
 dependencies[] = entity_token
