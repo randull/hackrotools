@@ -25,7 +25,6 @@ projects[] = date
 projects[] = devel
 projects[] = disqus
 projects[] = ds
-projects[] = elysia_cron
 projects[] = entity
 projects[] = entity_rules
 projects[] = entity2text
