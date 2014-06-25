@@ -5,7 +5,10 @@ api = 2
 projects[] = drupal
 
 ; Dev Modules
+projects[elysia_cron] = 2.x-dev
 projects[features] = 2.x-dev
+projects[media] = 2.x-dev
+
 
 ; Prod Modules
 projects[] = admin_menu
@@ -43,7 +46,6 @@ projects[] = libraries
 projects[] = link
 projects[] = linkit
 projects[] = logintoboggan
-projects[] = media
 projects[] = menu_block
 projects[] = menu_position
 projects[] = metatag
