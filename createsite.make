@@ -33,6 +33,7 @@ projects[] = entityform
 projects[] = entityreference
 projects[] = features_extra
 projects[] = field_group
+projects[] = file_entity
 projects[] = flexslider
 projects[] = fontyourface
 projects[] = google_analytics
