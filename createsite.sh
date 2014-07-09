@@ -101,6 +101,7 @@ rm -R all/libraries/plupload/examples
 ####                                                            ####
 ####    Create omega 4 sub-theme and set default                ####
 ####                                                            ####
+drush cc all
 drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 drush omega-export "omega_$machine" --revert -y
