@@ -12,6 +12,7 @@ projects[media] = 2.x-dev
 
 ; Prod Modules
 projects[] = admin_menu
+projects[] = advanced_help
 projects[] = backup_migrate
 projects[] = better_formats
 projects[] = blockreference
