@@ -115,3 +115,4 @@ sudo -u deploy git init
 ####                                                            ####
 cd $www
 sudo chown -R deploy:www-data $domain
+sudo chown -R deploy:www-data /home/deploy
