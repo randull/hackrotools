@@ -5,6 +5,7 @@ api = 2
 projects[] = drupal
 
 ; Dev Modules
+projects[backup_migrate] = 3.x-dev
 projects[elysia_cron] = 2.x-dev
 projects[features] = 2.x-dev
 projects[media] = 2.x-dev
@@ -13,7 +14,6 @@ projects[media] = 2.x-dev
 ; Prod Modules
 projects[] = admin_menu
 projects[] = advanced_help
-projects[] = backup_migrate
 projects[] = better_formats
 projects[] = blockreference
 projects[] = breakpoints
