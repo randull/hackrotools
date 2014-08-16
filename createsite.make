@@ -7,7 +7,6 @@ projects[] = drupal
 ; Dev Modules
 projects[backup_migrate] = 3.x-dev
 projects[elysia_cron] = 2.x-dev
-projects[features] = 2.x-dev
 projects[feeds] = 2.x-dev
 projects[media] = 2.x-dev
 projects[security_review] = 1.x-dev
@@ -33,6 +32,7 @@ projects[] = entity_rules
 projects[] = entity2text
 projects[] = entityform
 projects[] = entityreference
+projects[] = features
 projects[] = features_extra
 projects[] = field_group
 projects[] = file_entity
