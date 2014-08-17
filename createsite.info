@@ -71,6 +71,7 @@ dependencies[] = features
 dependencies[] = fe_block
 dependencies[] = fe_nodequeue
 dependencies[] = fe_profile
+dependencies[] = feeds
 dependencies[] = field_group
 dependencies[] = file_entity
 dependencies[] = flexslider
