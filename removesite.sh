@@ -22,6 +22,9 @@ service apache2 reload
 # Remove Virtual Host entry
 #
 rm $hosts/$domain
+if [ -d "$hosts/$domain" ]; then
+  echo "$domain directory still exists in /etc/apache2/sites-available"
+fi
 echo "$domain Apache2 conf disabled and removed"
 # Notify user of MySQL password requirement
 #
@@ -34,7 +37,7 @@ echo "$machine database and user dropped"
 #
 cd $www
 rm -R $domain
-if [ -d "$domain" ]; then
+if [ -d "$www/$domain" ]; then
   echo "$domain directory still exists in /var/www"
 fi
 echo "$domain directory removed from /var/www"
