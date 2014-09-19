@@ -29,8 +29,8 @@ service apache2 reload
 # Remove Virtual Host entry
 #
 rm $hosts/$machine.conf
-if [ -d "$hosts/$machine.conf" ]; then
-  echo "$machine.conf directory still exists in /etc/apache2/sites-available"
+if [ -d "$hosts/$machine\.conf" ]; then
+  echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
 echo "$domain Apache2 conf disabled and removed"
 # Delete File Structure
