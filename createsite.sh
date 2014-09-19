@@ -24,7 +24,7 @@ echo "Password Matches"
 ####                                                            ####
 ####    Create variables from Domain Name                       ####
 ####                                                            ####
-www=/var/www/drupal7
+www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
 name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -15`
@@ -81,6 +81,9 @@ echo "<VirtualHost *:80>
 </VirtualHost>" > /etc/apache2/sites-available/$domain
 a2ensite $domain && service apache2 reload
 ####                                                            ####
+####    Drupal Install Profile choice NEEDED here               ####
+####                                                            ####
+####                                                            ####
 ####    Create site structure using Drush Make                  ####
 ####                                                            ####
 cd $www/$domain/html
@@ -96,7 +99,7 @@ cd $www/$domain/html
 rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
 cd $www/$domain/html/sites
 rm README.txt all/modules/README.txt all/themes/README.txt
-sudo chown -R deploy:www-data all/libraries/plupload
+sudo chown -R deploy:www-data all default
 rm -R all/libraries/plupload/examples
 ####                                                            ####
 ####    Create omega 4 sub-theme and set default                ####
