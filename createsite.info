@@ -113,7 +113,6 @@ dependencies[] = metatag
 dependencies[] = metatag_context
 dependencies[] = metatag_devel
 dependencies[] = metatag_views
-dependencies[] = metatag_ui
 dependencies[] = module_filter
 dependencies[] = nodeformsettings
 dependencies[] = nodequeue
