@@ -13,6 +13,13 @@ tld=`echo $domain  |cut -d"." -f2,3`
 name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -15`
 machine=`echo $shortname |tr '-' '_'`
+# Notify user of MySQL password requirement
+#
+echo "MySQL verification required."
+# Delete Database & User
+#
+mysql -u deploy -p -e "drop database $machine;drop user $machine@localhost;"
+echo "$machine database and user dropped"
 # Disable sites-enabled symlink
 #
 a2dissite $domain
@@ -26,13 +33,6 @@ if [ -d "$hosts/$domain" ]; then
   echo "$domain directory still exists in /etc/apache2/sites-available"
 fi
 echo "$domain Apache2 conf disabled and removed"
-# Notify user of MySQL password requirement
-#
-echo "MySQL verification required."
-# Delete Database & User
-#
-mysql -u deploy -p -e "drop database $machine;drop user $machine@localhost;"
-echo "$machine database and user dropped"
 # Delete File Structure
 #
 cd $www
