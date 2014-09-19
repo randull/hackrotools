@@ -8,7 +8,7 @@ read -p "Site domain to remove: " domain
 # Create variables from Domain Name
 #
 hosts=/etc/apache2/sites-available
-www=/var/www/drupal7
+www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
 name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -15`
