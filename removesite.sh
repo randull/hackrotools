@@ -34,4 +34,7 @@ echo "$machine database and user dropped"
 #
 cd $www
 rm -R $domain
+if [ -d "$domain" ]; then
+  echo "$domain still exists"
+fi
 echo "$hosts/$domain directory fully removed"
