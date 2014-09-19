@@ -79,7 +79,7 @@ echo "<VirtualHost *:80>
         CustomLog $www/$domain/logs/access.log combined
         DirectoryIndex index.php
 </VirtualHost>" > /etc/apache2/sites-available/$machine.conf
-a2ensite $domain && service apache2 reload
+a2ensite $machine.conf && service apache2 reload
 ####                                                            ####
 ####    Drupal Install Profile choice NEEDED here               ####
 ####                                                            ####
