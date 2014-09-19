@@ -22,7 +22,7 @@ mysql -u deploy -p -e "drop database $machine;drop user $machine@localhost;"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
 #
-a2dissite $domain
+a2dissite $machine.conf
 # Reload Apache2
 #
 service apache2 reload
