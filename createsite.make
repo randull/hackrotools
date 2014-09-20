@@ -9,7 +9,6 @@ projects[backup_migrate] = 3.x-dev
 projects[elysia_cron] = 2.x-dev
 projects[feeds] = 2.x-dev
 projects[media] = 2.x-dev
-projects[security_review] = 1.x-dev
 
 
 ; Prod Modules
@@ -64,6 +63,7 @@ projects[] = plupload
 projects[] = prod_check
 projects[] = references
 projects[] = rules
+projects[] = security_review
 projects[] = services
 projects[] = special_menu_items
 projects[] = strongarm
