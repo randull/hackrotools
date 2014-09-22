@@ -27,7 +27,7 @@ echo "Password Matches"
 www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
 name=`echo $domain |cut -f1 -d"."`
-shortname=`echo $name |cut -c -15`
+shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 ####                                                            ####
