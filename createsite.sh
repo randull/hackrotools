@@ -50,7 +50,7 @@ cd $www/$domain/html/sites/default/files
 ####    Create Private directory and setup Backup directories   ####
 ####                                                            ####
 sudo -u deploy mkdir -p $www/$domain/private/backup_migrate/scheduled $www/$domain/private/backup_migrate/manual
-chmod 2774 -R $www/$domain/private
+chmod 6774 -R $www/$domain/private
 chown -R deploy:www-data $www/$domain/private
 ####                                                            ####
 ####    Download favicon.ico                                    ####
