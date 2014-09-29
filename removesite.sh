@@ -33,6 +33,14 @@ if [ -d "$hosts/$machine\.conf" ]; then
   echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
 echo "$domain Apache2 conf disabled and removed"
+# Remove /etc/cron.hourly entry
+#
+cd /etc/cron.hourly
+rm -R $machine
+if [ -d "/etc/cron.hourly/$machine" ]; then
+  echo "$machine entry still exists in /etc/cron.hourly"
+fi
+echo "$machine entry removed from /etc/cron.hourly"
 # Delete File Structure
 #
 cd $www
