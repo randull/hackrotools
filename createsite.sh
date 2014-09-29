@@ -81,6 +81,11 @@ echo "<VirtualHost *:80>
 </VirtualHost>" > /etc/apache2/sites-available/$machine.conf
 a2ensite $machine.conf && service apache2 reload
 ####                                                            ####
+####    Create /etc/cron.hourly entry                           ####
+####                                                            ####
+echo "#!/bin/bash
+/usr/bin/wget -O - -q -t 1 http://$machine.cascadiaweb.net/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
+####                                                            ####
 ####    Drupal Install Profile choice NEEDED here               ####
 ####                                                            ####
 ####                                                            ####
