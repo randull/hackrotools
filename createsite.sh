@@ -52,7 +52,7 @@ echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName www.$domain
         ServerAlias $domain *.$domain 
-        ServerAlias $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.510interactive.com $name.hackrobats.net $name.hackrotasks.com
         ServerAlias $name.5ten.co $name.cascadiacollective.net $name.cascadiaweb.net
         DocumentRoot $www/$domain/html
         ErrorLog $www/$domain/logs/error.log
@@ -67,22 +67,22 @@ echo "#!/bin/bash
 ####    Drupal Install Profile choice NEEDED here               ####
 ####                                                            ####
 ####    Create site structure using Drush Make                  ####
-#cd $www/$domain/html
-#drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+cd $www/$domain/html
+drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 ####    Deploy site using Drush Site-Install                    ####
-#drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
+drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 ####    Remove Drupal Install files after installation          ####
-#cd $www/$domain/html
-#rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
-#cd $www/$domain/html/sites
-#rm README.txt all/modules/README.txt all/themes/README.txt
-#sudo chown -R deploy:www-data all default
-#rm -R all/libraries/plupload/examples
+cd $www/$domain/html
+rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd $www/$domain/html/sites
+rm README.txt all/modules/README.txt all/themes/README.txt
+sudo chown -R deploy:www-data all default
+rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
-#drush cc all
-#drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
-#drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
-#drush omega-export "omega_$machine" --revert -y
+drush cc all
+drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
+drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
+drush omega-export "omega_$machine" --revert -y
 ####    Initialize Git directory                                ####
 cd $www/$domain/html
 sudo -u deploy git init
