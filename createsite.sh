@@ -49,11 +49,14 @@ echo "<?php
 sudo chown deploy:www-data $www/$domain/html/info.php
 ####    Create virtual host file, enable and restart apache     ####
 echo "<VirtualHost *:80>
+        ServerName $domain
+        Redirect 301 / http://www.$domain
+</VirtualHost>        
+<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName www.$domain
-        ServerAlias $domain *.$domain 
-        ServerAlias $name.510interactive.com $name.hackrobats.net $name.hackrotasks.com
-        ServerAlias $name.5ten.co $name.cascadiacollective.net $name.cascadiaweb.net
+        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiacollective.net $name.cascadiaweb.net $name.hackrotasks.com
         DocumentRoot $www/$domain/html
         ErrorLog $www/$domain/logs/error.log
         CustomLog $www/$domain/logs/access.log combined
