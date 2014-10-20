@@ -11,7 +11,7 @@ hosts=/etc/apache2/sites-available
 www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
 name=`echo $domain |cut -f1 -d"."`
-shortname=`echo $name |cut -c -15`
+shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 # Notify user of MySQL password requirement
 #
