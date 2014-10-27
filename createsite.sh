@@ -40,6 +40,10 @@ chmod 6774 -R $www/$domain/private
 chown -R deploy:www-data $www/$domain/private
 ####    Download favicon.ico                                    ####
 sudo -u deploy curl -o $www/$domain/html/sites/default/files/favicon.ico 'http://hackrobats.net/sites/default/files/favicon.ico'
+####    Create Public files directory                           ####
+sudo mkdir $www/$domain/public
+sudo chmod 6775 -R $www/$domain/public
+sudo chown $www/$domain/public
 ####    Create log files and folders, as well as info.php       ####
 sudo -u deploy mkdir $www/$domain/logs
 touch $www/$domain/logs/access.log $www/$domain/logs/error.log
@@ -52,6 +56,7 @@ echo "<VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://www.$domain
 </VirtualHost>        
+
 <VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName www.$domain
