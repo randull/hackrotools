@@ -40,10 +40,10 @@ chmod 6774 -R $www/$domain/private
 chown -R deploy:www-data $www/$domain/private
 ####    Download favicon.ico                                    ####
 sudo -u deploy curl -o $www/$domain/html/sites/default/files/favicon.ico 'http://hackrobats.net/sites/default/files/favicon.ico'
-####    Create Public files directory                           ####
-mkdir $www/$domain/public
-chmod 6775 -R $www/$domain/public
-chown -R deploy:www-data $www/$domain/public
+####    Create Public & Temp files directory                           ####
+mkdir $www/$domain/public $www/$domain/tmp
+chmod 6775 -R $www/$domain/public $www/$domain/tmp
+chown -R deploy:www-data $www/$domain/public $www/$domain/tmp
 ####    Create log files and folders, as well as info.php       ####
 sudo -u deploy mkdir $www/$domain/logs
 touch $www/$domain/logs/access.log $www/$domain/logs/error.log
@@ -71,7 +71,7 @@ a2ensite $machine.conf && service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
 echo "#!/bin/bash
 
-/usr/bin/wget -O - -q -t 1 http://$machine.cascadiaweb.net/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
+/usr/bin/wget -O - -q -t 1 http://$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 ####    Drupal Install Profile choice NEEDED here               ####
 ####                                                            ####
 ####    Create site structure using Drush Make                  ####
