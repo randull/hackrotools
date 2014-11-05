@@ -8,7 +8,7 @@ read -p "Site domain to remove: " domain
 # Create variables from Domain Name
 #
 hosts=/etc/apache2/sites-available
-www=/var/www/drupal7
+www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
 name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -16`
@@ -22,15 +22,15 @@ mysql -u deploy -p -e "drop database $machine;drop user $machine@localhost;"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
 #
-a2dissite $domain
+a2dissite $machine.conf
 # Reload Apache2
 #
 service apache2 reload
 # Remove Virtual Host entry
 #
-rm $hosts/$domain
-if [ -d "$hosts/$domain" ]; then
-  echo "$domain directory still exists in /etc/apache2/sites-available"
+rm $hosts/$machine.conf
+if [ -d "$hosts/$machine\.conf" ]; then
+  echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
 echo "$domain Apache2 conf disabled and removed"
 # Remove /etc/cron.hourly entry
