@@ -72,13 +72,13 @@ echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 ####    Create Drush Aliases                                    ####
 echo "<?php
-\$aliases["dev"] = array(
+\$aliases[\"dev\"] = array(
   'remote-host' => 'dev.$domain',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'dev.$domain',
 );
-\$aliases["prod"] = array(
+\$aliases[\"prod\"] = array(
   'remote-host' => 'prod.$domain',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
