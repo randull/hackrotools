@@ -5,16 +5,16 @@ read -p "Site Name: " sitename
 ####    Prompt user to enter Domain Name                        ####
 read -p "Domain Name: " domain
 ####    Prompt user to enter Password for User1(Hackrobats)     ####
-while true
-do
-    read -s -p "User1 Password: " drupalpass
-    echo
-    read -s -p "User1 Password (again): " drupalpass2
-    echo
-    [ "$drupalpass" = "$drupalpass2" ] && break
-    echo "Please try again"
-done
-echo "Password Matches"
+#while true
+#do
+#    read -s -p "User1 Password: " drupalpass
+#    echo
+#    read -s -p "User1 Password (again): " drupalpass2
+#    echo
+#    [ "$drupalpass" = "$drupalpass2" ] && break
+#    echo "Please try again"
+#done
+#echo "Password Matches"
 ####    Create variables from Domain Name                       ####
 www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
