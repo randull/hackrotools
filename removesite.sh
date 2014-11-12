@@ -51,4 +51,4 @@ fi
 echo "$domain directory removed from /var/www"
 # Remove Drush alias
 cd /home/deploy/.drush
-rm -R $domain.aliases.drushrc.php
+rm -R $machine.aliases.drushrc.php
