@@ -84,3 +84,5 @@ echo "<?php
   'root' => '/var/www/$domain/html',
   'uri' => 'www.$domain',
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
+sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
+sudo chown /home/deploy/.drush/$machine.aliases.drushrc.php
