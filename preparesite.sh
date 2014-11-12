@@ -53,20 +53,23 @@ echo "<?php
 sudo chown deploy:www-data $www/$domain/html/info.php
 ####    Create virtual host file, enable and restart apache     ####
 echo "<VirtualHost *:80>
-        ServerName $domain
-        Redirect 301 / http://www.$domain
-</VirtualHost>        
-<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName www.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-        ServerAlias $name.5ten.co $name.cascadiacollective.net $name.cascadiaweb.net $name.hackrotasks.com
+        ServerAlias $name.5ten.co $name.cascadiaweb.net
         DocumentRoot $www/$domain/html
         ErrorLog $www/$domain/logs/error.log
         CustomLog $www/$domain/logs/access.log combined
         DirectoryIndex index.php
-</VirtualHost>" > /etc/apache2/sites-available/$machine.conf
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName $domain
+        Redirect 301 / http://www.$domain
+</VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
 a2ensite $machine.conf && service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
 echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
+####    Switch to Production Server                             ####
+ssh prod
+sudo -u deploy mkdir $www/$domain $www/$domain/html $www/$domain/html/sites $www/$domain/html/sites/default $www/$domain/html/sites/default/files
