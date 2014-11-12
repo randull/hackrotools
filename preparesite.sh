@@ -71,5 +71,5 @@ a2ensite $machine.conf && service apache2 reload
 echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 ####    Switch to Production Server                             ####
-ssh prod
+sudo -u deploy ssh prod
 sudo -u deploy mkdir $www/$domain $www/$domain/html $www/$domain/html/sites $www/$domain/html/sites/default $www/$domain/html/sites/default/files
