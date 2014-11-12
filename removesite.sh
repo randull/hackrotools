@@ -49,3 +49,6 @@ if [ -d "$www/$domain" ]; then
   echo "$domain directory still exists in /var/www"
 fi
 echo "$domain directory removed from /var/www"
+# Remove Drush alias
+cd /home/deploy/.drush
+rm -R $domain.aliases.drushrc.php
