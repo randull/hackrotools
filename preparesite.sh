@@ -70,6 +70,17 @@ a2ensite $machine.conf && service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
 echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
-####    Switch to Production Server                             ####
-sudo -u deploy ssh prod
-sudo -u deploy mkdir $www/$domain $www/$domain/html $www/$domain/html/sites $www/$domain/html/sites/default $www/$domain/html/sites/default/files
+####    Create Drush Aliases                                    ####
+echo "<?php
+\$aliases["dev"] = array(
+  'remote-host' => 'dev.$domain',
+  'remote-user' => 'deploy',
+  'root' => '/var/www/$domain/html',
+  'uri' => 'dev.$domain',
+);
+\$aliases["prod"] = array(
+  'remote-host' => 'prod.$domain',
+  'remote-user' => 'deploy',
+  'root' => '/var/www/$domain/html',
+  'uri' => 'www.$domain',
+);" > /home/deploy/.drush/$machine.aliases.drushrc.php
