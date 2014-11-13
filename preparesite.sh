@@ -73,13 +73,24 @@ echo "#!/bin/bash
 ####    Create Drush Aliases                                    ####
 echo "<?php
 \$aliases[\"dev\"] = array(
-  'remote-host' => 'dev.$domain',
+  'remote-host' => 'dev.hackrobats.net',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'dev.$domain',
 );
 \$aliases[\"prod\"] = array(
-  'remote-host' => 'prod.$domain',
+  'remote-host' => 'prod.hackrobats.net',
+  'remote-user' => 'deploy',
+  'root' => '/var/www/$domain/html',
+  'uri' => 'www.$domain',
+);\$aliases[\"olddev\"] = array(
+  'remote-host' => 'olddev.hackrobats.net',
+  'remote-user' => 'deploy',
+  'root' => '/var/www/$domain/html',
+  'uri' => 'dev.$domain',
+);
+\$aliases[\"oldprod\"] = array(
+  'remote-host' => 'oldprod.hackrobats.net',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'www.$domain',
