@@ -4,17 +4,6 @@
 read -p "Site Name: " sitename
 ####    Prompt user to enter Domain Name                        ####
 read -p "Domain Name: " domain
-####    Prompt user to enter Password for User1(Hackrobats)     ####
-#while true
-#do
-#    read -s -p "User1 Password: " drupalpass
-#    echo
-#    read -s -p "User1 Password (again): " drupalpass2
-#    echo
-#    [ "$drupalpass" = "$drupalpass2" ] && break
-#    echo "Please try again"
-#done
-#echo "Password Matches"
 ####    Create variables from Domain Name                       ####
 www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
@@ -47,10 +36,6 @@ chown -R deploy:www-data $www/$domain/public $www/$domain/tmp
 ####    Create log files and folders, as well as info.php       ####
 sudo -u deploy mkdir $www/$domain/logs
 touch $www/$domain/logs/access.log $www/$domain/logs/error.log
-echo "<?php
-        phpinfo();
-?>" > $www/$domain/html/info.php
-sudo chown deploy:www-data $www/$domain/html/info.php
 ####    Create virtual host file, enable and restart apache     ####
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
