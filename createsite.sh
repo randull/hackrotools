@@ -3,7 +3,7 @@
 ####    Prompt user to enter Site Name                          ####
 read -p "Site Name: " sitename
 ####    Prompt user to enter Domain Name                        ####
-read -p "Domain Name: " domain
+#read -p "Domain Name: " domain
 ####    Prompt user to enter Password for User1(Hackrobats)     ####
 while true
 do
@@ -23,12 +23,12 @@ shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 ####    Print DB Password for reference                         ####
-#echo "$dbpw"
+echo "$dbpw"
 ####    Notify user of MySQL password requirement               ####
-#echo "MySQL verification required."
+echo "MySQL verification required."
 ####    Create database and user                                ####
-#db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-#mysql -u deploy -p -e "$db"
+db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+mysql -u deploy -p -e "$db"
 ####    Create directories necessary for Drupal installation    ####
 #sudo -u deploy mkdir $www/$domain $www/$domain/html $www/$domain/html/sites $www/$domain/html/sites/default $www/$domain/html/sites/default/files
 #chmod a+w $www/$domain/html/sites/default/files
