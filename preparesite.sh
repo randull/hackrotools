@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 ####    Prompt user to enter Site Name                          ####
-read -p "Site Name: " sitename
+#read -p "Site Name: " sitename
 ####    Prompt user to enter Domain Name                        ####
 read -p "Domain Name: " domain
 ####    Create variables from Domain Name                       ####
@@ -9,14 +9,14 @@ tld=`echo $domain  |cut -d"." -f2,3`
 name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
-dbpw=$(pwgen -n 16)
+#dbpw=$(pwgen -n 16)
 ####    Print DB Password for reference                         ####
-echo "$dbpw"
+#echo "$dbpw"
 ####    Notify user of MySQL password requirement               ####
-echo "MySQL verification required."
+#echo "MySQL verification required."
 ####    Create database and user                                ####
-db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-mysql -u deploy -p -e "$db"
+#db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+#mysql -u deploy -p -e "$db"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo -u deploy mkdir $domain
 cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
@@ -70,11 +70,5 @@ echo "<?php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 ####    Pass Variables to Createsite.sh                         ####
-export sitename
 export domain
-export tld
-export name
-export shortname
-export machine
-export dbpw
 sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/createsite.sh)" -y
