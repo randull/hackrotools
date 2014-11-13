@@ -69,3 +69,12 @@ echo "<?php
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
+####    Pass Variables to Createsite.sh                         ####
+export sitename
+export domain
+export tld
+export name
+export shortname
+export machine
+export dbpw
+./createsite.sh
