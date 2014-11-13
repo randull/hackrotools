@@ -23,6 +23,7 @@ cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
 cd /var/www/$domain/html && sudo -u deploy mkdir -p sites/default && sudo -u deploy ln -s /var/www/$domain/public sites/default/files
 cd /var/www/$domain/logs && touch access.log error.log
 cd /var/www/$domain/private && sudo -u deploy mkdir -p backup_migrate/manual backup_migrate/scheduled
+cd /var/www/$domain && sudo chmod 6775 html logs public private tmp
 ####    Create virtual host file, enable and restart apache     ####
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
