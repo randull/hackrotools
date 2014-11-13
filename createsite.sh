@@ -1,9 +1,9 @@
 #!/bin/bash
 #
 ####    Prompt user to enter Site Name                          ####
-#read -p "Site Name: " sitename
+read -p "Site Name: " sitename
 ####    Prompt user to enter Domain Name                        ####
-#read -p "Domain Name: " domain
+read -p "Domain Name: " domain
 ####    Prompt user to enter Password for User1(Hackrobats)     ####
 while true
 do
@@ -17,11 +17,11 @@ done
 echo "Password Matches"
 ####    Create variables from Domain Name                       ####
 www=/var/www
-#tld=`echo $domain  |cut -d"." -f2,3`
-#name=`echo $domain |cut -f1 -d"."`
-#shortname=`echo $name |cut -c -16`
-#machine=`echo $shortname |tr '-' '_'`
-#dbpw=$(pwgen -n 16)
+tld=`echo $domain  |cut -d"." -f2,3`
+name=`echo $domain |cut -f1 -d"."`
+shortname=`echo $name |cut -c -16`
+machine=`echo $shortname |tr '-' '_'`
+dbpw=$(pwgen -n 16)
 ####    Print DB Password for reference                         ####
 #echo "$dbpw"
 ####    Notify user of MySQL password requirement               ####
