@@ -20,8 +20,7 @@ mysql -u deploy -p -e "$db"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo -u deploy mkdir $domain
 cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
-cd /var/www/$domain/html && sudo -u deploy mkdir -p sites/default/files
-sudo -u deploy ln -s /var/www/$domain/public sites/default/files
+cd /var/www/$domain/html && sudo -u deploy ln -s /var/www/$domain/public sites/default/files
 cd /var/www/$domain/logs && touch access.log error.log
 cd /var/www/$domain/private && sudo -u deploy mkdir -p backup_migrate/manual backup_migrate/scheduled
 
