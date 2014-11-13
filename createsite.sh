@@ -96,5 +96,5 @@ sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 ####    Set Cron Key & Private File Path
 cd $www/$domain/html
-drush vset cron_key $domain
+drush vset cron_key $machine
 drush vset file_private_path $www/$domain/private
