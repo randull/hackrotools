@@ -39,7 +39,7 @@ www=/var/www
 #chmod 6774 -R $www/$domain/private
 #chown -R deploy:www-data $www/$domain/private
 ####    Download favicon.ico                                    ####
-sudo -u deploy curl -o $www/$domain/html/sites/default/files/favicon.ico 'http://hackrobats.net/sites/default/files/favicon.ico'
+#sudo -u deploy curl -o $www/$domain/html/sites/default/files/favicon.ico 'http://hackrobats.net/sites/default/files/favicon.ico'
 ####    Create Public & Temp files directory                           ####
 #mkdir $www/$domain/public $www/$domain/tmp
 #chmod 6775 -R $www/$domain/public $www/$domain/tmp
