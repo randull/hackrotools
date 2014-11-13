@@ -77,4 +77,4 @@ export name
 export shortname
 export machine
 export dbpw
-./createsite.sh
+sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/createsite.sh)" -y
