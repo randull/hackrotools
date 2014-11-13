@@ -3,7 +3,7 @@
 ####    Prompt user to enter Site Name                          ####
 read -p "Site Name: " sitename
 ####    Prompt user to enter Domain Name                        ####
-#read -p "Domain Name: " domain
+read -p "Domain Name: " domain
 ####    Prompt user to enter Password for User1(Hackrobats)     ####
 while true
 do
