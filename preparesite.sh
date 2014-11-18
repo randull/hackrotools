@@ -56,17 +56,6 @@ echo "<?php
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'www.$domain',
-);\$aliases[\"olddev\"] = array(
-  'remote-host' => 'olddev.hackrobats.net',
-  'remote-user' => 'deploy',
-  'root' => '/var/www/$domain/html',
-  'uri' => 'dev.$domain',
-);
-\$aliases[\"oldprod\"] = array(
-  'remote-host' => 'oldprod.hackrobats.net',
-  'remote-user' => 'deploy',
-  'root' => '/var/www/$domain/html',
-  'uri' => 'www.$domain',
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
