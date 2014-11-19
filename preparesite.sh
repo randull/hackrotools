@@ -29,7 +29,7 @@ echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName www.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-        ServerAlias $name.5ten.co $name.cascadiaweb.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
         DocumentRoot /var/www/$domain/html
         ErrorLog /var/www/$domain/logs/error.log
         CustomLog /var/www/$domain/logs/access.log combined
