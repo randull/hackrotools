@@ -197,11 +197,12 @@ db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* T
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 ssh deploy@prod "mysql -u deploy -p -e '$db3'"
 ssh deploy@prod "mysql -u deploy -p -e '$db4'"
+####    Clone DB
+drush sql-sync @$machine.dev @$machine.prod
 ####    Clone site directory to Production                      ####
-sudo -u deploy rsync -avzh /var/www/$domain deploy@prod:/var/www/$domain
+sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
-sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php
-
+sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 ####    Create virtual host file, enable and restart apache     ####
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
