@@ -193,7 +193,7 @@ drush cc all && drush updb -y && drush cron
 
 
 ####    Create DB & user on Production                          ####
-db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
+db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY "'"$dbpw"'";"
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY "'"$dbpw"'";FLUSH PRIVILEGES;"
 ssh deploy@prod.hackrobats.net "mysql -u deploy -e '$db3'"
 ssh deploy@prod.hackrobats.net "mysql -u deploy -e '$db4'"
