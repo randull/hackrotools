@@ -221,7 +221,7 @@ drush sql-sync @$machine.dev @$machine.prod
 #ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Clone Apache config & reload apache                     ####
 sudo -u deploy rsync -avzh /etc/apache2/sites-available/$machine.conf deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
-ssh deploy@prod.hacrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
+ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
 ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Clone cron entry                                        ####
 sudo -u deploy rsync -avzh /etc/cron.hourly/$machine deploy@prod.hackrobats.net:/etc/cron.hourly/$machine
