@@ -27,8 +27,8 @@ echo "MySQL verification required."
 ####    Create database and user                                ####
 db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
 db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-mysql -u deploy -p -e "$db"
-mysql -u deploy -p -e "$db2"
+mysql -u deploy -e "$db"
+mysql -u deploy -e "$db2"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo -u deploy mkdir $domain
 cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
@@ -195,8 +195,8 @@ drush cc all && drush updb -y && drush cron
 ####    Create DB & user on Production                          ####
 db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-ssh deploy@prod.hackrobats.net "mysql -u deploy -p -e '$db3'"
-ssh deploy@prod.hackrobats.net "mysql -u deploy -p -e '$db4'"
+ssh deploy@prod.hackrobats.net "mysql -u deploy -e '$db3'"
+ssh deploy@prod.hackrobats.net "mysql -u deploy -e '$db4'"
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod.hackrobats.net:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
