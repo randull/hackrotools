@@ -27,8 +27,10 @@ echo "$dbpw"
 ####    Notify user of MySQL password requirement               ####
 echo "MySQL verification required."
 ####    Create database and user                                ####
-db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
+db="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 mysql -u deploy -p -e "$db"
+mysql -u deploy -p -e "$db2"
 ####    Create directories necessary for Drupal installation    ####
 #sudo -u deploy mkdir $www/$domain $www/$domain/html $www/$domain/html/sites $www/$domain/html/sites/default $www/$domain/html/sites/default/files
 #chmod a+w $www/$domain/html/sites/default/files
