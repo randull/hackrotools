@@ -195,12 +195,12 @@ drush cc all && drush updb -y && drush cron
 ####    Create DB & user on Production                          ####
 db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-ssh deploy@prod "mysql -u deploy -p -e '$db3'"
-ssh deploy@prod "mysql -u deploy -p -e '$db4'"
+ssh deploy@prod.hackrobats.net "mysql -u deploy -p -e '$db3'"
+ssh deploy@prod.hackrobats.net "mysql -u deploy -p -e '$db4'"
 ####    Clone site directory to Production                      ####
-sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
+sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod.hackrobats.net:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
-sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod.hackrobats.net:/home/deploy/.drush/$machine.aliases.drushrc.php
 ####    Clone DB
 drush sql-sync @$machine.dev @$machine.prod
 ####    Create virtual host file, enable and restart apache     ####
@@ -217,8 +217,8 @@ echo "<VirtualHost *:80>
 <VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://www.$domain
-</VirtualHost>  " > deploy@prod:/etc/apache2/sites-available/$machine.conf
-ssh deploy@prod "a2ensite $machine.conf && service apache2 reload"
+</VirtualHost>  " > deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
+ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Create /etc/cron.hourly entry                           ####
-ssh deploy@prod "echo '#!/bin/bash
+ssh deploy@prod.hackrobats.net "echo '#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://www.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine' > /etc/cron.hourly/$machine"
