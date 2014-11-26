@@ -204,21 +204,28 @@ sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php depl
 ####    Clone DB
 drush sql-sync @$machine.dev @$machine.prod
 ####    Create virtual host file, enable and restart apache     ####
-echo "<VirtualHost *:80>
-        ServerAdmin maintenance@hackrobats.net
-        ServerName www.$domain
-        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-        DocumentRoot /var/www/$domain/html
-        ErrorLog /var/www/$domain/logs/error.log
-        CustomLog /var/www/$domain/logs/access.log combined
-        DirectoryIndex index.php
-</VirtualHost>
-<VirtualHost *:80>
-        ServerName $domain
-        Redirect 301 / http://www.$domain
-</VirtualHost>  " > deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
+#echo "<VirtualHost *:80>
+#        ServerAdmin maintenance@hackrobats.net
+#        ServerName www.$domain
+#        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+#        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+#        DocumentRoot /var/www/$domain/html
+#        ErrorLog /var/www/$domain/logs/error.log
+#        CustomLog /var/www/$domain/logs/access.log combined
+#        DirectoryIndex index.php
+#</VirtualHost>
+#<VirtualHost *:80>
+#        ServerName $domain
+#        Redirect 301 / http://www.$domain
+#</VirtualHost>  " > deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
+#ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
+####    Clone Apache config & reload apache                     ####
+sudo -u deploy rsync -avzh /etc/apache2/sites-available/$machine.conf deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
+ssh deploy@prod.hacrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
 ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
+####    Clone cron entry                                        ####
+sudo -u deploy rsync -avzh /etc/cron.hourly/$machine deploy@prod.hackrobats.net:/etc/cron.hourly/$machine
+ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
 ####    Create /etc/cron.hourly entry                           ####
-ssh deploy@prod.hackrobats.net "echo '#!/bin/bash
-/usr/bin/wget -O - -q -t 1 http://www.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine' > /etc/cron.hourly/$machine"
+#ssh deploy@prod.hackrobats.net "echo '#!/bin/bash
+#/usr/bin/wget -O - -q -t 1 http://www.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine' > /etc/cron.hourly/$machine"
