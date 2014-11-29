@@ -28,8 +28,11 @@ echo "MySQL verification required."
 db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
 db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
 db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+echo "$db3"
 mysql -u deploy -e "$db"
+echo "$db3"
 mysql -u deploy -e "$db1"
+echo "$db3"
 mysql -u deploy -e "$db2"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo -u deploy mkdir $domain
@@ -162,7 +165,7 @@ sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 
 
 ####    Create site structure using Drush Make                  ####
-cd /var/www/$domain/html
+#cd /var/www/$domain/html
 #drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 ####    Deploy site using Drush Site-Install                    ####
 #drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
@@ -179,20 +182,20 @@ cd /var/www/$domain/html
 #drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 #drush omega-export "omega_$machine" --revert -y
 ####    Initialize Git directory                                ####
-cd /var/www/$domain/html
-sudo -u deploy git init
+#cd /var/www/$domain/html
+#sudo -u deploy git init
 ####    Set owner of entire directory to deploy:www-data        ####
 cd /var/www
 sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 ####    Set Cron Key & Private File Path
-cd /var/www/$domain/html
-drush vset cron_key $machine
-drush vset cron_safe_threshold 0
-drush vset file_private_path /var/www/$domain/private
-drush vset maintenance_mode 1
+#cd /var/www/$domain/html
+#drush vset cron_key $machine
+#drush vset cron_safe_threshold 0
+#drush vset file_private_path /var/www/$domain/private
+#drush vset maintenance_mode 1
 ####    Clear Drupal cache, update database, run cron
-drush cc all && drush updb -y && drush cron
+#drush cc all && drush updb -y && drush cron
 
 
 
@@ -201,11 +204,11 @@ drush cc all && drush updb -y && drush cron
 db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
 db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-echo $db3
+echo "$db3"
 ssh deploy@prod "mysql -u deploy -e \"$db3\";"
-echo $db4
+echo "$db4"
 ssh deploy@prod 'mysql -u deploy -e "$db4"'
-echo $db5
+echo "$db5"
 ssh deploy@prod 'mysql -u deploy -e "$db5"'
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
