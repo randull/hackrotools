@@ -38,12 +38,12 @@ mysql -u deploy -e "$db2"
 echo "$db3"
 mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
-cd /var/www && sudo -u deploy mkdir $domain
-cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
-cd /var/www/$domain/html && sudo -u deploy mkdir -p sites/default && sudo -u deploy ln -s /var/www/$domain/public sites/default/files
+cd /var/www && mkdir $domain
+cd /var/www/$domain && mkdir html logs private public tmp
+cd /var/www/$domain/html && mkdir -p sites/default && ln -s /var/www/$domain/public sites/default/files
 cd /var/www/$domain/logs && touch access.log error.log
-cd /var/www/$domain/private && sudo -u deploy mkdir -p backup_migrate/manual backup_migrate/scheduled
-cd /var/www/$domain && sudo chmod 6775 html logs public private tmp
+cd /var/www/$domain/private && mkdir -p backup_migrate/manual backup_migrate/scheduled
+cd /var/www/$domain && chmod 6775 html logs public private tmp
 ####    Create virtual host file, enable and restart apache     ####
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
@@ -59,7 +59,6 @@ echo "<VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://dev.$domain
 </VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
-chown root:root /etc/apache2/sites-available/$machine.conf
 a2ensite $machine.conf && service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
 echo "#!/bin/bash
