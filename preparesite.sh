@@ -26,8 +26,10 @@ echo "$dbpw"
 echo "MySQL verification required."
 ####    Create database and user                                ####
 db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
-db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
+db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 mysql -u deploy -e "$db"
+mysql -u deploy -e "$db1"
 mysql -u deploy -e "$db2"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo -u deploy mkdir $domain
@@ -197,11 +199,14 @@ drush cc all && drush updb -y && drush cron
 
 ####    Create DB & user on Production                          ####
 db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
-db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
+db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 echo $db3
 ssh deploy@prod 'mysql -u deploy -e "$db3"'
 echo $db4
 ssh deploy@prod 'mysql -u deploy -e "$db4"'
+echo $db5
+ssh deploy@prod 'mysql -u deploy -e "$db5"'
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod.hackrobats.net:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
