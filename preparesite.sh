@@ -197,7 +197,7 @@ drush cc all && drush updb -y && drush cron
 
 ####    Create DB & user on Production                          ####
 db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY "'"$dbpw"'";"
-db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY "'"$dbpw"'";FLUSH PRIVILEGES;"
+db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 echo $db3
 ssh deploy@prod.hackrobats.net mysql -u deploy -e '$db3'
 echo $db4
@@ -225,12 +225,12 @@ drush sql-sync @$machine.dev @$machine.prod
 #</VirtualHost>  " > deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
 #ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Clone Apache config & reload apache                     ####
-sudo -u deploy rsync -avzh -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
-ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
-ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
+sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
+ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
+ssh deploy@prod "a2ensite $machine.conf && service apache2 reload"
 ####    Clone cron entry                                        ####
-sudo -u deploy rsync -avzh -e ssh /etc/cron.hourly/$machine deploy@prod.hackrobats.net:/etc/cron.hourly/$machine
-ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
+sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod.hackrobats.net:/etc/cron.hourly/$machine
+ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
 ####    Create /etc/cron.hourly entry                           ####
 #ssh deploy@prod.hackrobats.net "echo '#!/bin/bash
 #/usr/bin/wget -O - -q -t 1 http://www.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine' > /etc/cron.hourly/$machine"
