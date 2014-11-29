@@ -165,37 +165,37 @@ sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 
 
 ####    Create site structure using Drush Make                  ####
-#cd /var/www/$domain/html
-#drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+cd /var/www/$domain/html
+drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 ####    Deploy site using Drush Site-Install                    ####
-#drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
+drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 ####    Remove Drupal Install files after installation          ####
-#cd /var/www/$domain/html
-#rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
-#cd /var/www/$domain/html/sites
-#rm README.txt all/modules/README.txt all/themes/README.txt
-#sudo chown -R deploy:www-data all default
-#rm -R all/libraries/plupload/examples
+cd /var/www/$domain/html
+rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd /var/www/$domain/html/sites
+rm README.txt all/modules/README.txt all/themes/README.txt
+sudo chown -R deploy:www-data all default
+rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
-#drush cc all
-#drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
-#drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
-#drush omega-export "omega_$machine" --revert -y
+drush cc all
+drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
+drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
+drush omega-export "omega_$machine" --revert -y
 ####    Initialize Git directory                                ####
-#cd /var/www/$domain/html
-#sudo -u deploy git init
+cd /var/www/$domain/html
+sudo -u deploy git init
 ####    Set owner of entire directory to deploy:www-data        ####
 cd /var/www
 sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 ####    Set Cron Key & Private File Path
-#cd /var/www/$domain/html
-#drush vset cron_key $machine
-#drush vset cron_safe_threshold 0
-#drush vset file_private_path /var/www/$domain/private
-#drush vset maintenance_mode 1
+cd /var/www/$domain/html
+drush vset cron_key $machine
+drush vset cron_safe_threshold 0
+drush vset file_private_path /var/www/$domain/private
+drush vset maintenance_mode 1
 ####    Clear Drupal cache, update database, run cron
-#drush cc all && drush updb -y && drush cron
+drush cc all && drush updb -y && drush cron
 
 
 
@@ -209,7 +209,7 @@ ssh deploy@prod "mysql -u deploy -e \"$db3\""
 echo "$db4"
 ssh deploy@prod "mysql -u deploy -e \"$db4\""
 echo "$db5"
-ssh deploy@prod 'mysql -u deploy -e \"$db5\"'
+ssh deploy@prod "mysql -u deploy -e \"$db5\""
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
