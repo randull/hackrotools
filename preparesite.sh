@@ -199,7 +199,7 @@ drush cc all && drush updb -y && drush cron
 db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY "'"$dbpw"'";"
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY "'"$dbpw"'";FLUSH PRIVILEGES;"
 echo $db3
-ssh deploy@prod.hackrobats.net "mysql -u deploy -e '$db3'"
+ssh deploy@prod.hackrobats.net mysql -u deploy -e '$db3'
 echo $db4
 ssh deploy@prod.hackrobats.net "mysql -u deploy -e '$db4'"
 ####    Clone site directory to Production                      ####
@@ -225,11 +225,11 @@ drush sql-sync @$machine.dev @$machine.prod
 #</VirtualHost>  " > deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
 #ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Clone Apache config & reload apache                     ####
-sudo -u deploy rsync -avzh ssh /etc/apache2/sites-available/$machine.conf deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
+sudo -u deploy rsync -avzh -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
 ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
 ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Clone cron entry                                        ####
-sudo -u deploy rsync -avzh ssh /etc/cron.hourly/$machine deploy@prod.hackrobats.net:/etc/cron.hourly/$machine
+sudo -u deploy rsync -avzh -e ssh /etc/cron.hourly/$machine deploy@prod.hackrobats.net:/etc/cron.hourly/$machine
 ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
 ####    Create /etc/cron.hourly entry                           ####
 #ssh deploy@prod.hackrobats.net "echo '#!/bin/bash
