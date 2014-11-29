@@ -205,11 +205,11 @@ db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* T
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
 db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 echo "$db3"
-ssh deploy@prod "mysql -u deploy -e \"$db3\";"
+ssh deploy@prod "mysql -u deploy -e \"$db3\""
 echo "$db4"
-ssh deploy@prod 'mysql -u deploy -e "$db4"'
+ssh deploy@prod "mysql -u deploy -e \"$db4\""
 echo "$db5"
-ssh deploy@prod 'mysql -u deploy -e "$db5"'
+ssh deploy@prod 'mysql -u deploy -e \"$db5\"'
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
