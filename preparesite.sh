@@ -199,9 +199,9 @@ drush cc all && drush updb -y && drush cron
 db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
 db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 echo $db3
-ssh deploy@prod.hackrobats.net mysql -u deploy -e "$db3"
+ssh deploy@prod "mysql -u deploy -e '$db3'"
 echo $db4
-ssh deploy@prod.hackrobats.net mysql -u deploy -e "$db4"
+ssh deploy@prod 'mysql -u deploy -e "$db4"'
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod.hackrobats.net:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
