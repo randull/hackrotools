@@ -60,7 +60,7 @@ echo "#!/bin/bash
 ####    Create Drush Aliases                                    ####
 echo "<?php
 \$aliases[\"dev\"] = array(
-  'remote-host' => 'dev.hackrobats.net',
+  'remote-host' => 'dev',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'dev.$domain',
@@ -83,7 +83,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'dev.hackrobats.net',
+        'host' => 'dev',
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
@@ -92,7 +92,7 @@ echo "<?php
   ),
 );
 \$aliases[\"test\"] = array(
-  'remote-host' => 'test.hackrobats.net',
+  'remote-host' => 'test',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'test.$domain',
@@ -115,7 +115,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'test.hackrobats.net',
+        'host' => 'test',
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
@@ -124,7 +124,7 @@ echo "<?php
   ),
 );
 \$aliases[\"prod\"] = array(
-  'remote-host' => 'prod.hackrobats.net',
+  'remote-host' => 'prod',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'www.$domain',
@@ -147,7 +147,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'prod.hackrobats.net',
+        'host' => 'prod',
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
@@ -208,9 +208,9 @@ ssh deploy@prod 'mysql -u deploy -e "$db4"'
 echo $db5
 ssh deploy@prod 'mysql -u deploy -e "$db5"'
 ####    Clone site directory to Production                      ####
-sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod.hackrobats.net:/var/www/$domain/
+sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
-sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod.hackrobats.net:/home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 ####    Clone DB
 drush sql-sync @$machine.dev @$machine.prod
 ####    Create virtual host file, enable and restart apache     ####
@@ -230,11 +230,11 @@ drush sql-sync @$machine.dev @$machine.prod
 #</VirtualHost>  " > deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
 #ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Clone Apache config & reload apache                     ####
-sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
+sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
 ssh deploy@prod "a2ensite $machine.conf && service apache2 reload"
 ####    Clone cron entry                                        ####
-sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod.hackrobats.net:/etc/cron.hourly/$machine
+sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
 ####    Create /etc/cron.hourly entry                           ####
 #ssh deploy@prod.hackrobats.net "echo '#!/bin/bash
