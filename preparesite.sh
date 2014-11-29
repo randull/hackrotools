@@ -25,15 +25,18 @@ echo "$dbpw"
 ####    Notify user of MySQL password requirement               ####
 echo "MySQL verification required."
 ####    Create database and user                                ####
-db="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
-db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
-db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-echo "$db3"
+db="CREATE DATABASE IF NOT EXISTS $machine;"
+db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
+db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
+db3="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
+echo "$db"
 mysql -u deploy -e "$db"
-echo "$db3"
+echo "$db1"
 mysql -u deploy -e "$db1"
-echo "$db3"
+echo "$db2"
 mysql -u deploy -e "$db2"
+echo "$db3"
+mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo -u deploy mkdir $domain
 cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
@@ -201,37 +204,24 @@ drush cc all && drush updb -y && drush cron
 
 
 ####    Create DB & user on Production                          ####
-db3="CREATE DATABASE IF NOT EXISTS $machine;GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
-db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
-db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-echo "$db3"
-ssh deploy@prod "mysql -u deploy -e \"$db3\""
+db4="CREATE DATABASE IF NOT EXISTS $machine;"
+db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
+db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';"
+db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
 echo "$db4"
 ssh deploy@prod "mysql -u deploy -e \"$db4\""
 echo "$db5"
 ssh deploy@prod "mysql -u deploy -e \"$db5\""
+echo "$db6"
+ssh deploy@prod "mysql -u deploy -e \"$db6\""
+echo "$db7"
+ssh deploy@prod "mysql -u deploy -e \"$db7\""
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
 sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 ####    Clone DB
 drush sql-sync @$machine.dev @$machine.prod
-####    Create virtual host file, enable and restart apache     ####
-#echo "<VirtualHost *:80>
-#        ServerAdmin maintenance@hackrobats.net
-#        ServerName www.$domain
-#        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-#        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-#        DocumentRoot /var/www/$domain/html
-#        ErrorLog /var/www/$domain/logs/error.log
-#        CustomLog /var/www/$domain/logs/access.log combined
-#        DirectoryIndex index.php
-#</VirtualHost>
-#<VirtualHost *:80>
-#        ServerName $domain
-#        Redirect 301 / http://www.$domain
-#</VirtualHost>  " > deploy@prod.hackrobats.net:/etc/apache2/sites-available/$machine.conf
-#ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
 ####    Clone Apache config & reload apache                     ####
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
@@ -239,6 +229,3 @@ ssh deploy@prod "a2ensite $machine.conf && service apache2 reload"
 ####    Clone cron entry                                        ####
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
-####    Create /etc/cron.hourly entry                           ####
-#ssh deploy@prod.hackrobats.net "echo '#!/bin/bash
-#/usr/bin/wget -O - -q -t 1 http://www.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine' > /etc/cron.hourly/$machine"
