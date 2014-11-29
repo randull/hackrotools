@@ -179,6 +179,7 @@ rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt I
 cd /var/www/$domain/html/sites
 rm README.txt all/modules/README.txt all/themes/README.txt
 sudo chown -R deploy:www-data all default
+sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
 drush cc all
