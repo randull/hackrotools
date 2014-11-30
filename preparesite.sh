@@ -40,7 +40,7 @@ mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && mkdir $domain
 cd /var/www/$domain && mkdir html logs private public tmp
-cd /var/www/$domain/html && mkdir -p sites/default && ln -s /var/www/$domain/public sites/default/files
+cd /var/www/$domain/html && mkdir -p sites/default && ln -s /var/www/$domain/public sites/default/files && chmod 6755 default all
 cd /var/www/$domain/logs && touch access.log error.log
 cd /var/www/$domain/private && mkdir -p backup_migrate/manual backup_migrate/scheduled
 cd /var/www/$domain && chmod 6775 html logs public private tmp
