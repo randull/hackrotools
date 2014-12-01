@@ -36,7 +36,7 @@ echo "$domain Apache2 conf disabled and removed"
 # Remove /etc/cron.hourly entry
 #
 cd /etc/cron.hourly
-rm -R $machine
+sudo rm -R $machine
 if [ -d "/etc/cron.hourly/$machine" ]; then
   echo "$machine entry still exists in /etc/cron.hourly"
 fi
