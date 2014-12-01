@@ -22,20 +22,14 @@ machine=`echo $shortname |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 ####    Print DB Password for reference                         ####
 echo "$dbpw"
-####    Notify user of MySQL password requirement               ####
-echo "MySQL verification required."
 ####    Create database and user                                ####
 db="CREATE DATABASE IF NOT EXISTS $machine;"
 db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
 db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
 db3="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
-echo "$db"
 mysql -u deploy -e "$db"
-echo "$db1"
 mysql -u deploy -e "$db1"
-echo "$db2"
 mysql -u deploy -e "$db2"
-echo "$db3"
 mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && mkdir $domain
@@ -213,13 +207,9 @@ db4="CREATE DATABASE IF NOT EXISTS $machine;"
 db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
 db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
 db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-echo "$db4"
 ssh deploy@prod "mysql -u deploy -e \"$db4\""
-echo "$db5"
 ssh deploy@prod "mysql -u deploy -e \"$db5\""
-echo "$db6"
 ssh deploy@prod "mysql -u deploy -e \"$db6\""
-echo "$db7"
 ssh deploy@prod "mysql -u deploy -e \"$db7\""
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
