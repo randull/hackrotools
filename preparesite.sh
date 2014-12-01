@@ -66,7 +66,7 @@ echo "#!/bin/bash
 ####    Create Drush Aliases                                    ####
 echo "<?php
 \$aliases[\"dev\"] = array(
-  'remote-host' => 'dev',
+  'remote-host' => 'dev.hackrobats.net',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'dev.$domain',
@@ -89,7 +89,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'dev',
+        'host' => 'dev.hackrobats.net',
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
@@ -98,7 +98,7 @@ echo "<?php
   ),
 );
 \$aliases[\"test\"] = array(
-  'remote-host' => 'test',
+  'remote-host' => 'test.hackrobats.net',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'test.$domain',
@@ -121,7 +121,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'test',
+        'host' => 'test.hackrobats.net',
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
@@ -130,7 +130,7 @@ echo "<?php
   ),
 );
 \$aliases[\"prod\"] = array(
-  'remote-host' => 'prod',
+  'remote-host' => 'prod.hackrobats.net',
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'www.$domain',
@@ -153,7 +153,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'prod',
+        'host' => 'prod.hackrobats.net',
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
