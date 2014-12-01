@@ -167,6 +167,7 @@ sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 
 
 
+
 ####    Create site structure using Drush Make                  ####
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
@@ -180,6 +181,7 @@ rm README.txt all/modules/README.txt all/themes/README.txt
 sudo chown -R deploy:www-data all default
 sudo chmod 6755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
+sudo chmod 644 /var/www/$domain/public/.htaccess
 rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
 drush cc all
