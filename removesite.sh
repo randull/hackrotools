@@ -28,7 +28,7 @@ a2dissite $machine.conf
 service apache2 reload
 # Remove Virtual Host entry
 #
-rm $hosts/$machine.conf
+rm -R $hosts/$machine.conf
 if [ -d "$hosts/$machine\.conf" ]; then
   echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
