@@ -44,11 +44,11 @@ echo "$machine entry removed from /etc/cron.hourly"
 # Delete File Structure
 #
 cd $www
-rm -R $domain
+sudo rm -R $domain
 if [ -d "$www/$domain" ]; then
   echo "$domain directory still exists in /var/www"
 fi
 echo "$domain directory removed from /var/www"
 # Remove Drush alias
 cd /home/deploy/.drush
-rm -R $machine.aliases.drushrc.php
+sudo rm -R $machine.aliases.drushrc.php
