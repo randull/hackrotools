@@ -53,7 +53,7 @@ echo "<VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://dev.$domain
 </VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
-sudo chown root:root /etc/apache2/sites-available/$machine.conf
+sudo chown root:www-data /etc/apache2/sites-available/$machine.conf
 a2ensite $machine.conf && service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
 echo "#!/bin/bash
@@ -222,7 +222,7 @@ drush sql-sync @$machine.dev @$machine.prod -y
 ####    Clone Apache config & reload apache                     ####
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
-sudo -u deploy ssh deploy@prod "sudo chown root:root /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "sudo chown root:www-data /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "a2ensite $machine.conf && service apache2 reload"
 ####    Clone cron entry                                        ####
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
