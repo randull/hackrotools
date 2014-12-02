@@ -53,8 +53,7 @@ echo "<VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://dev.$domain
 </VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
-cd /etc/apache2/sites-available
-sudo -u deploy chown root:root $machine.conf
+sudo chown root:root /etc/apache2/sites-available/$machine.conf
 a2ensite $machine.conf && service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
 echo "#!/bin/bash
