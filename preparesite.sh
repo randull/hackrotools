@@ -57,7 +57,7 @@ cd /etc/apache2/sites-available
 sudo -u deploy chown root:root $machine.conf
 a2ensite $machine.conf && service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
-sudo echo "#!/bin/bash
+sudo -u deploy echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 ####    Create Drush Aliases                                    ####
 echo "<?php
