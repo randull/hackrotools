@@ -208,10 +208,10 @@ db4="CREATE DATABASE IF NOT EXISTS $machine;"
 db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
 db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
 db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-ssh deploy@prod "mysql -u deploy -e \"$db4\""
-ssh deploy@prod "mysql -u deploy -e \"$db5\""
-ssh deploy@prod "mysql -u deploy -e \"$db6\""
-ssh deploy@prod "mysql -u deploy -e \"$db7\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db4\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
 ####    Clone site directory to Production                      ####
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 ####    Clone Drush aliases                                     ####
