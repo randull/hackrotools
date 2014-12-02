@@ -221,9 +221,9 @@ drush sql-sync @$machine.dev @$machine.prod -y
 ####    Clone Apache config & reload apache                     ####
 sudo chown root:root /etc/apache2/sites-available/$machine.conf
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
-ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
-ssh deploy@prod "sudo chown root:root /etc/apache2/sites-available/$machine.conf"
-ssh deploy@prod.hackrobats.net "a2ensite $machine.conf && service apache2 reload"
+sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "sudo chown root:root /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "a2ensite $machine.conf && service apache2 reload"
 ####    Clone cron entry                                        ####
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
-ssh deploy@prod.hackrobats.net "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
+sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
