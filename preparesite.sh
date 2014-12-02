@@ -218,7 +218,6 @@ sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php depl
 ####    Clone DB
 drush sql-sync @$machine.dev @$machine.prod -y
 ####    Clone Apache config & reload apache                     ####
-sudo chown root:root /etc/apache2/sites-available/$machine.conf
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "sudo chown root:root /etc/apache2/sites-available/$machine.conf"
