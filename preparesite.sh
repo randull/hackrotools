@@ -181,10 +181,10 @@ sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
-#drush cc all
-#drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
-#drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
-#drush omega-export "omega_$machine" --revert -y
+drush cc all
+drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
+drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
+drush omega-export "omega_$machine" --revert -y
 ####    Initialize Git directory                                ####
 cd /var/www/$domain/html
 sudo -u deploy git init
@@ -194,12 +194,12 @@ sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 ####    Set Cron Key & Private File Path
 cd /var/www/$domain/html
-#drush vset cron_key $machine
-#drush vset cron_safe_threshold 0
-#drush vset file_private_path /var/www/$domain/private
-#drush vset maintenance_mode 1
+drush vset cron_key $machine
+drush vset cron_safe_threshold 0
+drush vset file_private_path /var/www/$domain/private
+drush vset maintenance_mode 1
 ####    Clear Drupal cache, update database, run cron
-#drush cc all && drush updb -y && drush cron
+drush cc all && drush updb -y && drush cron
 
 
 
