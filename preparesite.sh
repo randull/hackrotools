@@ -223,7 +223,7 @@ sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/ap
 sudo -u deploy ssh deploy@prod "sudo chown root:www-data /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "a2ensite $machine.conf && service apache2 reload"
 ####    Clone DB
-drush sql-sync @$machine.dev @$machine.prod -y
+sudo -u deploy ssh deploy@prod "drush sql-sync @$machine.dev @$machine.prod -y"
 ####    Clone cron entry                                        ####
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
