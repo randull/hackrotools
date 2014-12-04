@@ -21,6 +21,10 @@ shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 dbpw=$(pwgen -n 16)
 ####    Print DB Password for reference                         ####
+echo "$tld"
+echo "$name"
+echo "$shortname"
+echo "$machine"
 echo "$dbpw"
 ####    Create database and user                                ####
 db="CREATE DATABASE IF NOT EXISTS $machine;"
