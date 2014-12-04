@@ -166,9 +166,9 @@ sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 
 ####    Initialize Git directory                                ####
 cd /var/www/$domain/html
-git init
-git remote add origin git@github.com:/randull/$machine.git
-git pull origin master
+sudo -u deploy git init
+sudo -u deploy git remote add origin git@github.com:/randull/$machine.git
+sudo -u deploy git pull origin master
 ####    Create site structure using Drush Make                  ####
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
@@ -202,9 +202,9 @@ drush vset maintenance_mode 1
 ####    Clear Drupal cache, update database, run cron
 drush cc all && drush updb -y && drush cron
 ####    Push changes to Git directory                           ####
-git add .
-git commit -a -m "initial commit"
-git push origin master
+sudo -u deploy git add .
+sudo -u deploy git commit -a -m "initial commit"
+sudo -u deploy git push origin master
 
 
 
