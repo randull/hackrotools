@@ -187,7 +187,12 @@ drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="om
 drush omega-export "omega_$machine" --revert -y
 ####    Initialize Git directory                                ####
 cd /var/www/$domain/html
-sudo -u deploy git init
+git init
+git remote add origin git@github.com:/randull/$machine.git
+git pull origin master
+git add .
+git commit -a -m "initial commit"
+git push origin master
 ####    Set owner of entire directory to deploy:www-data        ####
 cd /var/www
 sudo chown -R deploy:www-data $domain
