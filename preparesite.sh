@@ -164,7 +164,11 @@ sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 
 
 
-
+####    Initialize Git directory                                ####
+cd /var/www/$domain/html
+git init
+git remote add origin git@github.com:/randull/$machine.git
+git pull origin master
 ####    Create site structure using Drush Make                  ####
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
@@ -185,14 +189,6 @@ drush cc all
 drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 drush omega-export "omega_$machine" --revert -y
-####    Initialize Git directory                                ####
-cd /var/www/$domain/html
-git init
-git remote add origin git@github.com:/randull/$machine.git
-git pull origin master
-git add .
-git commit -a -m "initial commit"
-git push origin master
 ####    Set owner of entire directory to deploy:www-data        ####
 cd /var/www
 sudo chown -R deploy:www-data $domain
@@ -205,6 +201,10 @@ drush vset file_private_path /var/www/$domain/private
 drush vset maintenance_mode 1
 ####    Clear Drupal cache, update database, run cron
 drush cc all && drush updb -y && drush cron
+####    Push changes to Git directory                           ####
+git add .
+git commit -a -m "initial commit"
+git push origin master
 
 
 
