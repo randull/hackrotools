@@ -21,13 +21,6 @@ longname=`echo $name |tr '-' '_'`
 shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 dbpw=$(pwgen -n 16)
-####    Print DB Password for reference                         ####
-echo "$tld"
-echo "$name"
-echo "$longname"
-echo "$shortname"
-echo "$machine"
-echo "$dbpw"
 ####    Create database and user                                ####
 db="CREATE DATABASE IF NOT EXISTS $machine;"
 db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
