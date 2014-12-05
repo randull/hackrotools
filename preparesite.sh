@@ -93,38 +93,6 @@ echo "<?php
     ),
   ),
 );
-#\$aliases[\"test\"] = array(
-#  'remote-host' => 'test.hackrobats.net',
-#  'remote-user' => 'deploy',
-#  'root' => '/var/www/$domain/html',
-#  'uri' => 'test.$domain',
-#  '#name' => '$machine.test',
-#  '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
-#  'path-aliases' => 
-#  array (
-#    '%drush' => '/usr/share/php/drush',
-#    '%dump-dir' => '/var/www/$domain/tmp',
-#    '%private' => '/var/www/$domain/private',
-#    '%files' => '/var/www/$domain/public',
-#    '%site' => 'sites/default/',
-#  ),
-#  'databases' =>
-#  array (
-#    'default' =>
-#    array (
-#      'default' =>
-#      array (
-#        'database' => '$machine',
-#        'username' => '$machine',
-#        'password' => '$dbpw',
-#        'host' => 'test.hackrobats.net',
-#        'port' => '',
-#        'driver' => 'mysql',
-#        'prefix' => '',
-#      ),
-#    ),
-#  ),
-#);
 \$aliases[\"prod\"] = array(
   'remote-host' => 'prod.hackrobats.net',
   'remote-user' => 'deploy',
