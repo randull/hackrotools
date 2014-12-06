@@ -36,7 +36,9 @@ cd /var/www/$domain && mkdir html logs private public tmp
 cd /var/www/$domain/html && mkdir -p sites/default && ln -s /var/www/$domain/public sites/default/files
 cd /var/www/$domain/logs && touch access.log error.log
 cd /var/www/$domain/private && mkdir -p backup_migrate/manual backup_migrate/scheduled
-cd /var/www/$domain && chmod 6775 html logs public private tmp
+cd /var/www/$domain && chmod 775 html logs public private tmp
+chmod -R u=rw,go=r,a+X html/* && chmod -R ug=rw,o=r,a+X public/*
+
 ####    Create virtual host file, enable and restart apache     ####
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
@@ -147,7 +149,7 @@ rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt I
 cd /var/www/$domain/html/sites
 rm README.txt all/modules/README.txt all/themes/README.txt
 sudo chown -R deploy:www-data all default
-sudo chmod 6755 all default
+sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 rm -R all/libraries/plupload/examples
