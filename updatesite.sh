@@ -17,14 +17,14 @@ machine=`echo $shortname |tr '-' '_'`
 # Put Dev & Prod sites into Maintenance Mode
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Git steps on Production Web Server
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Dev Server\""
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
+sudo -u deploy ssh deploy@prod.hackrobats.net "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@prod.hackrobats.net "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Dev Server\""
+sudo -u deploy ssh deploy@prod.hackrobats.net "cd /var/www/$domain/html && git push origin master"
 # Git steps on Development
 cd /var/www/$domain/html
 git pull origin master
 # Rsync steps for sites/default/files
-drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files
+drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files -y
 # Export DB from Prod to Dev using Drush
 drush sql-sync @$machine.prod @$machine.dev -y
 # Prepare site for Maintenance
