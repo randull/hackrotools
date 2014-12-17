@@ -15,7 +15,7 @@ name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 # Put Dev & Prod sites into Maintenance Mode
-drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
+#drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "sudo -u deploy cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Dev Server\""
