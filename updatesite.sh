@@ -24,7 +24,7 @@ sudo -u deploy ssh deploy@prod "git push origin master"
 cd /var/www/$domain/html
 git pull origin master
 # Rsync steps for sites/default/files
-drush rsync -avz @$machine.prod:%files @$machine.dev:%files -y
+drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files
 # Export DB from Prod to Dev using Drush
 drush sql-sync @$machine.prod @$machine.dev -y
 # Prepare site for Maintenance
