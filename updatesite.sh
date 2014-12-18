@@ -15,17 +15,14 @@ name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 # Put Dev & Prod sites into Maintenance Mode
-#drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
+drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Dev Server\""
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
 # Git steps on Development
 cd /var/www/$domain/html
-echo "Navigated to /var/www/$domain/html"
-ls -al
 git pull origin master
-echo "Pulled most recent version from Github"
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files -y
 # Export DB from Prod to Dev using Drush
