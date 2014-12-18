@@ -22,7 +22,9 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"P
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
 # Git steps on Development
 cd /var/www/$domain/html
+echo "Navigated to /var/www/$domain/html"
 git pull origin master
+echo "Pulled most recent version from Github"
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files
 # Export DB from Prod to Dev using Drush
