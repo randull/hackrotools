@@ -169,17 +169,15 @@ drush vset cron_key $machine
 drush vset cron_safe_threshold 0
 drush vset file_private_path /var/www/$domain/private
 drush vset maintenance_mode 1
-####    Clear Drupal cache, update database, run cron
+# Clear Drupal cache, update database, run cron
 drush cc all && drush updb -y && drush cron
-####    Push changes to Git directory                           ####
+# Push changes to Git directory
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 
 
-
-
-####    Create DB & user on Production                          ####
+# Create DB & user on Production
 db4="CREATE DATABASE IF NOT EXISTS $machine;"
 db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
 db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
@@ -188,17 +186,17 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db4\""
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
-####    Clone site directory to Production                      ####
+# Clone site directory to Production
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
-####    Clone Drush aliases                                     ####
+# Clone Drush aliases
 sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
-####    Clone Apache config & reload apache                     ####
+# Clone Apache config & reload apache
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "sudo chown root:www-data /etc/apache2/sites-available/$machine.conf"
-sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload && sudo service apache2 restart"
-####    Clone DB
+sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
+# Clone DB
 sudo -u deploy ssh deploy@prod "drush sql-sync @$machine.dev @$machine.prod -y"
-####    Clone cron entry                                        ####
+# Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"

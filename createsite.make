@@ -34,6 +34,7 @@ projects[] = entityreference
 projects[] = features
 projects[] = features_extra
 projects[] = field_group
+projects[] = field_placeholder
 projects[] = file_entity
 projects[] = flexslider
 projects[] = fontyourface
