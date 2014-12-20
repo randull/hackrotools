@@ -31,7 +31,7 @@ mysql -u deploy -e "$db1"
 mysql -u deploy -e "$db2"
 mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
-cd /var/www && sudo mkdir $domain
+cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data $domain
 ls -al
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
 ls -al
