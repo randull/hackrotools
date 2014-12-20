@@ -43,7 +43,7 @@ cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrat
 ls -al
 cd /var/www/$domain && sudo chmod 775 html logs public private tmp
 ls -al
-sudo chmod -R u=rw,go=r,a+X html/* && sudo chmod -R ug=rw,o=r,a+X public/* private/*
+sudo chmod -R u=rw,go=r,a+X html/* && sudo chmod -R ug=rw,o=r,a+X /var/www/$domain/public/* /var/www/$domain/private/*
 
 ####    Create virtual host file, enable and restart apache     ####
 sudo echo "<VirtualHost *:80>
