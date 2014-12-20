@@ -42,7 +42,7 @@ sudo chmod -R u=rw,go=r,a+X html/*
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
 
 ####    Create virtual host file, enable and restart apache     ####
-sudo echo "<VirtualHost *:80>
+echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName dev.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
@@ -59,12 +59,12 @@ sudo echo "<VirtualHost *:80>
 sudo chown root:www-data /etc/apache2/sites-available/$machine.conf
 sudo a2ensite $machine.conf && sudo service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
-sudo echo "#!/bin/bash
+echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
 ####    Create Drush Aliases                                    ####
-sudo echo "<?php
+echo "<?php
 \$aliases[\"dev\"] = array(
   'remote-host' => 'dev.hackrobats.net',
   'remote-user' => 'deploy',
