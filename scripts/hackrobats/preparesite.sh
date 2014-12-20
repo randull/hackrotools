@@ -31,16 +31,16 @@ mysql -u deploy -e "$db1"
 mysql -u deploy -e "$db2"
 mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
-cd /var/www && mkdir $domain
-cd /var/www/$domain && mkdir html logs private public tmp
-cd /var/www/$domain/html && mkdir -p sites/default && ln -s /var/www/$domain/public sites/default/files
-cd /var/www/$domain/logs && touch access.log error.log
-cd /var/www/$domain/private && mkdir -p backup_migrate/manual backup_migrate/scheduled
-cd /var/www/$domain && chmod 775 html logs public private tmp
-chmod -R u=rw,go=r,a+X html/* && chmod -R ug=rw,o=r,a+X public/*
+cd /var/www && sudo -u deploy mkdir $domain
+cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
+cd /var/www/$domain/html && sudo -u deploy mkdir -p sites/default && sudo -u deploy ln -s /var/www/$domain/public sites/default/files
+cd /var/www/$domain/logs && sudo -u deploy touch access.log error.log
+cd /var/www/$domain/private && sudo -u deploy mkdir -p backup_migrate/manual backup_migrate/scheduled
+cd /var/www/$domain && sudo -u deploy chmod 775 html logs public private tmp
+sudo -u deploy chmod -R u=rw,go=r,a+X html/* && sudo -u deploy chmod -R ug=rw,o=r,a+X public/* private/*
 
 ####    Create virtual host file, enable and restart apache     ####
-echo "<VirtualHost *:80>
+sudo -u deploy echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName dev.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
@@ -54,15 +54,15 @@ echo "<VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://dev.$domain
 </VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
-sudo chown root:www-data /etc/apache2/sites-available/$machine.conf
-a2ensite $machine.conf && service apache2 reload
+sudo -u deploy chown root:www-data /etc/apache2/sites-available/$machine.conf
+sudo -u deploy a2ensite $machine.conf && sudo -u deploy service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
-echo "#!/bin/bash
+sudo -u deploy echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
 ####    Create Drush Aliases                                    ####
-echo "<?php
+sudo -u deploy echo "<?php
 \$aliases[\"dev\"] = array(
   'remote-host' => 'dev.hackrobats.net',
   'remote-user' => 'deploy',
@@ -127,8 +127,8 @@ echo "<?php
     ),
   ),
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
-sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
-sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 
 
 
@@ -145,14 +145,14 @@ drush make https://raw.github.com/randull/createsite/master/profiles/hackrobats/
 drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 ####    Remove Drupal Install files after installation          ####
 cd /var/www/$domain/html
-rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+sudo -u deploy rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
 cd /var/www/$domain/html/sites
-rm README.txt all/modules/README.txt all/themes/README.txt
-sudo chown -R deploy:www-data all default
-sudo chmod 755 all default
-sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
-sudo chmod 644 /var/www/$domain/public/.htaccess
-rm -R all/libraries/plupload/examples
+sudo -u deploy rm README.txt all/modules/README.txt all/themes/README.txt
+sudo -u deploy chown -R deploy:www-data all default
+sudo -u deploy chmod 755 all default
+sudo -u deploy chmod 644 /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy chmod 644 /var/www/$domain/public/.htaccess
+sudo -u deploy rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
 drush cc all
 drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
@@ -160,8 +160,8 @@ drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="om
 drush omega-export "omega_$machine" --revert -y
 ####    Set owner of entire directory to deploy:www-data        ####
 cd /var/www
-sudo chown -R deploy:www-data $domain
-sudo chown -R deploy:www-data /home/deploy
+sudo -u deploy chown -R deploy:www-data $domain
+sudo -u deploy chown -R deploy:www-data /home/deploy
 ####    Set Cron Key & Private File Path
 cd /var/www/$domain/html
 drush vset cron_key $machine
