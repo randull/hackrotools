@@ -33,7 +33,7 @@ mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo mkdir $domain
 ls -al
-cd /var/www/$domain && sudo mkdir html logs private public tmp
+cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
 ls -al
 cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
 ls -al
@@ -41,7 +41,7 @@ cd /var/www/$domain/logs && sudo touch access.log error.log
 ls -al
 cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
 ls -al
-cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
+cd /var/www/$domain && sudo chmod 775 html logs private public tmp
 ls -al
 sudo chmod -R u=rw,go=r,a+X html/* && sudo chmod -R ug=rw,o=r,a+X private/* public/*
 
