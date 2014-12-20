@@ -140,7 +140,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$longname.git
 sudo -u deploy git pull origin master
 ####    Create site structure using Drush Make                  ####
 cd /var/www/$domain/html
-drush make https://raw.github.com/randull/createsite/master/install_profile/createsite.make -y
+drush make https://raw.github.com/randull/createsite/master/profiles/hackrobats/createsite.make -y
 ####    Deploy site using Drush Site-Install                    ####
 drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 ####    Remove Drupal Install files after installation          ####
