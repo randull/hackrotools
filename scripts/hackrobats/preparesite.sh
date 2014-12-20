@@ -31,16 +31,22 @@ mysql -u deploy -e "$db1"
 mysql -u deploy -e "$db2"
 mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
-cd /var/www && sudo -u deploy mkdir $domain
-cd /var/www/$domain && sudo -u deploy mkdir html logs private public tmp
-cd /var/www/$domain/html && sudo -u deploy mkdir -p sites/default && sudo -u deploy ln -s /var/www/$domain/public sites/default/files
-cd /var/www/$domain/logs && sudo -u deploy touch access.log error.log
-cd /var/www/$domain/private && sudo -u deploy mkdir -p backup_migrate/manual backup_migrate/scheduled
-cd /var/www/$domain && sudo -u deploy chmod 775 html logs public private tmp
-sudo -u deploy chmod -R u=rw,go=r,a+X html/* && sudo -u deploy chmod -R ug=rw,o=r,a+X public/* private/*
+cd /var/www && sudo mkdir $domain
+ls -al
+cd /var/www/$domain && sudo mkdir html logs private public tmp
+ls -al
+cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
+ls -al
+cd /var/www/$domain/logs && sudo touch access.log error.log
+ls -al
+cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
+ls -al
+cd /var/www/$domain && sudo chmod 775 html logs public private tmp
+ls -al
+sudo chmod -R u=rw,go=r,a+X html/* && sudo chmod -R ug=rw,o=r,a+X public/* private/*
 
 ####    Create virtual host file, enable and restart apache     ####
-sudo -u deploy echo "<VirtualHost *:80>
+sudo echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName dev.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
@@ -54,15 +60,15 @@ sudo -u deploy echo "<VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://dev.$domain
 </VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
-sudo -u deploy chown root:www-data /etc/apache2/sites-available/$machine.conf
-sudo -u deploy a2ensite $machine.conf && sudo -u deploy service apache2 reload
+sudo chown root:www-data /etc/apache2/sites-available/$machine.conf
+sudo a2ensite $machine.conf && sudo service apache2 reload
 ####    Create /etc/cron.hourly entry                           ####
-sudo -u deploy echo "#!/bin/bash
+sudo echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
 ####    Create Drush Aliases                                    ####
-sudo -u deploy echo "<?php
+sudo echo "<?php
 \$aliases[\"dev\"] = array(
   'remote-host' => 'dev.hackrobats.net',
   'remote-user' => 'deploy',
@@ -127,8 +133,8 @@ sudo -u deploy echo "<?php
     ),
   ),
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
-sudo -u deploy chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
-sudo -u deploy chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
+sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
+sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 
 
 
@@ -148,10 +154,10 @@ cd /var/www/$domain/html
 sudo -u deploy rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
 cd /var/www/$domain/html/sites
 sudo -u deploy rm README.txt all/modules/README.txt all/themes/README.txt
-sudo -u deploy chown -R deploy:www-data all default
-sudo -u deploy chmod 755 all default
-sudo -u deploy chmod 644 /var/www/$domain/html/sites/default/settings.php
-sudo -u deploy chmod 644 /var/www/$domain/public/.htaccess
+sudo chown -R deploy:www-data all default
+sudo chmod 755 all default
+sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
+sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
 drush cc all
@@ -160,8 +166,8 @@ drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="om
 drush omega-export "omega_$machine" --revert -y
 ####    Set owner of entire directory to deploy:www-data        ####
 cd /var/www
-sudo -u deploy chown -R deploy:www-data $domain
-sudo -u deploy chown -R deploy:www-data /home/deploy
+sudo chown -R deploy:www-data $domain
+sudo chown -R deploy:www-data /home/deploy
 ####    Set Cron Key & Private File Path
 cd /var/www/$domain/html
 drush vset cron_key $machine
