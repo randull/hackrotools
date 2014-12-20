@@ -157,7 +157,6 @@ sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
 ####    Create omega 4 sub-theme and set default                ####
 drush cc all
-drush omega-subtheme "Hackrobats Omega Subtheme" --machine-name="omega_hackrobats"
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 drush omega-export "omega_$machine" --revert -y
 ####    Set owner of entire directory to deploy:www-data        ####
@@ -173,7 +172,7 @@ drush vset maintenance_mode 1
 ####    Clear Drupal cache, update database, run cron
 drush cc all && drush updb -y && drush cron
 ####    Push changes to Git directory                           ####
-sudo -u deploy git add .
+sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 
