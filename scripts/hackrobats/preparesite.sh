@@ -32,21 +32,14 @@ mysql -u deploy -e "$db2"
 mysql -u deploy -e "$db3"
 ####    Create directories necessary for Drupal installation    ####
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data $domain
-ls -al
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
-ls -al
 cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
-ls -al
+cd /var/www/$domain/html && sudo mkdir -p scripts/hackrobats && sudo mkdir -p profiles/hackrobats
 cd /var/www/$domain && sudo touch logs/access.log logs/error.log public/readme.md tmp/readme.md
-ls -al
 cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
-ls -al
 cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
-ls -al
 sudo chmod -R u=rw,go=r,a+X html/*
-ls -al
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
-ls -al
 
 ####    Create virtual host file, enable and restart apache     ####
 sudo echo "<VirtualHost *:80>
