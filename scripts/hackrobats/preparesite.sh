@@ -138,7 +138,7 @@ sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 ####    Initialize Git directory                                ####
 cd /var/www/$domain/html
 sudo -u deploy git init
-sudo -u deploy git remote add origin git@github.com:/randull/$longname.git
+sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 ####    Create site structure using Drush Make                  ####
 cd /var/www/$domain/html
