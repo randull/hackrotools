@@ -18,12 +18,11 @@ machine=`echo $shortname |tr '-' '_'`
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
-echo = "$pwd"
-echo $pwd
-dir = $(PWD)
-echo $dir
 git status
 git reset --hard .
+git reset --hard *
+git reset --hard
+git reset
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
