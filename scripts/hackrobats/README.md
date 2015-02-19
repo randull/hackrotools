@@ -6,12 +6,12 @@ Creates Apache Config, DB & DB User, and empty directory within /var/www on Dev 
 <b>Updatesite:</b><br>
 Clones current site from Prod to Dev, to be used before testing Drupal updates on Dev<br>
 <b>Stagesite:</b><br>
-pulls current site from Prod to Dev<br>
+Pushes changes done on Dev to Github repo, then pulls those changes to Prod<br>
 <b>Migratesite:</b><br>
-pulls current site from Prod to Dev<br>
+Migrates entire site from Dev to Prod, will overwrite everything including DB<br>
 <b>Cleansite:</b><br>
-pulls current site from Prod to Dev<br>
+Fixes Drupal file permissions, removes unnecessary placeholder files<br>
 <b>Emptysite:</b><br>
-pulls current site from Prod to Dev<br>
+Drops all tables in Database, deletes all files and directories in root directory<br>
 <b>Removesite:</b><br>
-push updates done on Dev back to Prod
+Deletes DB & DB user, removes entire directory from /var/www, Apache config, All of it!
