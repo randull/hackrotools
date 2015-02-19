@@ -26,7 +26,7 @@ git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files -y
 # Export DB from Prod to Dev using Drush
-drush sql-sync --skip-tables-list @$machine.prod @$machine.dev -y
+drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.prod @$machine.dev -y
 # Prepare site for Maintenance
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot prod_check -y
 drush @$machine.dev en devel_ds devel_generate devel_node_access metatag_devel devel -y
