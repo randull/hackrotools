@@ -20,7 +20,8 @@ drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 cd /var/www/$domain/html
 pwd
 git status
-git checkout -- . && git checkout .
+git stash save --keep-index
+git stash drop
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
