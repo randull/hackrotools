@@ -48,7 +48,6 @@ INSTALLATION INSTRUCTIONS
 
 2.) Navigate your browser to:
 
-    http://SITENAME.cascadiaweb.net/<br>
-    OR<br>
-    http://SITENAME.5ten.co/<br>
-    
+    http://SITENAME.cascadiaweb.net/
+    OR
+    http://SITENAME.5ten.co/
