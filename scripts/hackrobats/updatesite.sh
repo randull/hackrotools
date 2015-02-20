@@ -19,7 +19,10 @@ drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
 git status
+git checkout -- .
+git status
 git clean -nd .
+git status
 git clean -fd .
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
@@ -27,6 +30,7 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Dev Server\""
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
 # Git steps on Development
+git status
 git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files -y
