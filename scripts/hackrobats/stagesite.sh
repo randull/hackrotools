@@ -28,7 +28,7 @@ git add . -A
 git commit -a -m "$commit"
 git push origin master
 # Git steps on Production
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
 # Fix File and Directory Permissions on Prod
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:deploy html/* logs/*"
