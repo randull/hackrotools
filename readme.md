@@ -10,7 +10,6 @@ CONTENTS OF THIS FILE
 PREREQUISITS
 --------------------------
  * LAMP stack
- * cURL
  * wget
  * Git
  * Drush
@@ -37,7 +36,7 @@ Modules Included:
 APPEARANCE
 ----------
 
-Default Theme: Omega 4
+Default Theme: Omega 4<br>
 Admin Theme: Shiny
 
 INSTALLATION INSTRUCTIONS
@@ -45,8 +44,11 @@ INSTALLATION INSTRUCTIONS
 
 1.) Execute the following line in your terminal:
 
-    sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/createsite.sh)" -y
+    sudo bash -c "$(curl -fsSL https://raw.github.com/randull/createsite/master/scripts/hackrobats/generatesite.sh)" -y
 
 2.) Navigate your browser to:
 
-    http://SITENAME.cascadiaweb.net/
+    http://SITENAME.cascadiaweb.net/<br>
+    OR<br>
+    http://SITENAME.5ten.co/<br>
+    
