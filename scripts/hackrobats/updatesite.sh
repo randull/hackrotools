@@ -21,10 +21,6 @@ cd /var/www/$domain/html
 git reset
 git checkout .
 git clean -fd
-#git status
-#git clean -nd .
-#git status
-#git clean -fd .
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
