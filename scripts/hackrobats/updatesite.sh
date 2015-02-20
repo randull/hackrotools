@@ -18,6 +18,7 @@ machine=`echo $shortname |tr '-' '_'`
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
+sudo rm -R sites/all/*
 git status
 git checkout -- .
 #git status
