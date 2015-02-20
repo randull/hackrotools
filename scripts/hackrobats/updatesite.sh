@@ -20,6 +20,11 @@ drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:deploy html/* logs/* public/* private/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/*"
+# Fix File and Directory Permissions on Dev
+cd /var/www/$domain
+sudo chown -R deploy:www-data html/* logs/* public/* private/* tmp/*
+sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/*
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
 git reset
@@ -41,11 +46,6 @@ drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.prod @$m
 cd /var/www/$domain/html
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot prod_check -y
 drush @$machine.dev en devel_generate devel_node_access ds_devel metatag_devel devel -y
-# Fix File and Directory Permissions on Dev
-cd /var/www/$domain
-sudo chown -R deploy:www-data html/* logs/* public/* private/* tmp/*
-sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/*
 # Prepare site for Development
 drush @$machine updb -y && drush @$machine cron -y
 # Take Dev & Prod sites out of Maintenance Mode
