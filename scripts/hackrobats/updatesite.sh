@@ -20,10 +20,10 @@ drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 cd /var/www/$domain/html
 git status
 git checkout -- .
-git status
-git clean -nd .
-git status
-git clean -fd .
+#git status
+#git clean -nd .
+#git status
+#git clean -fd .
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
