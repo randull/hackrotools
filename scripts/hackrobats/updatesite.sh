@@ -31,7 +31,7 @@ sudo chmod -R u=rw,go=r,a+X html/*
 cd /var/www/$domain/html
 git reset
 git checkout .
-git clean -fd
+git checkout -- .
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
