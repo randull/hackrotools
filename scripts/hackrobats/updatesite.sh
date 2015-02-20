@@ -19,7 +19,9 @@ drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
 git status
-git clone
+git reset
+git checkout .
+git clean -fd
 #git status
 #git clean -nd .
 #git status
