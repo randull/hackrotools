@@ -17,12 +17,14 @@ machine=`echo $shortname |tr '-' '_'`
 # Put Dev & Prod sites into Maintenance Mode
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:www-data html/* logs/* public/* private/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:deploy html/* logs/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R www-data:www-data public/* private/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/*"
 # Fix File and Directory Permissions on Dev
 cd /var/www/$domain
-sudo chown -R deploy:www-data html/* logs/* public/* private/* tmp/*
+sudo chown -R deploy:deploy html/* logs/* public/* private/* tmp/*
+sudo chown -R www-data:www-data public/* private/* tmp/*
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/*
 # Checkout all changes on Development Web Server
