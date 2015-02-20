@@ -34,7 +34,7 @@ drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files -y
 drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.prod @$machine.dev -y
 # Prepare site for Maintenance
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot prod_check -y
-drush @$machine.dev en devel_ds devel_generate devel_node_access metatag_devel devel -y
+drush @$machine.dev en devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Development
 drush @$machine updb -y && drush @$machine cron -y
 # Take Dev & Prod sites out of Maintenance Mode
