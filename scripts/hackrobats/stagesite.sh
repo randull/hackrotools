@@ -30,10 +30,10 @@ git push origin master
 # Git steps on Production
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && chown -R deploy:deploy html/* logs/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && chown -R www-data:www-data public/* private/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && chmod -R u=rw,go=r,a+X html/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:deploy html/* logs/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R www-data:www-data public/* private/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/*"
 # Prepare site for Live Environment
 drush @$machine updb -y && drush @$machine cron -y
 # Take Dev & Prod sites out of Maintenance Mode
