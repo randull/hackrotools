@@ -2,10 +2,17 @@
 #
 # This script deletes virtual hosts and drupal directory.
 #
-# Prompt user to enter Domain Name
+# Retrieve Domain Name from command line argument OR Prompt user to enter  
+if [ "$1" == "" ]; 
+    then
+      echo "No arguments provided";
+      read -p "Site domain to update: " domain;
+    else
+      domain=$1
+fi
+#domain=$1
+# Prompt user to enter Domain Name if not given at command line
 #read -p "Site domain to update: " domain
-# Retrieve Domain Name from command line argument
-domain=$1
 # Prompt user to enter Git Commit Note
 #read -p "Please give description of planned changes: " commit
 # Create variables from Domain Name
