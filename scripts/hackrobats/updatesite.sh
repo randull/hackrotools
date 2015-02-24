@@ -8,7 +8,7 @@ if [ "$1" == "" ];
     echo "No arguments provided";
     read -p "Site domain to update: " domain;
   else
-  	echo $1;
+    echo $1;
     domain=$1;
 fi
 #domain=$1
