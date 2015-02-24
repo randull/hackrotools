@@ -4,9 +4,9 @@
 #
 # Prompt user to enter Domain Name
 #read -p "Site domain to update: " domain
-echo $1
+echo = $1
 domain=$1
-echo $domain
+echo = $domain
 # Prompt user to enter Git Commit Note
 #read -p "Please give description of planned changes: " commit
 # Create variables from Domain Name
