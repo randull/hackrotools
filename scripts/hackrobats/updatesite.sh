@@ -3,7 +3,8 @@
 # This script deletes virtual hosts and drupal directory.
 #
 # Prompt user to enter Domain Name
-read -p "Site domain to update: " domain
+#read -p "Site domain to update: " domain
+domain=$1
 # Prompt user to enter Git Commit Note
 #read -p "Please give description of planned changes: " commit
 # Create variables from Domain Name
