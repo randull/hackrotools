@@ -2,10 +2,28 @@
 #
 # This script deletes virtual hosts and drupal directory.
 #
+# Retrieve Domain Name from command line argument OR Prompt user to enter  
+if [ "$1" == "" ]; 
+  then
+    echo "No domain provided";
+    read -p "Site domain to publish: " domain;
+  else
+  	echo $1;
+    domain=$1;
+fi
+# Gather commit Notes for Github repo OR prompt the user to enter  
+if [ "$2" == "" ]; 
+  then
+    echo "No commit notes provided";
+    read -p "Please give description of planned changes: " commit;
+  else
+  	echo $2;
+    commit=$2;
+fi
 # Prompt user to enter Domain Name
-read -p "Site domain to publish: " domain
+#read -p "Site domain to publish: " domain
 # Prompt user to enter Git Commit Note
-read -p "Please give description of planned changes: " commit
+#read -p "Please give description of planned changes: " commit
 # Create variables from Domain Name
 #
 hosts=/etc/apache2/sites-available

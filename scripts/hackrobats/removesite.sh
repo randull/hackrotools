@@ -2,9 +2,18 @@
 #
 # This script deletes virtual hosts and drupal directory.
 #
+# Retrieve Domain Name from command line argument OR Prompt user to enter  
+if [ "$1" == "" ]; 
+  then
+    echo "No domain provided";
+    read -p "Site domain to publish: " domain;
+  else
+  	echo $1;
+    domain=$1;
+fi
 # Prompt user to enter Domain Name
 #
-read -p "Site domain to remove: " domain
+#read -p "Site domain to remove: " domain
 # Create variables from Domain Name
 #
 hosts=/etc/apache2/sites-available
