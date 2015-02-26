@@ -54,6 +54,6 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R www-data:ww
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/*"
 # Prepare site for Live Environment
-drush @$machine updb -y && drush @$machine cron -y
+drush @$machine cron -y && drush @$machine updb -y && drush @$machine cron -y
 # Take Dev & Prod sites out of Maintenance Mode
 drush @$machine vset maintenance_mode 0 -y && drush @$machine cc all -y

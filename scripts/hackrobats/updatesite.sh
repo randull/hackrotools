@@ -58,6 +58,6 @@ cd /var/www/$domain/html
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot prod_check -y
 drush @$machine.dev en devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Development
-drush @$machine updb -y && drush @$machine cron -y
+drush @$machine cron -y && drush @$machine updb -y && drush @$machine cron -y
 # Take Dev & Prod sites out of Maintenance Mode
 drush @$machine vset maintenance_mode 0 -y && drush @$machine cc all -y
