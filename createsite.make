@@ -7,6 +7,7 @@ projects[] = drupal
 ; Dev Modules
 projects[backup_migrate] = 3.x-dev
 projects[elysia_cron] = 2.x-dev
+projects[flexslider] = 2.x-dev
 projects[feeds] = 2.x-dev
 projects[media] = 2.x-dev
 
@@ -36,7 +37,6 @@ projects[] = features_extra
 projects[] = field_group
 projects[] = field_placeholder
 projects[] = file_entity
-projects[] = flexslider
 projects[] = fontyourface
 projects[] = google_analytics
 projects[] = imagecache_actions
@@ -101,7 +101,7 @@ libraries[colorbox][download][url] = "https://github.com/jackmoore/colorbox/arch
 libraries[flexslider][directory_name] = "flexslider"
 libraries[flexslider][destination] = "libraries"
 libraries[flexslider][download][type] = "get"
-libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/master.tar.gz"
+libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/archive/master.zip"
 libraries[html5shiv][directory_name] = "html5shiv"
 libraries[html5shiv][destination] = "libraries"
 libraries[html5shiv][download][type] = "get"
