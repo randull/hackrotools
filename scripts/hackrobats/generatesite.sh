@@ -204,3 +204,7 @@ sudo -u deploy ssh deploy@prod "drush sql-sync @$machine.dev @$machine.prod -y"
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
+# Prepare site for Live Environment
+drush @$machine cron -y && drush @$machine updb -y && drush @$machine cron -y
+# Take Dev & Prod sites out of Maintenance Mode
+drush @$machine vset maintenance_mode 0 -y && drush @$machine cc all -y
