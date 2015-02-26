@@ -123,6 +123,7 @@ dependencies[] = nodereference_url
 dependencies[] = pathauto
 dependencies[] = pathologic
 dependencies[] = picture
+dependencies[] = placeholder
 dependencies[] = plupload
 dependencies[] = prod_check
 dependencies[] = references

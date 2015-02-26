@@ -60,6 +60,7 @@ projects[] = nodereference_url
 projects[] = pathauto
 projects[] = pathologic
 projects[] = picture
+projects[] = placeholder
 projects[] = plupload
 projects[] = prod_check
 projects[] = references
@@ -125,10 +126,19 @@ libraries[respond][directory_name] = "respond"
 libraries[respond][destination] = "libraries"
 libraries[respond][download][type] = "get"
 libraries[respond][download][url] = "https://github.com/fubhy/respond/archive/master.zip"
+libraries[selectivizr][directory_name] = "s3-php5-curl"
+libraries[selectivizr][destination] = "libraries"
+libraries[selectivizr][download][type] = "get"
+libraries[selectivizr][download][url] = "https://github.com/tpyo/amazon-s3-php-class/archive/master.zip"
 libraries[selectivizr][directory_name] = "selectivizr"
 libraries[selectivizr][destination] = "libraries"
 libraries[selectivizr][download][type] = "get"
 libraries[selectivizr][download][url] = "https://github.com/fubhy/selectivizr/archive/master.zip"
+libraries[selectivizr][directory_name] = "simplepie"
+libraries[selectivizr][destination] = "libraries"
+libraries[selectivizr][download][type] = "get"
+libraries[selectivizr][download][url] = "http://simplepie.org/downloads/simplepie_1.3.1.compiled.php"
+
 
 
 ; Custom Install Profile
