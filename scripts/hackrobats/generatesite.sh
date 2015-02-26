@@ -161,6 +161,7 @@ drush en omega_hackrobats -y
 # Create Omega 4 sub-theme and set default
 drush cc all
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
+drush en "omega_$machine" -y
 drush omega-export "omega_$machine" --revert -y
 # Set owner of entire directory to deploy:www-data
 cd /var/www
