@@ -60,7 +60,6 @@ projects[] = nodereference_url
 projects[] = pathauto
 projects[] = pathologic
 projects[] = picture
-projects[] = placeholder
 projects[] = plupload
 projects[] = prod_check
 projects[] = references
