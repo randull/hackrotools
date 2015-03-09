@@ -15,11 +15,16 @@ do
 done
 echo "Password Matches"
 ####    Create variables from Domain Name                       ####
-tld=`echo $domain  |cut -d"." -f2,3`
-name=`echo $domain |cut -f1 -d"."`
+tld=`echo $domain  |cut -d"." -f2,3` # Generate tld (eg .com)
+echo $tld
+name=`echo $domain |cut -f1 -d"."`   # Remove last for characters (eg .com) 
+echo $name
 longname=`echo $name |tr '-' '_'`
+echo $longname
 shortname=`echo $name |cut -c -16`
+echo $shortname
 machine=`echo $shortname |tr '-' '_'`
+echo $machine
 dbpw=$(pwgen -n 16)
 ####    Create database and user                                ####
 db="CREATE DATABASE IF NOT EXISTS $machine;"
