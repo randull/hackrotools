@@ -48,7 +48,7 @@ drush -y rsync -avz @$machine.dev:%files @$machine.prod:%files
 drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.dev @$machine.prod -y
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush @$machine.prod en cdn googleanalytics google_analytics hidden_captcha honeypot honeypot_entityform prod_check -y
+drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot honeypot_entityform prod_check -y
 drush @$machine.prod pm-disable devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Fix File and Directory Permissions on Prod
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:deploy html/* logs/*"
