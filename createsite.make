@@ -86,7 +86,6 @@ projects[omega_hackrobats][type] = theme
 projects[omega_hackrobats][version] = 1.0
 projects[omega_hackrobats][download][type] = git
 projects[omega_hackrobats][download][url] = http://github.com/randull/omega_hackrobats.git
-projects[omega_hackrobats][download][branch] = 7.x-1.x
 projects[shiny][type] = theme
 projects[shiny][version] = 1.6
 projects[shiny][download][type] = git
