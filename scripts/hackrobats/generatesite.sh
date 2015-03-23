@@ -208,6 +208,13 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
 # Clone site directory to Production
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
+# Enable/Disable appropriate modules for Prod and Dev
+cd /var/www/$domain/html
+sudo -u deploy ssh deploy@prod "git pull origin master"
+drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.dev en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel -y
+drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot honeypot_entityform prod_check -y
+drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Clone Drush aliases
 sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
