@@ -211,9 +211,9 @@ sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 # Enable/Disable appropriate modules for Prod and Dev
 cd /var/www/$domain/html
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.dev en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel -y
+drush @$machine.dev en devel devel_generate devel_node_access ds_devel metatag_devel -y
 drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot honeypot_entityform prod_check -y
-drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush @$machine.prod pm-disable devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Clone Drush aliases
 sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
