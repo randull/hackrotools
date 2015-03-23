@@ -20,12 +20,7 @@ if [ "$2" == "" ];
   	echo $2;
     commit=$2;
 fi
-# Prompt user to enter Domain Name
-#read -p "Site domain to publish: " domain
-# Prompt user to enter Git Commit Note
-#read -p "Please give description of planned changes: " commit
 # Create variables from Domain Name
-#
 hosts=/etc/apache2/sites-available
 www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
@@ -35,6 +30,10 @@ machine=`echo $shortname |tr '-' '_'`
 # Put Dev & Prod sites into Maintenance Mode
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Fix File and Directory Permissions on Dev
+cd /var/www/$domain/html
+sudo -u deploy rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd /var/www/$domain/html/sites
+sudo -u deploy rm README.txt all/modules/README.txt all/themes/README.txt
 cd /var/www/$domain
 sudo chown -R deploy:deploy html/* logs/*
 sudo chown -R www-data:www-data public/* private/* tmp/*

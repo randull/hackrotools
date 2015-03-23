@@ -40,10 +40,10 @@ git add . -A
 git commit -a -m "$commit"
 git push origin master
 # Git steps on Production
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
-drush -y rsync -avz @$machine.dev:%files @$machine.prod:%files
+drush -y rsync -avzO @$machine.dev:%files @$machine.prod:%files
 # Export DB from Prod to Dev using Drush
 drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.dev @$machine.prod -y
 # Prepare site for Maintenance
