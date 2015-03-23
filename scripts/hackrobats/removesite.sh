@@ -6,16 +6,12 @@
 if [ "$1" == "" ]; 
   then
     echo "No domain provided";
-    read -p "Site domain to publish: " domain;
+    read -p "Site domain to remove: " domain;
   else
   	echo $1;
     domain=$1;
 fi
-# Prompt user to enter Domain Name
-#
-#read -p "Site domain to remove: " domain
 # Create variables from Domain Name
-#
 hosts=/etc/apache2/sites-available
 www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
@@ -23,27 +19,21 @@ name=`echo $domain |cut -f1 -d"."`
 shortname=`echo $name |cut -c -16`
 machine=`echo $shortname |tr '-' '_'`
 # Notify user of MySQL password requirement
-#
 echo "MySQL verification required."
 # Delete Database & User
-#
 mysql -u deploy -e "drop database $machine;drop user $machine@localhost;drop user $machine@prod; drop user $machine@dev;flush privileges;"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
-#
 a2dissite $machine.conf
 # Reload Apache2
-#
 service apache2 reload
 # Remove Virtual Host entry
-#
 sudo rm -R $hosts/$machine.conf
 if [ -d "$hosts/$machine\.conf" ]; then
   echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
 echo "$domain Apache2 conf disabled and removed"
 # Remove /etc/cron.hourly entry
-#
 cd /etc/cron.hourly
 sudo rm -R $machine
 if [ -d "/etc/cron.hourly/$machine" ]; then
@@ -51,7 +41,6 @@ if [ -d "/etc/cron.hourly/$machine" ]; then
 fi
 echo "$machine entry removed from /etc/cron.hourly"
 # Delete File Structure
-#
 cd $www
 sudo rm -R $domain
 if [ -d "$www/$domain" ]; then

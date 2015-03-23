@@ -1,9 +1,30 @@
 #!/bin/bash
 #
-####    Prompt user to enter Business Name & Domain             ####
-read -p "Business Name: " sitename
-read -p "Domain Name: " domain
-####    Prompt user to enter Password for User1(Hackrobats)     ####
+# This script Creates Apache Config, DB & DB User, and empty directory within /var/www on Dev and Prod
+# Also Generates Drupal site using custom Installation Profile on Dev & Clones it to Prod
+#
+# Retrieve Domain Name from command line argument OR Prompt user to enter
+if [ "$1" == "" ]; 
+  then
+    echo "No domain provided";
+    read -p "Site domain to generate: " domain;
+  else
+    echo $1;
+    domain=$1;
+fi
+# Retrieve Business Name from command line argument OR Prompt user to enter
+if [ "$2" == "" ]; 
+  then
+    echo "No Business Name provided";
+    read -p "Please provide user friendly Business Name: " sitename;
+  else
+    echo $2;
+    sitename=$2;
+fi
+#  Prompt user to enter Business Name & Domain 
+#read -p "Domain Name: " domain
+#read -p "Business Name: " sitename
+# Prompt user to enter Password for User1(Hackrobats)
 while true
 do
     read -s -p "User1 Password: " drupalpass
@@ -14,7 +35,7 @@ do
     echo "Please try again"
 done
 echo "Password Matches"
-####    Create variables from Domain Name                       ####
+# Create variables from Domain Name
 tld=`echo $domain  |cut -d"." -f2,3` # Generate tld (eg .com)
 echo = $tld
 name=`echo $domain |cut -f1 -d"."`   # Remove last for characters (eg .com) 
@@ -26,7 +47,7 @@ echo $shortname
 machine=`echo $shortname |tr '-' '_'`
 echo $machine
 dbpw=$(pwgen -n 16)
-####    Create database and user                                ####
+# Create database and user
 db="CREATE DATABASE IF NOT EXISTS $machine;"
 db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
 db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
@@ -35,7 +56,7 @@ mysql -u deploy -e "$db"
 mysql -u deploy -e "$db1"
 mysql -u deploy -e "$db2"
 mysql -u deploy -e "$db3"
-####    Create directories necessary for Drupal installation    ####
+# Create directories necessary for Drupal installation
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data $domain
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
 cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
@@ -45,8 +66,7 @@ cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrat
 cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
 sudo chmod -R u=rw,go=r,a+X html/*
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
-
-####    Create virtual host file, enable and restart apache     ####
+# Create virtual host file, enable and restart apache
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName dev.$domain
@@ -63,12 +83,12 @@ echo "<VirtualHost *:80>
 </VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
 sudo chown root:www-data /etc/apache2/sites-available/$machine.conf
 sudo a2ensite $machine.conf && sudo service apache2 reload
-####    Create /etc/cron.hourly entry                           ####
+# Create /etc/cron.hourly entry
 echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
-####    Create Drush Aliases                                    ####
+# Create Drush Aliases
 echo "<?php
 \$aliases[\"dev\"] = array(
   'remote-host' => 'dev.hackrobats.net',
@@ -136,8 +156,6 @@ echo "<?php
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
-
-
 
 
 ####    Initialize Git directory                                ####

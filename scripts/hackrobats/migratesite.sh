@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # This script Stages changes to Github, as well as Files and Database overwrite of Prod.
+#
 # Retrieve Domain Name from command line argument OR Prompt user to enter  
 if [ "$1" == "" ]; 
   then

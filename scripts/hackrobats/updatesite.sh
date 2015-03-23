@@ -11,13 +11,7 @@ if [ "$1" == "" ];
     echo $1;
     domain=$1;
 fi
-#domain=$1
-# Prompt user to enter Domain Name if not given at command line
-#read -p "Site domain to update: " domain
-# Prompt user to enter Git Commit Note
-#read -p "Please give description of planned changes: " commit
 # Create variables from Domain Name
-#
 hosts=/etc/apache2/sites-available
 www=/var/www
 tld=`echo $domain  |cut -d"." -f2,3`
