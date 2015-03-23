@@ -21,9 +21,6 @@ if [ "$2" == "" ];
     echo $2;
     sitename=$2;
 fi
-#  Prompt user to enter Business Name & Domain 
-#read -p "Domain Name: " domain
-#read -p "Business Name: " sitename
 # Prompt user to enter Password for User1(Hackrobats)
 while true
 do
@@ -156,19 +153,17 @@ echo "<?php
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
-
-
-####    Initialize Git directory                                ####
+# Initialize Git directory
 cd /var/www/$domain/html
 sudo -u deploy git init
 sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
-####    Create site structure using Drush Make                  ####
+# Create site structure using Drush Make
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
-####    Deploy site using Drush Site-Install                    ####
+# Deploy site using Drush Site-Install
 drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
-####    Remove Drupal Install files after installation          ####
+# Remove Drupal Install files after installation
 cd /var/www/$domain/html
 sudo -u deploy rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
 cd /var/www/$domain/html/sites
@@ -189,7 +184,7 @@ drush omega-export "omega_$machine" --revert -y
 cd /var/www
 sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
-####    Set Cron Key & Private File Path
+# Set Cron Key & Private File Path
 cd /var/www/$domain/html
 drush vset cron_key $machine
 drush vset cron_safe_threshold 0
@@ -202,8 +197,6 @@ drush cc all && drush updb -y && drush cron
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
-
-
 # Create DB & user on Production
 db4="CREATE DATABASE IF NOT EXISTS $machine;"
 db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
