@@ -183,10 +183,13 @@ sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
 cd /var/www/$domain/html
+drush en "omega_$machine" && drush vset theme_default "omega_$machine"
 drush vset cron_key $machine
 drush vset cron_safe_threshold 0
+drush vset error_level 0
 drush vset file_private_path /var/www/$domain/private
 drush vset file_temporary_path /var/www/$domain/tmp
+drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 # Clear Drupal cache, update database, run cron
 drush cc all && drush updb -y && drush cron
