@@ -210,7 +210,6 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 # Enable/Disable appropriate modules for Prod and Dev
 cd /var/www/$domain/html
-sudo -u deploy ssh deploy@prod "git pull origin master"
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 drush @$machine.dev en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel -y
 drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot honeypot_entityform prod_check -y
