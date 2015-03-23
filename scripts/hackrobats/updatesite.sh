@@ -12,12 +12,13 @@ if [ "$1" == "" ];
     domain=$1;
 fi
 # Create variables from Domain Name
-hosts=/etc/apache2/sites-available
-www=/var/www
-tld=`echo $domain  |cut -d"." -f2,3`
-name=`echo $domain |cut -f1 -d"."`
-shortname=`echo $name |cut -c -16`
-machine=`echo $shortname |tr '-' '_'`
+hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
+www=/var/www                          # Set variable for Drupal root directory
+tld=`echo $domain  |cut -d"." -f2,3`  # Generate tld (eg .com)
+name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com) 
+longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
+shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
+machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
 # Put Dev & Prod sites into Maintenance Mode
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Fix File and Directory Permissions on Prod

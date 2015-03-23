@@ -15,13 +15,15 @@ do
     echo "Please try again"
 done
 echo "Password Matches"
-####    Create variables from Domain Name                       ####
-www=/var/www
-tld=`echo $domain  |cut -d"." -f2,3`
-name=`echo $domain |cut -f1 -d"."`
-shortname=`echo $name |cut -c -16`
-machine=`echo $shortname |tr '-' '_'`
-dbpw=$(pwgen -n 16)
+# Create variables from Domain Name
+hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
+www=/var/www                          # Set variable for Drupal root directory
+tld=`echo $domain  |cut -d"." -f2,3`  # Generate tld (eg .com)
+name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com) 
+longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
+shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
+machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
+dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric password
 ####    Print DB Password for reference                         ####
 echo "$dbpw"
 ####    Notify user of MySQL password requirement               ####

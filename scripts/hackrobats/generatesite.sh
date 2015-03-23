@@ -33,17 +33,14 @@ do
 done
 echo "Password Matches"
 # Create variables from Domain Name
-tld=`echo $domain  |cut -d"." -f2,3` # Generate tld (eg .com)
-echo = $tld
-name=`echo $domain |cut -f1 -d"."`   # Remove last for characters (eg .com) 
-echo = name
-longname=`echo $name |tr '-' '_'`
-echo $longname
-shortname=`echo $name |cut -c -16`
-echo $shortname
-machine=`echo $shortname |tr '-' '_'`
-echo $machine
-dbpw=$(pwgen -n 16)
+hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
+www=/var/www                          # Set variable for Drupal root directory
+tld=`echo $domain  |cut -d"." -f2,3`  # Generate tld (eg .com)
+name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com) 
+longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
+shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
+machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
+dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric password
 # Create database and user
 db="CREATE DATABASE IF NOT EXISTS $machine;"
 db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
