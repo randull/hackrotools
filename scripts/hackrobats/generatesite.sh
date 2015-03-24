@@ -170,20 +170,20 @@ sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
-# Enable Hackrobats base theme (Omega 4 sub-theme)
+# Create Omega 4 sub-theme and set default
 drush en omega -y
 drush en omega_hackrobats -y
-# Create Omega 4 sub-theme and set default
 drush cc all
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 drush omega-export "omega_$machine" --revert -y
+drush en "omega_$machine" -y
+drush vset theme_default "omega_$machine"
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
 cd /var/www/$domain/html
-drush en "omega_$machine" && drush vset theme_default "omega_$machine"
 drush vset cron_key $machine
 drush vset cron_safe_threshold 0
 drush vset error_level 0
