@@ -156,7 +156,8 @@ sudo -u deploy git init
 sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Remove old version of theme if generated from Github
-sudo -u deploy rm -R all/themes/omega_$machine
+cd /var/www/$domain/html
+sudo -u deploy rm -R sites/all/themes/omega_$machine
 # Create site structure using Drush Make
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
