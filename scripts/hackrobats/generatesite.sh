@@ -170,20 +170,20 @@ sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
-# Create Omega 4 sub-theme and set default
+# Enable Hackrobats base theme (Omega 4 sub-theme)
 drush en omega -y
 drush en omega_hackrobats -y
+# Create Omega 4 sub-theme and set default
 drush cc all
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 drush omega-export "omega_$machine" --revert -y
-drush en "omega_$machine" -y
-drush vset theme_default "omega_$machine" -y
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
 cd /var/www/$domain/html
+drush en "omega_$machine" && drush vset theme_default "omega_$machine"
 drush vset cron_key $machine
 drush vset cron_safe_threshold 0
 drush vset error_level 0
@@ -208,12 +208,6 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
 # Clone site directory to Production
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
-# Enable/Disable appropriate modules for Prod and Dev
-cd /var/www/$domain/html
-drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.dev en devel devel_generate devel_node_access ds_devel metatag_devel -y
-drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot honeypot_entityform prod_check -y
-drush @$machine.prod pm-disable devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Clone Drush aliases
 sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
