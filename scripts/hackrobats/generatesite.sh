@@ -155,6 +155,8 @@ cd /var/www/$domain/html
 sudo -u deploy git init
 sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
+# Remove old version of theme if generated from Github
+sudo -u deploy rm -R all/themes/omega_$machine
 # Create site structure using Drush Make
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
@@ -170,7 +172,6 @@ sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
-sudo -u deploy rm -R all/themes/omega_$machine
 # Create Omega 4 sub-theme and set default
 drush en omega -y
 drush en omega_hackrobats -y
