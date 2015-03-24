@@ -190,6 +190,9 @@ drush vset cron_safe_threshold 0
 drush vset error_level 0
 drush vset file_private_path /var/www/$domain/private
 drush vset file_temporary_path /var/www/$domain/tmp
+drush vset jquery_update_jquery_admin_version "1.7"
+drush vset jquery_update_jquery_cdn "google"
+drush vset jquery_update_jquery_version "1.9"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 # Clear Drupal cache, update database, run cron
