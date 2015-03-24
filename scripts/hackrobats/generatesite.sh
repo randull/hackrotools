@@ -170,14 +170,13 @@ sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
+sudo -u deploy rm -R all/themes/omega_$machine
 # Create Omega 4 sub-theme and set default
 drush en omega -y
 drush en omega_hackrobats -y
 drush cc all
 drush omega-subtheme "$sitename" --machine-name="omega_$machine" --basetheme="omega_hackrobats" --set-default
 drush omega-export "omega_$machine" --revert -y
-drush en "omega_$machine" -y
-drush vset theme_default "omega_$machine"
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
@@ -223,7 +222,7 @@ sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cr
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.prod pm-disable devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
 drush @$machine cron -y && drush @$machine updb -y && drush @$machine cron -y
 # Take Dev & Prod sites out of Maintenance Mode
