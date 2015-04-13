@@ -11,6 +11,8 @@ projects[flexslider] = 2.x-dev
 projects[feeds] = 2.x-dev
 projects[media] = 2.x-dev
 projects[media_browser_plus] = 3.x-dev
+projects[multiform] = 2.x-dev
+projects[views_tree] = 2.x-dev
 
 
 ; Prod Modules
