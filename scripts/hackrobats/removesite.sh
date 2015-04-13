@@ -23,6 +23,7 @@ machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to undersco
 echo "MySQL verification required."
 # Delete Database & User
 mysql -u deploy -e "drop database $machine;drop user $machine@localhost;drop user $machine@prod; drop user $machine@dev;flush privileges;"
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e 'drop database $machine;drop user $machine@localhost;drop user $machine@prod; drop user $machine@dev;flush privileges;'"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
 a2dissite $machine.conf
