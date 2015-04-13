@@ -34,21 +34,40 @@ sudo rm -R $hosts/$machine.conf
 if [ -d "$hosts/$machine\.conf" ]; then
   echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
-echo "$domain Apache2 conf disabled and removed"
+echo "$domain Apache2 conf disabled and removed from Dev"
+sudo -u deploy ssh deploy@prod "sudo rm -R $hosts/$machine.conf"
+sudo -u deploy ssh deploy@prod "if [ -d "$hosts/$machine\.conf" ]; then
+  echo '$machine\.conf directory still exists in /etc/apache2/sites-available'
+fi"
+echo "$domain Apache2 conf disabled and removed from Prod"
 # Remove /etc/cron.hourly entry
 cd /etc/cron.hourly
 sudo rm -R $machine
 if [ -d "/etc/cron.hourly/$machine" ]; then
   echo "$machine entry still exists in /etc/cron.hourly"
 fi
-echo "$machine entry removed from /etc/cron.hourly"
+echo "$machine entry removed from /etc/cron.hourly on Dev"
+sudo -u deploy ssh deploy@prod "cd /etc/cron.hourly"
+sudo -u deploy ssh deploy@prod "sudo rm -R $machine""
+sudo -u deploy ssh deploy@prod "if [ -d '/etc/cron.hourly/$machine' ]; then
+  echo '$machine entry still exists in /etc/cron.hourly'
+fi"
+echo "$machine entry removed from /etc/cron.hourly on Prod"
 # Delete File Structure
 cd $www
 sudo rm -R $domain
 if [ -d "$www/$domain" ]; then
   echo "$domain directory still exists in /var/www"
 fi
-echo "$domain directory removed from /var/www"
+echo "$domain directory removed from /var/www on Dev"
+sudo -u deploy ssh deploy@prod "cd $www"
+sudo -u deploy ssh deploy@prod "sudo rm -R $domain"
+sudo -u deploy ssh deploy@prod "if [ -d '$www/$domain' ]; then
+  echo '$domain directory still exists in /var/www'
+fi"
+echo "$domain directory removed from /var/www on Prod"
 # Remove Drush alias
 cd /home/deploy/.drush
 sudo rm -R $machine.aliases.drushrc.php
+sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush"
+sudo -u deploy ssh deploy@prod "sudo rm -R $machine.aliases.drushrc.php"
