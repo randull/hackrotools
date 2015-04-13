@@ -9,6 +9,7 @@ projects[backup_migrate] = 3.x-dev
 projects[elysia_cron] = 2.x-dev
 projects[flexslider] = 2.x-dev
 projects[feeds] = 2.x-dev
+projects[fpa] = 2.x-dev
 projects[media] = 2.x-dev
 projects[media_browser_plus] = 3.x-dev
 projects[multiform] = 2.x-dev
