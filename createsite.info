@@ -85,6 +85,7 @@ dependencies[] = flexslider_views
 dependencies[] = font_reference
 dependencies[] = fontyourface
 dependencies[] = fontyourface_ui
+dependencies[] = fpa
 dependencies[] = google_fonts_api
 dependencies[] = image_effects_text
 dependencies[] = image_styles_admin
