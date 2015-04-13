@@ -47,8 +47,7 @@ if [ -d "/etc/cron.hourly/$machine" ]; then
   echo "$machine entry still exists in /etc/cron.hourly"
 fi
 echo "$machine entry removed from /etc/cron.hourly on Dev"
-sudo -u deploy ssh deploy@prod "cd /etc/cron.hourly"
-sudo -u deploy ssh deploy@prod "sudo rm -R $machine"
+sudo -u deploy ssh deploy@prod "cd /etc/cron.hourly && sudo rm -R $machine"
 sudo -u deploy ssh deploy@prod "if [ -d '/etc/cron.hourly/$machine' ]; then
   echo '$machine entry still exists in /etc/cron.hourly'
 fi"
