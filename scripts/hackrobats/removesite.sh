@@ -59,8 +59,7 @@ if [ -d "$www/$domain" ]; then
   echo "$domain directory still exists in /var/www"
 fi
 echo "$domain directory removed from /var/www on Dev"
-sudo -u deploy ssh deploy@prod "cd $www"
-sudo -u deploy ssh deploy@prod "sudo rm -R $domain"
+sudo -u deploy ssh deploy@prod "cd $www && sudo rm -R $domain"
 sudo -u deploy ssh deploy@prod "if [ -d '$www/$domain' ]; then
   echo '$domain directory still exists in /var/www'
 fi"
