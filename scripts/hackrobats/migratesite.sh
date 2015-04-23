@@ -51,7 +51,7 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin mast
 # Rsync steps for sites/default/files
 drush -y rsync -avzO @$machine.dev:%files @$machine.prod:%files
 # Export DB from Prod to Dev using Drush
-drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.dev @$machine.prod -y
+drush sql-sync --skip-tables-list=backup_migrate_destinations,ds_field_settings @$machine.dev @$machine.prod -y
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush @$machine.prod en cdn contact_google_analytics ga_tokenizer googleanalytics honeypot honeypot_entityform prod_check -y
