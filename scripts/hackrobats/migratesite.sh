@@ -31,6 +31,10 @@ machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to undersco
 # Put Dev & Prod sites into Maintenance Mode
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
 # Fix File and Directory Permissions on Dev
+cd /var/www/$domain/html
+sudo -u deploy rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd /var/www/$domain/html/sites
+sudo -u deploy rm README.txt all/modules/README.txt all/themes/README.txt
 cd /var/www/$domain
 sudo chown -R deploy:deploy html/* logs/*
 sudo chown -R www-data:www-data public/* private/* tmp/*
@@ -50,7 +54,7 @@ drush -y rsync -avzO @$machine.dev:%files @$machine.prod:%files
 drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.dev @$machine.prod -y
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot honeypot_entityform prod_check -y
+drush @$machine.prod en cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot honeypot_entityform prod_check -y
 drush @$machine.prod pm-disable devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Fix File and Directory Permissions on Prod
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:deploy html/* logs/*"
