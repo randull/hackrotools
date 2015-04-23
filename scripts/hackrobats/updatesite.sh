@@ -50,7 +50,7 @@ drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files
 drush sql-sync --skip-tables-list=backup_migrate_destinations @$machine.prod @$machine.dev -y
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush @$machine.dev pm-disable cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.dev pm-disable cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot prod_check -y
 drush @$machine.dev en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel -y
 # Prepare site for Development
 drush @$machine cron -y && drush @$machine updb -y && drush @$machine cron -y
