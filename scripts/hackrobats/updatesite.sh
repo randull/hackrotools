@@ -34,7 +34,10 @@ sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/*
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
-git reset
+git add .
+git reset --hard
+git stash
+git stash drop
 git checkout -- .
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
@@ -43,7 +46,6 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"P
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
 # Git steps on Development
 git status
-git checkout -- .
 git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.dev:%files
