@@ -26,6 +26,8 @@ dependencies[] = taxonomy
 dependencies[] = trigger
 
 ; Contrib Modules
+dependencies[] = actions_permissions
+dependencies[] = admin_devel
 dependencies[] = admin_menu
 dependencies[] = advanced_help
 dependencies[] = backup_migrate
@@ -36,6 +38,7 @@ dependencies[] = bulk_export
 dependencies[] = calendar
 dependencies[] = ckeditor
 dependencies[] = colorbox
+dependencies[] = commentformsettings
 dependencies[] = context
 dependencies[] = context_layouts
 dependencies[] = context_ui
@@ -86,6 +89,7 @@ dependencies[] = font_reference
 dependencies[] = fontyourface
 dependencies[] = fontyourface_ui
 dependencies[] = fpa
+dependencies[] = googleanalytics
 dependencies[] = google_fonts_api
 dependencies[] = image_effects_text
 dependencies[] = image_styles_admin
