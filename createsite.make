@@ -17,6 +17,7 @@ projects[views_tree] = 2.x-dev
 
 ; Prod Modules
 projects[] = admin_menu
+projects[] = adminimal_admin_menu
 projects[] = advanced_help
 projects[] = better_formats
 projects[] = blockreference
@@ -82,15 +83,11 @@ projects[] = views
 projects[] = views_bulk_operations
 
 ; Themes
-projects[omega][type] = theme
-projects[omega][version] = 4.4
-projects[omega][download][type] = git
-projects[omega][download][url] = http://git.drupal.org/project/omega.git
-projects[omega][download][branch] = 7.x-4.x
-projects[omega_hackrobats][type] = theme
-projects[omega_hackrobats][version] = 1.0
-projects[omega_hackrobats][download][type] = git
-projects[omega_hackrobats][download][url] = http://github.com/randull/omega_hackrobats.git
+projects[xtheme][type] = theme
+projects[xtheme][version] = 1.3
+projects[xtheme][download][type] = git
+projects[xtheme][download][url] = http://git.drupal.org/project/xtheme.git
+projects[xtheme][download][branch] = 7.x-1.x
 projects[shiny][type] = theme
 projects[shiny][version] = 1.6
 projects[shiny][download][type] = git
