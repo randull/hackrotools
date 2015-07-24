@@ -434,7 +434,7 @@ function createsite_install() {
   
   // Enable the default theme.
   $enable = array(
-    'theme_default' => 'omega',
+    'theme_default' => 'xtheme',
     'admin_theme' => 'shiny',
     //'zen'
   );
