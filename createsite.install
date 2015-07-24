@@ -436,7 +436,7 @@ function createsite_install() {
   $enable = array(
     'theme_default' => 'xtheme',
     'admin_theme' => 'shiny',
-    //'zen'
+    //'xtheme'
   );
   theme_enable($enable);
 
