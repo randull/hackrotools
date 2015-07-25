@@ -28,7 +28,6 @@ dependencies[] = trigger
 ; Contrib Modules
 dependencies[] = actions_permissions
 dependencies[] = admin_devel
-dependencies[] = admin_menu
 dependencies[] = advanced_help
 dependencies[] = backup_migrate
 dependencies[] = better_formats
