@@ -109,10 +109,10 @@ projects[] = views_megarow
 
 ; Themes
 projects[xtheme][type] = theme
-projects[xtheme][version] = 2.0
+projects[xtheme][version] = 2
 projects[xtheme][download][type] = git
 projects[xtheme][download][url] = http://git.drupal.org/project/xtheme.git
-projects[xtheme][download][branch] = 7.x-2.x-dev
+projects[xtheme][download][branch] = 7.x-2.x
 projects[shiny][type] = theme
 projects[shiny][version] = 1.7
 projects[shiny][download][type] = git
@@ -145,7 +145,7 @@ libraries[pie][destination] = "libraries"
 libraries[pie][download][type] = "get"
 libraries[pie][download][url] = "https://github.com/fubhy/pie/archive/master.zip"
 libraries[placeholder][directory_name] = "placeholder"
-libraries[placeholder][destination] = "sites/all/libraries"
+libraries[placeholder][destination] = "libraries"
 libraries[placeholder][download][type] = "get"
 libraries[placeholder][download][url] = "https://github.com/jamesallardice/Placeholders.js/archive/master.zip"
 libraries[plupload][directory_name] = "plupload"
