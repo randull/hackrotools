@@ -171,8 +171,6 @@ sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
 # Enable Xtheme and set default
-drush en xtheme -y
-drush vset theme_default xtheme
 drush cc all
 npm install
 grunt sass
