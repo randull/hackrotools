@@ -171,9 +171,11 @@ sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
 # Enable Xtheme and set default
-#drush en xtheme -y
-#drush vset theme_default xtheme
-#drush cc all
+drush en xtheme -y
+drush vset theme_default xtheme
+drush cc all
+npm install
+grunt sass
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
@@ -185,11 +187,13 @@ drush vset cron_safe_threshold 0
 drush vset error_level 0
 drush vset file_private_path /var/www/$domain/private
 drush vset file_temporary_path /var/www/$domain/tmp
-drush vset jquery_update_jquery_admin_version "1.7"
 drush vset jquery_update_jquery_cdn "google"
-drush vset jquery_update_jquery_version "1.9"
+drush vset jquery_update_jquery_version "1.8"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
+
+drush en advanced_help -y
+
 # Clear Drupal cache, update database, run cron
 drush cc all && drush updb -y && drush cron
 # Push changes to Git directory
