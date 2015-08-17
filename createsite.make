@@ -120,6 +120,10 @@ projects[shiny][download][url] = http://git.drupal.org/project/shiny.git
 projects[shiny][download][branch] = 7.x-1.x
 
 ; Libraries
+libraries[charts][directory_name] = "charts"
+libraries[charts][destination] = "libraries"
+libraries[charts][download][type] = "get"
+libraries[charts][download][url] = "http://code.highcharts.com/highcharts.js"
 libraries[ckeditor][directory_name] = "ckeditor"
 libraries[ckeditor][destination] = "libraries"
 libraries[ckeditor][download][type] = "get"
