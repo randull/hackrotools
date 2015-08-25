@@ -189,7 +189,6 @@ sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php depl
 cd /var/www/$domain/html
 sudo -u deploy git init
 sudo -u deploy git remote add origin git@github.com:/randull/$name.git
-sudo -u deploy git pull origin master
 # Push changes to Git directory
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
