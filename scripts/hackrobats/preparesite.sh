@@ -42,7 +42,6 @@ mysql -u deploy -e "$db2" && sudo -u deploy ssh deploy@dev "mysql -u deploy -e \
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data $domain
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
 cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
-cd /var/www/$domain/html && sudo mkdir -p scripts/hackrobats && sudo mkdir -p profiles/hackrobats
 cd /var/www/$domain && sudo touch logs/access.log logs/error.log public/readme.md tmp/readme.md
 cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
 cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
