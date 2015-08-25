@@ -70,7 +70,11 @@ echo "<VirtualHost *:80>
         ErrorLog /var/www/$domain/logs/error.log
         CustomLog /var/www/$domain/logs/access.log combined
         DirectoryIndex index.php
-</VirtualHost>" > /etc/apache2/sites-available/$machine.conf
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName $domain
+        Redirect 301 / http://dev.$domain/
+</VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
 sudo chown root:www-data /etc/apache2/sites-available/$machine.conf
 sudo a2ensite $machine.conf && sudo service apache2 reload
 # Create /etc/cron.hourly entry
@@ -211,10 +215,6 @@ sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php depl
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "sudo chown root:www-data /etc/apache2/sites-available/$machine.conf"
-echo "<VirtualHost *:80>
-        ServerName $domain
-        Redirect 301 / http://www.$domain/
-</VirtualHost>  " >> deploy@prod:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
 sudo -u deploy ssh deploy@prod "drush sql-sync @$machine.dev @$machine.prod -y"
