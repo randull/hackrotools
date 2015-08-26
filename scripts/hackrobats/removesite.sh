@@ -27,7 +27,7 @@ sudo -u deploy ssh deploy@dev "mysql -u deploy -e 'drop database $machine; drop 
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; drop user $machine@prod; drop user $machine@prod.hackrobats.net;flush privileges;'"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
-a2dissite $machine.conf
+sudo -u deploy a2dissite $machine.conf
 sudo -u deploy ssh deploy@dev "a2dissite $machine.conf"
 sudo -u deploy ssh deploy@prod "a2dissite $machine.conf"
 # Reload Apache2
