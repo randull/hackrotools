@@ -29,6 +29,7 @@ name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com)
 longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
+dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric password
 #
 #
 # Create database and user on Local, Dev & Prod
@@ -41,7 +42,6 @@ mysql -u deploy -e "$db2" && sudo -u deploy ssh deploy@dev "mysql -u deploy -e \
 # Create directories necessary for Drupal installation
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data $domain
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
-cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
 cd /var/www/$domain && sudo touch logs/access.log logs/error.log public/readme.md tmp/readme.md
 cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
 cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
@@ -67,8 +67,8 @@ sudo -u deploy echo "<VirtualHost *:80>
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@dev:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 # Clone Apache config & reload apache
-sudo -u deploy head -n-4 /etc/apache2/sites-available/$machine.conf
-sudo -u deploy ssh deploy@dev "sudo -u deploy head -n-4 /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy sed -i '11,15 d' /etc/apache2/sites-available/$machine.conf
+sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i '11,15 d '/etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/apache2/sites-available/$machine.conf"
 sudo a2ensite $machine.conf && sudo service apache2 reload
