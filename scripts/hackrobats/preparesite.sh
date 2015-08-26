@@ -84,6 +84,8 @@ echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://local.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
+sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/cron.hourly/$machine"
+sudo -u deploy ssh deploy@dev "sudo chmod 775 /etc/cron.hourly/$machine"
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
@@ -199,7 +201,7 @@ sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 # Git steps on Development
-sudo -u deploy rsync -avzh /var/www/$domain/.git/ deploy@dev:/var/www/$domain/.git/
-sudo -u deploy rsync -avzh /var/www/$domain/.git/ deploy@prod:/var/www/$domain/.git/
+sudo -u deploy rsync -avzh /var/www/$domain/html/.git/ deploy@dev:/var/www/$domain/html/.git/
+sudo -u deploy rsync -avzh /var/www/$domain/html/.git/ deploy@prod:/var/www/$domain/html/.git/
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash && git pull origin master"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash && git pull origin master"
