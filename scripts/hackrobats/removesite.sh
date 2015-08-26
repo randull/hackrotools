@@ -85,6 +85,7 @@ sudo -u deploy ssh deploy@prod "if [ -d '$www/$domain' ]; then
 fi"
 echo "$domain directory removed from /var/www on Prod"
 # Remove Drush alias
-sudo rm -R ~/.drush/$machine.aliases.drushrc.php
-sudo -u deploy ssh deploy@dev "sudo rm -R ~/.drush/$machine.aliases.drushrc.php"
-sudo -u deploy ssh deploy@prod "sudo rm -R ~/.drush/$machine.aliases.drushrc.php"
+cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php
+sudo -u deploy ssh deploy@dev "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
+sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
+#
