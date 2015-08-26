@@ -73,7 +73,7 @@ sudo -u deploy echo "<VirtualHost *:80>
 <VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://www.$domain/
-</VirtualHost>" > /etc/apache2/sites-available/$machine.conf
+</VirtualHost>" > deploy@dev:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@dev:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/apache2/sites-available/$machine.conf"
 sudo a2ensite $machine.conf && sudo service apache2 reload
