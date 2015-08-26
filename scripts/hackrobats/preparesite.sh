@@ -67,8 +67,8 @@ sudo -u deploy echo "<VirtualHost *:80>
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@dev:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
 # Clone Apache config & reload apache
-sudo -u deploy sed -i '11,15 d' /etc/apache2/sites-available/$machine.conf
-sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i '11,15 d '/etc/apache2/sites-available/$machine.conf"
+sed -i '11,15 d' /etc/apache2/sites-available/$machine.conf
+sudo -u deploy ssh deploy@dev "sed -i '11,15 d '/etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/apache2/sites-available/$machine.conf"
 sudo a2ensite $machine.conf && sudo service apache2 reload
