@@ -22,8 +22,9 @@ machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to undersco
 # Notify user of MySQL password requirement
 echo "MySQL verification required."
 # Delete Database & User
-mysql -u deploy -e "drop database $machine;drop user $machine@localhost;drop user $machine@prod; drop user $machine@dev;flush privileges;"
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e 'drop database $machine;drop user $machine@localhost;drop user $machine@prod; drop user $machine@dev;flush privileges;'"
+mysql -u deploy -e "drop database $machine; drop user $machine@localhost; drop user $machine@local; drop user $machine@local.hackrobats.net; flush privileges;"
+sudo -u deploy ssh deploy@dev "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; drop user $machine@dev; drop user $machine@dev.hackcrobats.net; flush privileges;'"
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; drop user $machine@prod; drop user $machine@prod.hackrobats.net;flush privileges;'"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
 a2dissite $machine.conf
@@ -34,6 +35,11 @@ sudo rm -R $hosts/$machine.conf
 if [ -d "$hosts/$machine\.conf" ]; then
   echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
+echo "$domain Apache2 conf disabled and removed from Local"
+sudo -u deploy ssh deploy@dev "sudo rm -R $hosts/$machine.conf"
+sudo -u deploy ssh deploy@dev "if [ -d "$hosts/$machine\.conf" ]; then
+  echo '$machine\.conf directory still exists in /etc/apache2/sites-available'
+fi"
 echo "$domain Apache2 conf disabled and removed from Dev"
 sudo -u deploy ssh deploy@prod "sudo rm -R $hosts/$machine.conf"
 sudo -u deploy ssh deploy@prod "if [ -d "$hosts/$machine\.conf" ]; then
@@ -46,6 +52,11 @@ sudo rm -R $machine
 if [ -d "/etc/cron.hourly/$machine" ]; then
   echo "$machine entry still exists in /etc/cron.hourly"
 fi
+echo "$machine entry removed from /etc/cron.hourly on Local"
+sudo -u deploy ssh deploy@dev "cd /etc/cron.hourly && sudo rm -R $machine"
+sudo -u deploy ssh deploy@dev "if [ -d '/etc/cron.hourly/$machine' ]; then
+  echo '$machine entry still exists in /etc/cron.hourly'
+fi"
 echo "$machine entry removed from /etc/cron.hourly on Dev"
 sudo -u deploy ssh deploy@prod "cd /etc/cron.hourly && sudo rm -R $machine"
 sudo -u deploy ssh deploy@prod "if [ -d '/etc/cron.hourly/$machine' ]; then
@@ -58,6 +69,11 @@ sudo rm -R $domain
 if [ -d "$www/$domain" ]; then
   echo "$domain directory still exists in /var/www"
 fi
+echo "$domain directory removed from /var/www on Local"
+sudo -u deploy ssh deploy@dev "cd $www && sudo rm -R $domain"
+sudo -u deploy ssh deploy@dev "if [ -d '$www/$domain' ]; then
+  echo '$domain directory still exists in /var/www'
+fi"
 echo "$domain directory removed from /var/www on Dev"
 sudo -u deploy ssh deploy@prod "cd $www && sudo rm -R $domain"
 sudo -u deploy ssh deploy@prod "if [ -d '$www/$domain' ]; then
@@ -66,4 +82,5 @@ fi"
 echo "$domain directory removed from /var/www on Prod"
 # Remove Drush alias
 sudo rm -R ~/.drush/$machine.aliases.drushrc.php
+sudo -u deploy ssh deploy@dev "sudo rm -R ~/.drush/$machine.aliases.drushrc.php"
 sudo -u deploy ssh deploy@prod "sudo rm -R ~/.drush/$machine.aliases.drushrc.php"
