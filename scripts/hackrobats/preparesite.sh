@@ -53,6 +53,16 @@ sudo -u deploy rsync -avzh /var/www/$domain/ deploy@dev:/var/www/$domain/ && sud
 sudo -u deploy echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName local.$domain
+        ServerAlias $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        DocumentRoot /var/www/$domain/html
+        ErrorLog /var/www/$domain/logs/error.log
+        CustomLog /var/www/$domain/logs/access.log combined
+        DirectoryIndex index.php
+</VirtualHost>" > /etc/apache2/sites-available/$machine.conf
+sudo -u deploy echo "<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
+        ServerName www.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
         ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
         DocumentRoot /var/www/$domain/html
@@ -62,15 +72,10 @@ sudo -u deploy echo "<VirtualHost *:80>
 </VirtualHost>
 <VirtualHost *:80>
         ServerName $domain
-        Redirect 301 / http://local.$domain/
-</VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
+        Redirect 301 / http://www.$domain/
+</VirtualHost>" > /etc/apache2/sites-available/$machine.conf
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@dev:/etc/apache2/sites-available/$machine.conf
-sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@prod:/etc/apache2/sites-available/$machine.conf
-# Clone Apache config & reload apache
-sed -i '11,15 d' /etc/apache2/sites-available/$machine.conf
-sudo -u deploy ssh deploy@dev "sed -i '11,15 d '/etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/apache2/sites-available/$machine.conf"
-sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/apache2/sites-available/$machine.conf"
 sudo a2ensite $machine.conf && sudo service apache2 reload
 sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
@@ -194,6 +199,7 @@ sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 # Git steps on Development
-sudo -u deploy rsync -avzh /var/www/$domain/ deploy@dev:/var/www/$domain/.git/ && sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/.git/
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
+sudo -u deploy rsync -avzh /var/www/$domain/.git/ deploy@dev:/var/www/$domain/.git/
+sudo -u deploy rsync -avzh /var/www/$domain/.git/ deploy@prod:/var/www/$domain/.git/
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash && git pull origin master"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash && git pull origin master"
