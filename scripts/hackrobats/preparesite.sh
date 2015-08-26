@@ -60,7 +60,7 @@ sudo -u deploy echo "<VirtualHost *:80>
         CustomLog /var/www/$domain/logs/access.log combined
         DirectoryIndex index.php
 </VirtualHost>" > /etc/apache2/sites-available/$machine.conf
-sudo -u deploy echo "<VirtualHost *:80>
+sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName www.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
@@ -73,7 +73,7 @@ sudo -u deploy echo "<VirtualHost *:80>
 <VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://www.$domain/
-</VirtualHost>" > deploy@dev:/etc/apache2/sites-available/$machine.conf
+</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy rsync -avz -e ssh /etc/apache2/sites-available/$machine.conf deploy@dev:/etc/apache2/sites-available/$machine.conf
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/apache2/sites-available/$machine.conf"
 sudo a2ensite $machine.conf && sudo service apache2 reload
