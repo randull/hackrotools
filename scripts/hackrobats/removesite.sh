@@ -88,5 +88,3 @@ echo "$domain directory removed from /var/www on Prod"
 sudo rm -R ~/.drush/$machine.aliases.drushrc.php
 sudo -u deploy ssh deploy@dev "sudo rm -R ~/.drush/$machine.aliases.drushrc.php"
 sudo -u deploy ssh deploy@prod "sudo rm -R ~/.drush/$machine.aliases.drushrc.php"
-sudo -u deploy ssh deploy@prod "sudo rm -R ~/.drush/$machine.aliases.drushrc.php"
-
