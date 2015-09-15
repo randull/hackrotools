@@ -1,17 +1,25 @@
-<b>Preparesite:</b><br>
+<p><span style="font-size: 110%; font-weight: bold;">Preparesite:</span><br>
 Creates Apache Config, DB & DB User, and empty directory within /var/www on Dev and Prod<br>
-<b>Generatesite:</b><br>
+<i>preparesite <strong>domain.tld "Site Name"</strong></i></p>
+<p><span style="font-size: 110%; font-weight: bold;">Generatesite:</span><br>
 Creates Apache Config, DB & DB User, and empty directory within /var/www on Dev and Prod<br>
-<i>Also</i> Generates Drupal site using custom Installation Profile on Dev & Clones it to Prod<br>
-<b>Updatesite:</b><br>
+Also Generates Drupal site using custom Installation Profile on Dev & Clones it to Prod<br>
+<i>generatesite <strong>domain.tld "Site Name"</strong></i></p>
+<p><span style="font-size: 110%; font-weight: bold;">Updatesite:</span><br>
 Clones current site from Prod to Dev, to be used before testing Drupal updates on Dev<br>
-<b>Stagesite:</b><br>
+<i>updatesite <strong>domain.tld</strong></i></p>
+<p><span style="font-size: 110%; font-weight: bold;">Stagesite:</span><br>
 Pushes changes done on Dev to Github repo, then pulls those changes to Prod<br>
-<b>Migratesite:</b><br>
+<i>stagesite <strong>domain.tld "Git Commit Comments"</strong></i></p>
+<p><span style="font-size: 110%; font-weight: bold;">Migratesite:</span><br>
 Migrates entire site from Dev to Prod, will overwrite everything including DB<br>
-<b>Cleansite:</b><br>
+<i>migratesite <strong>domain.tld "Git Commit Comments"</strong></i></p>
+<p><span style="font-size: 110%; font-weight: bold;">Cleansite:</span><br>
 Fixes Drupal file permissions, removes unnecessary placeholder files<br>
-<b>Emptysite:</b><br>
+<i>cleansite <strong>domain.tld</strong></i></p>
+<p><span style="font-size: 110%; font-weight: bold;">Emptysite:</span><br>
 Drops all tables in Database, deletes all files and directories in root directory<br>
-<b>Removesite:</b><br>
-Deletes DB & DB user, removes entire directory from /var/www, Apache config, All of it!
+<i>emptysite <strong>domain.tld</strong></i></p>
+<p><span style="font-size: 110%; font-weight: bold;">Removesite:</span><br>
+Deletes DB and DB user, removes entire directory from /var/www, Apache config, All of it!
+<i>removesite <strong>domain.tld</strong></i><br></p>
