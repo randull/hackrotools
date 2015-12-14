@@ -53,7 +53,7 @@ git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.local:%files
 # Export DB from Prod to Local using Drush
-drush sql-sync --no-cache --skip-tables-key=common @$machine.prod @$machine.local -y
+drush sql-sync --skip-tables-key=common @$machine.prod @$machine.local -y
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush @$machine.local pm-disable cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot prod_check -y
