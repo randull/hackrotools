@@ -35,9 +35,8 @@ drush -y @$machine.dev vset maintenance_mode 0
 drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain
-sudo chown -R deploy:www-data html/* logs/* public/* private/* tmp/*
-sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/*
+sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Git steps on Local
 cd /var/www/$domain/html
 git checkout .gitignore
