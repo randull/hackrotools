@@ -34,17 +34,13 @@ drush -y @$machine.local cc all
 drush -y @$machine.dev vset maintenance_mode 0
 drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
-cd /var/www/$domain/html
-sudo -u deploy rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
-cd /var/www/$domain/html/sites
-sudo -u deploy rm README.txt all/modules/README.txt all/themes/README.txt
 cd /var/www/$domain
-sudo chown -R deploy:deploy html/* logs/*
-sudo chown -R www-data:www-data public/* private/* tmp/*
+sudo chown -R deploy:www-data html/* logs/* public/* private/* tmp/*
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/*
 # Git steps on Local
 cd /var/www/$domain/html
+git checkout .gitignore
 git add . -A
 git commit -a -m "$commit"
 git push origin master
@@ -52,8 +48,7 @@ git push origin master
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Fix File and Directory Permissions on Dev
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -R deploy:deploy html/* logs/*"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -R www-data:www-data public/* private/* tmp/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -R deploy:www-data public/* private/* tmp/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/*"
 # Prepare site for Live Environment

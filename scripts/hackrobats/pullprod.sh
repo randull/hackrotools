@@ -25,16 +25,12 @@ drush -y @$machine.local cc all
 drush -y @$machine.prod vset maintenance_mode 1
 drush -y @$machine.prod cc all 
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:deploy html/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:www-data logs/* private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain
-sudo chown -R deploy:deploy html/*
-sudo chown -R deploy:www-data logs/* private/* public/* tmp/*
-sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/*
+sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/* logs/* private/* 
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
 git add .
