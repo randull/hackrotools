@@ -47,9 +47,8 @@ git push origin master
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Fix File and Directory Permissions on Dev
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -R deploy:www-data public/* private/* tmp/*"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
 # Prepare site for Live Environment
 drush -y @$machine.local cron
 drush -y @$machine.local updb
