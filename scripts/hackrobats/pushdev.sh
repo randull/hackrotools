@@ -47,7 +47,7 @@ git status
 git add . -A
 git commit -a -m "$commit"
 git push origin master
-# Git steps on Production
+# Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git diff"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
