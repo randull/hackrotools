@@ -33,6 +33,8 @@ sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/* 
 # Checkout all changes on Development Web Server
 cd /var/www/$domain/html
+git status
+git diff
 git add .
 git reset --hard
 git stash
@@ -40,11 +42,13 @@ git stash drop
 git checkout -- .
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git diff"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
 # Git steps on Development
 git status
+git diff
 git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.local:%files

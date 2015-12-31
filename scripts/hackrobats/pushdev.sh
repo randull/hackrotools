@@ -34,19 +34,27 @@ drush -y @$machine.local cc all
 drush -y @$machine.dev vset maintenance_mode 0
 drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
+cd /var/www/$domain/html
+sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd /var/www/$domain/html/sites
+sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Git steps on Local
-cd /var/www/$domain/html
 git checkout .gitignore
+git status
 git add . -A
 git commit -a -m "$commit"
 git push origin master
 # Git steps on Production
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git diff"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Fix File and Directory Permissions on Dev
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html/sites && sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
 # Prepare site for Live Environment

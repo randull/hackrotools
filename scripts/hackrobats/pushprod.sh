@@ -34,11 +34,16 @@ drush -y @$machine.local cc all
 drush -y @$machine.prod vset maintenance_mode 0
 drush -y @$machine.prod cc all
 # Fix File and Directory Permissions on Local
+cd /var/www/$domain/html
+sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
+cd /var/www/$domain/html/sites
+sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/defaultsettings.php
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Git steps on Local
 cd /var/www/$domain/html
+git checkout .gitignore
 git status
 git diff
 git add . -A
