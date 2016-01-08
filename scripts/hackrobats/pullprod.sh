@@ -31,10 +31,9 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/* 
-# Checkout all changes on Development Web Server
+# Checkout all changes on Local Environment
 cd /var/www/$domain/html
 git status
-git diff
 git add .
 git reset --hard
 git stash
@@ -42,7 +41,6 @@ git stash drop
 git checkout -- .
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git diff"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
@@ -56,6 +54,7 @@ drush -y rsync -avz @$machine.prod:%files @$machine.local:%files
 drush sql-sync --skip-tables-key=common @$machine.prod @$machine.local -y
 # Prepare site for Maintenance
 cd /var/www/$domain/html
+
 drush @$machine.local pm-disable cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot prod_check -y
 drush @$machine.local en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel -y
 # Prepare site for Development
