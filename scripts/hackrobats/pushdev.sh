@@ -50,7 +50,6 @@ git commit -a -m "$commit"
 git push origin master
 # Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git diff"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
