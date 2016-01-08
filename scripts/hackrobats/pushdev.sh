@@ -42,6 +42,7 @@ cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Git steps on Local
+cd /var/www/$domain/html
 git checkout .gitignore
 git status
 git add . -A
