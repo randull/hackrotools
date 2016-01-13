@@ -38,11 +38,12 @@ sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Checkout all changes on Local Environment
 cd /var/www/$domain/html
 git status
-git add .
+git add . -A
 git reset --hard
 git stash
 git stash drop
 git checkout -- .
+git status
 # Git steps on Production Web Server
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
