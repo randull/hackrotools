@@ -192,6 +192,8 @@ drush vset maintenance_mode 1
 
 drush en advanced_help -y
 
+drush php-eval 'node_access_rebuild();'
+
 # Clear Drupal cache, update database, run cron
 drush cc all && drush updb -y && drush cron
 # Push changes to Git directory
