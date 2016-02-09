@@ -88,8 +88,6 @@ sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
         ServerName $domain
         Redirect 301 / http://www.$domain/
 </VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
-sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-sudo -u deploy ssh deploy@prod "sudo a2ensite $machine.conf && sudo service apache2 reload"
 # Create /etc/cron.hourly entry
 echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
