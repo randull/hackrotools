@@ -41,15 +41,24 @@ longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
 dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric password
+
+
+
+#############################################################
+#    Prepare Local Environment for Installation
+#############################################################
+
 # Create database and user
-db="CREATE DATABASE IF NOT EXISTS $machine;"
-db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
-db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
-db3="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';"
-mysql -u deploy -e "$db"
+db0="CREATE DATABASE IF NOT EXISTS $machine;"
+db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
+db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
+db3="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
+db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
+mysql -u deploy -e "$db0"
 mysql -u deploy -e "$db1"
 mysql -u deploy -e "$db2"
 mysql -u deploy -e "$db3"
+mysql -u deploy -e "$db4"
 # Create directories necessary for Drupal installation
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data $domain
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
@@ -63,7 +72,7 @@ sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
 # Create virtual host file on Dev, enable and restart apache
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
-        ServerName dev.$domain
+        ServerName local.$domain
         ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
         ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
         DocumentRoot /var/www/$domain/html
@@ -73,24 +82,9 @@ echo "<VirtualHost *:80>
 </VirtualHost>" > /etc/apache2/sites-available/$machine.conf
 sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf
 sudo a2ensite $machine.conf && sudo service apache2 reload
-# Create virtual host file on Prod, enable and restart apache
-sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
-        ServerAdmin maintenance@hackrobats.net
-        ServerName www.$domain
-        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-        DocumentRoot /var/www/$domain/html
-        ErrorLog /var/www/$domain/logs/error.log
-        CustomLog /var/www/$domain/logs/access.log combined
-        DirectoryIndex index.php
-</VirtualHost>
-<VirtualHost *:80>
-        ServerName $domain
-        Redirect 301 / http://www.$domain/
-</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
 # Create /etc/cron.hourly entry
 echo "#!/bin/bash
-/usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
+/usr/bin/wget -O - -q -t 1 http://local.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
 sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
 # Create Drush Aliases
@@ -169,14 +163,18 @@ sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+
+
+
+#############################################################
+#    Install Drupal on Local
+#############################################################
+
 # Deploy site using Drush Site-Install
 drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 # Remove Drupal Install files after installation
 cd /var/www/$domain/html
 sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
-echo "
-# Prohibit Search Engines from randomly Flagging/Unflagging content
-Disallow: /flag/" >> robots.txt
 cd /var/www/$domain/html/sites
 sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php
 sudo chown -R deploy:www-data all default
@@ -184,6 +182,10 @@ sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
+# Prohibit Search Engines from Flagging
+echo "
+# Prohibit Search Engines from randomly Flagging/Unflagging content
+Disallow: /flag/" >> robots.txt
 # Enable Xtheme and set default
 drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
 npm install
@@ -208,39 +210,85 @@ drush en advanced_help -y
 
 drush php-eval 'node_access_rebuild();'
 
+
+
+#############################################################
+#    Prepare Development & Production to Clone
+#############################################################
+
+# Create virtual host file on Prod, enable and restart apache
+sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
+        ServerName dev.$domain
+        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        DocumentRoot /var/www/$domain/html
+        ErrorLog /var/www/$domain/logs/error.log
+        CustomLog /var/www/$domain/logs/access.log combined
+        DirectoryIndex index.php
+</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
+        ServerName www.$domain
+        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        DocumentRoot /var/www/$domain/html
+        ErrorLog /var/www/$domain/logs/error.log
+        CustomLog /var/www/$domain/logs/access.log combined
+        DirectoryIndex index.php
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName $domain
+        Redirect 301 / http://www.$domain/
+</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+# Create DB & user on Production
+db5="CREATE DATABASE IF NOT EXISTS $machine;"
+db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
+db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
+db8="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
+db9="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
+sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db5\""
+sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db6\""
+sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db7\""
+sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db8\""
+sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db9\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
+# Clone site directory to Production
+sudo -u deploy rsync -avzh /var/www/$domain/ deploy@dev:/var/www/$domain/
+sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
+# Clone Drush aliases
+sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
+# Clone Apache config & reload apache
+sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
+sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
+# Clone DB
+drush sql-sync @$machine.local @$machine.dev -y
+drush sql-sync @$machine.local @$machine.prod -y
+# Clone cron entry
+sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
+sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
+sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
+sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
 # Set permissions
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Clear Drupal cache, update database, run cron
-drush cc all && drush updb -y && drush cron
+drush -y @domain.local cc all && drush -y @domain.local updb && drush -y @domain.local cron
 # Push changes to Git directory
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
-# Create DB & user on Production
-db4="CREATE DATABASE IF NOT EXISTS $machine;"
-db5="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
-db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
-db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;"
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db4\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
-# Clone site directory to Production
-sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
-# Clone Drush aliases
-sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
-# Clone Apache config & reload apache
-sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
-# Clone DB
-sudo -u deploy ssh deploy@prod "drush sql-sync @$machine.dev @$machine.prod -y"
-# Clone cron entry
-sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
-sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/dev./www./g' /etc/cron.hourly/$machine"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
+drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
