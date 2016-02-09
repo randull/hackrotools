@@ -60,7 +60,7 @@ cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrat
 cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
 sudo chmod -R u=rw,go=r,a+X html/*
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
-# Create virtual host file, enable and restart apache
+# Create virtual host file on Dev, enable and restart apache
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
         ServerName dev.$domain
@@ -70,13 +70,26 @@ echo "<VirtualHost *:80>
         ErrorLog /var/www/$domain/logs/error.log
         CustomLog /var/www/$domain/logs/access.log combined
         DirectoryIndex index.php
+</VirtualHost>" > /etc/apache2/sites-available/$machine.conf
+sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf
+sudo a2ensite $machine.conf && sudo service apache2 reload
+# Create virtual host file on Prod, enable and restart apache
+sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
+        ServerName www.$domain
+        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        DocumentRoot /var/www/$domain/html
+        ErrorLog /var/www/$domain/logs/error.log
+        CustomLog /var/www/$domain/logs/access.log combined
+        DirectoryIndex index.php
 </VirtualHost>
 <VirtualHost *:80>
         ServerName $domain
-        Redirect 301 / http://dev.$domain/
-</VirtualHost>  " > /etc/apache2/sites-available/$machine.conf
-sudo chown root:www-data /etc/apache2/sites-available/$machine.conf
-sudo a2ensite $machine.conf && sudo service apache2 reload
+        Redirect 301 / http://www.$domain/
+</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "sudo a2ensite $machine.conf && sudo service apache2 reload"
 # Create /etc/cron.hourly entry
 echo "#!/bin/bash
 /usr/bin/wget -O - -q -t 1 http://dev.$domain/sites/all/modules/elysia_cron/cron.php?cron_key=$machine" > /etc/cron.hourly/$machine
