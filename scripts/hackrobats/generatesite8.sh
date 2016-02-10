@@ -166,7 +166,7 @@ echo "<?php
         'username' => '$machine',
         'password' => '$dbpw',
         'host' => 'localhost,
-        'port' => '',
+        'port' => '3306',
         'driver' => 'mysql',
         'prefix' => '',
       ),
