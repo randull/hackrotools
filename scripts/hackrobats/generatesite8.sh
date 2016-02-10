@@ -175,6 +175,7 @@ echo "<?php
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
+echo "Drush Alias Created"
 # Initialize Git directory
 cd /var/www/$domain/html
 sudo -u deploy git init
@@ -183,6 +184,7 @@ sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+echo "Site Prepared for Drush Install"
 
 
 
