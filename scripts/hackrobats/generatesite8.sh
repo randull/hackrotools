@@ -89,20 +89,16 @@ sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
 # Create Drush Aliases
 echo "<?php
-\$aliases[\"dev\"] = array(
-  'remote-host' => 'dev.hackrobats.net',
-  'remote-user' => 'deploy',
+\$aliases[\"local\"] = array(
   'root' => '/var/www/$domain/html',
-  'uri' => 'dev.$domain',
-  '#name' => '$machine.dev',
+  'uri' => 'http://local.$domain',
+  '#name' => '$machine.local',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
   'path-aliases' => 
   array (
-    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
-    '%site' => 'sites/default/',
   ),
   'databases' =>
   array (
@@ -113,7 +109,35 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'dev.hackrobats.net',
+        'host' => 'localhost',
+        'port' => '',
+        'driver' => 'mysql',
+        'prefix' => '',
+      ),
+    ),
+  ),
+);
+\$aliases[\"dev\"] = array(
+  'root' => '/var/www/$domain/html',
+  'uri' => 'http://dev.$domain',
+  '#name' => '$machine.dev',
+  '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
+  'path-aliases' => 
+  array (
+    '%dump-dir' => '/var/www/$domain/tmp',
+    '%private' => '/var/www/$domain/private',
+    '%files' => '/var/www/$domain/public',
+  ),
+  'databases' =>
+  array (
+    'default' =>
+    array (
+      'default' =>
+      array (
+        'database' => '$machine',
+        'username' => '$machine',
+        'password' => '$dbpw',
+        'host' => 'localhost',
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
@@ -122,19 +146,15 @@ echo "<?php
   ),
 );
 \$aliases[\"prod\"] = array(
-  'remote-host' => 'prod.hackrobats.net',
-  'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
-  'uri' => 'www.$domain',
-  '#name' => '$machine.dev',
+  'uri' => 'http://www.$domain',
+  '#name' => '$machine.prod',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
   'path-aliases' => 
   array (
-    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
-    '%site' => 'sites/default/',
   ),
   'databases' =>
   array (
@@ -145,7 +165,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'prod.hackrobats.net',
+        'host' => 'localhost,
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
@@ -185,7 +205,7 @@ sudo -u deploy rm -R all/libraries/plupload/examples
 # Prohibit Search Engines from Flagging
 echo "
 # Prohibit Search Engines from randomly Flagging/Unflagging content
-Disallow: /flag/" >> robots.txt
+Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 # Enable Xtheme and set default
 drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
 npm install
@@ -281,7 +301,7 @@ cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Clear Drupal cache, update database, run cron
-drush -y @domain.local cc all && drush -y @domain.local updb && drush -y @domain.local cron
+drush -y @machine.local cc all && drush -y @machine.local updb && drush -y @machine.local cron
 # Push changes to Git directory
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
