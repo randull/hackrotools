@@ -312,6 +312,6 @@ sudo -u deploy git push origin master
 #drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 #drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-drush @$machine cron -y && drush @$machine updb -y && drush @$machine cron -y
+drush @$machine.local cron -y && drush @$machine.local updb -y && drush @$machine.local cron -y
 # Take Dev & Prod sites out of Maintenance Mode
-drush @$machine vset maintenance_mode 0 -y && drush @$machine cc all -y
+drush @$machine.local vset maintenance_mode 0 -y && drush @$machine.local cc all -y
