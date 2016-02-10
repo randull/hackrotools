@@ -200,35 +200,35 @@ sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/the
 sudo chown -R deploy:www-data all default
 sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
-sudo chmod 644 /var/www/$domain/public/.htaccess
-sudo -u deploy rm -R all/libraries/plupload/examples
+#sudo chmod 644 /var/www/$domain/public/.htaccess
+#sudo -u deploy rm -R all/libraries/plupload/examples
 # Prohibit Search Engines from Flagging
-echo "
-# Prohibit Search Engines from randomly Flagging/Unflagging content
-Disallow: /flag/" >> /var/www/$domain/html/robots.txt
+#echo "
+## Prohibit Search Engines from randomly Flagging/Unflagging content
+#Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 # Enable Xtheme and set default
-drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
-npm install
-grunt sass
+#drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
+#npm install
+#grunt sass
 # Set owner of entire directory to deploy:www-data
-cd /var/www
-sudo chown -R deploy:www-data $domain
-sudo chown -R deploy:www-data /home/deploy
+#cd /var/www
+#sudo chown -R deploy:www-data $domain
+#sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
-cd /var/www/$domain/html
-drush vset cron_key $machine
-drush vset cron_safe_threshold 0
-drush vset error_level 0
-drush vset file_private_path /var/www/$domain/private
-drush vset file_temporary_path /var/www/$domain/tmp
-drush vset jquery_update_jquery_cdn "google"
-drush vset jquery_update_jquery_version "1.8"
-drush vset prod_check_sitemail "maintenance@hackrobats.net"
-drush vset maintenance_mode 1
+#cd /var/www/$domain/html
+#drush vset cron_key $machine
+#drush vset cron_safe_threshold 0
+#drush vset error_level 0
+#drush vset file_private_path /var/www/$domain/private
+#drush vset file_temporary_path /var/www/$domain/tmp
+#drush vset jquery_update_jquery_cdn "google"
+#drush vset jquery_update_jquery_version "1.8"
+#drush vset prod_check_sitemail "maintenance@hackrobats.net"
+#drush vset maintenance_mode 1
 
-drush en advanced_help -y
+#drush en advanced_help -y
 
-drush php-eval 'node_access_rebuild();'
+#drush php-eval 'node_access_rebuild();'
 
 
 
