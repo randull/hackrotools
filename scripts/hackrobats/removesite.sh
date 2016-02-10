@@ -92,4 +92,3 @@ echo "$domain directory removed from /var/www on Prod"
 cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php
 sudo -u deploy ssh deploy@dev "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
 sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
-# Finished
