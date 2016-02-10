@@ -27,13 +27,17 @@ sudo -u deploy ssh deploy@dev "mysql -u deploy -e 'drop database $machine; drop 
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; drop user $machine@prod; drop user $machine@prod.hackrobats.net;flush privileges;'"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
-sudo -u deploy a2dissite $machine.conf
+sudo a2dissite $machine.conf
 sudo -u deploy ssh deploy@dev "sudo a2dissite $machine.conf"
 sudo -u deploy ssh deploy@prod "sudo a2dissite $machine.conf"
 # Reload Apache2
-service apache2 reload
+sudo service apache2 reload
 sudo -u deploy ssh deploy@dev "sudo service apache2 reload"
 sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
+# Restart Apache2
+sudo service apache2 restart
+sudo -u deploy ssh deploy@dev "sudo service apache2 restart"
+sudo -u deploy ssh deploy@prod "sudo service apache2 restart"
 # Remove Virtual Host entry
 sudo rm -R $hosts/$machine.conf
 if [ -d "$hosts/$machine\.conf" ]; then
