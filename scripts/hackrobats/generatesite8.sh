@@ -175,7 +175,6 @@ echo "<?php
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
-echo "Drush Alias Created"
 # Initialize Git directory
 cd /var/www/$domain/html
 sudo -u deploy git init
@@ -184,7 +183,6 @@ sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
 drush make https://raw.github.com/randull/createsite/master/createsite.make -y
-echo "Site Prepared for Drush Install"
 
 
 
@@ -193,7 +191,7 @@ echo "Site Prepared for Drush Install"
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" --notify -y
+drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 # Remove Drupal Install files after installation
 cd /var/www/$domain/html
 sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
