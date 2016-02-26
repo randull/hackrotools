@@ -301,7 +301,7 @@ cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Clear Drupal cache, update database, run cron
-drush -y @machine.local cc all && drush -y @machine.local updb && drush -y @machine.local cron
+drush -y @$machine.local cc all && drush -y @$machine.local updb && drush -y @$machine.local cron
 # Push changes to Git directory
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
