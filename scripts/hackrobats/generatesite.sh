@@ -215,20 +215,20 @@ cd /var/www
 sudo chown -R deploy:www-data $domain
 sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
-#cd /var/www/$domain/html
-#drush vset cron_key $machine
-#drush vset cron_safe_threshold 0
-#drush vset error_level 0
-#drush vset file_private_path /var/www/$domain/private
-#drush vset file_temporary_path /var/www/$domain/tmp
-#drush vset jquery_update_jquery_cdn "google"
-#drush vset jquery_update_jquery_version "1.8"
-#drush vset prod_check_sitemail "maintenance@hackrobats.net"
-#drush vset maintenance_mode 1
+cd /var/www/$domain/html
+drush vset cron_key $machine
+drush vset cron_safe_threshold 0
+drush vset error_level 0
+drush vset file_private_path /var/www/$domain/private
+drush vset file_temporary_path /var/www/$domain/tmp
+drush vset jquery_update_jquery_cdn "google"
+drush vset jquery_update_jquery_version "1.8"
+drush vset prod_check_sitemail "maintenance@hackrobats.net"
+drush vset maintenance_mode 1
 
-#drush en advanced_help -y
+drush en advanced_help -y
 
-#drush php-eval 'node_access_rebuild();'
+drush php-eval 'node_access_rebuild();'
 
 
 
