@@ -200,16 +200,16 @@ sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/the
 sudo chown -R deploy:www-data all default
 sudo chmod 755 all default
 sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
-#sudo chmod 644 /var/www/$domain/public/.htaccess
-#sudo -u deploy rm -R all/libraries/plupload/examples
+sudo chmod 644 /var/www/$domain/public/.htaccess
+sudo -u deploy rm -R all/libraries/plupload/examples
 # Prohibit Search Engines from Flagging
-#echo "
-## Prohibit Search Engines from randomly Flagging/Unflagging content
-#Disallow: /flag/" >> /var/www/$domain/html/robots.txt
+echo "
+# Prohibit Search Engines from randomly Flagging/Unflagging content
+Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 # Enable Xtheme and set default
-#drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
-#npm install
-#grunt sass
+drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
+npm install
+grunt sass
 # Set owner of entire directory to deploy:www-data
 #cd /var/www
 #sudo chown -R deploy:www-data $domain
