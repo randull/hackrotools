@@ -193,14 +193,14 @@ drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 # Deploy site using Drush Site-Install
 drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 # Remove Drupal Install files after installation
+cd /var/www/$domain
+sudo chown -R deploy:www-data html logs private public tmp
+sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 cd /var/www/$domain/html
 sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
 cd /var/www/$domain/html/sites
 sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php
-sudo chown -R deploy:www-data all default
-sudo chmod 755 all default
-sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
-sudo chmod 644 /var/www/$domain/public/.htaccess
 sudo -u deploy rm -R all/libraries/plupload/examples
 # Prohibit Search Engines from Flagging
 echo "
@@ -211,9 +211,9 @@ drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
 npm install
 grunt sass
 # Set owner of entire directory to deploy:www-data
-#cd /var/www
-#sudo chown -R deploy:www-data $domain
-#sudo chown -R deploy:www-data /home/deploy
+cd /var/www
+sudo chown -R deploy:www-data $domain
+sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
 #cd /var/www/$domain/html
 #drush vset cron_key $machine
