@@ -262,38 +262,38 @@ sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
 #        Redirect 301 / http://www.$domain/
 #</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
 # Create DB & user on Production
-db5="CREATE DATABASE IF NOT EXISTS $machine;"
-db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
-db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
-db8="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
-db9="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db5\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db6\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db7\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db8\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db9\""
+#db5="CREATE DATABASE IF NOT EXISTS $machine;"
+#db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
+#db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
+#db8="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
+#db9="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
+#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db5\""
+#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db6\""
+#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db7\""
+#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db8\""
+#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db9\""
 #sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
 #sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
 #sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
 #sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
 #sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
 # Clone site directory to Production
-sudo -u deploy rsync -avzh /var/www/$domain/ deploy@dev:/var/www/$domain/
+#sudo -u deploy rsync -avzh /var/www/$domain/ deploy@dev:/var/www/$domain/
 #sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 # Clone Drush aliases
-sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
+#sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
 #sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
-sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
+#sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+#sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 #sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
 #sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
-drush sql-sync @$machine.local @$machine.dev -y
+#drush sql-sync @$machine.local @$machine.dev -y
 #drush sql-sync @$machine.local @$machine.prod -y
 # Clone cron entry
-sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
-sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
+#sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
+#sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
 #sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 #sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
 # Set permissions
@@ -309,7 +309,7 @@ sudo -u deploy git push origin master
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
+#drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 #drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
 drush @$machine.local cron -y && drush @$machine.local updb -y && drush @$machine.local cron -y
