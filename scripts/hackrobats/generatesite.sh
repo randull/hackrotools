@@ -121,7 +121,7 @@ echo "<?php
   'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
   'uri' => 'www.$domain',
-  '#name' => '$machine.dev',
+  '#name' => '$machine.prod',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
   'path-aliases' => 
   array (
