@@ -237,16 +237,16 @@ drush php-eval 'node_access_rebuild();'
 #############################################################
 
 # Create virtual host file on Prod, enable and restart apache
-#sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
-#        ServerAdmin maintenance@hackrobats.net
-#        ServerName dev.$domain
-#        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-#        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-#        DocumentRoot /var/www/$domain/html
-#        ErrorLog /var/www/$domain/logs/error.log
-#        CustomLog /var/www/$domain/logs/access.log combined
-#        DirectoryIndex index.php
-#</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
+        ServerName dev.$domain
+        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        DocumentRoot /var/www/$domain/html
+        ErrorLog /var/www/$domain/logs/error.log
+        CustomLog /var/www/$domain/logs/access.log combined
+        DirectoryIndex index.php
+</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
 #sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
 #        ServerAdmin maintenance@hackrobats.net
 #        ServerName www.$domain
