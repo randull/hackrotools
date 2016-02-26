@@ -191,7 +191,7 @@ drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" --notify -y
+drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
@@ -307,11 +307,11 @@ sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 # Prepare site for Maintenance
-cd /var/www/$domain/html
-drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
+#cd /var/www/$domain/html
+#drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 #drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 #drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-drush @$machine.local cron -y && drush @$machine.local updb -y && drush @$machine.local cron -y
+#drush @$machine.local cron -y && drush @$machine.local updb -y && drush @$machine.local cron -y
 # Take Dev & Prod sites out of Maintenance Mode
 drush @$machine.local vset maintenance_mode 0 -y && drush @$machine.local cc all -y
