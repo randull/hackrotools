@@ -311,6 +311,8 @@ drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_cap
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 #drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-drush @$machine cron -y && drush @$machine updb -y && drush @$machine cron -y
+drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
+drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
 # Take Dev & Prod sites out of Maintenance Mode
-drush @$machine vset maintenance_mode 0 -y && drush @$machine cc all -y
+drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
+drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
