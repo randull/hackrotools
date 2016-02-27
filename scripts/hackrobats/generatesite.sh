@@ -89,23 +89,21 @@ sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
 # Create Drush Aliases
 echo "<?php
-\$aliases[\"local\"] = array(
+\$aliases[\"local\"] = array (
   'root' => '/var/www/$domain/html',
-  'uri' => 'http://local.$domain',
+  'uri' => 'local.$domain',
   '#name' => '$machine.local',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
-  'path-aliases' => 
-  array (
+  'path-aliases' => array (
+    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
+    '%site' => 'sites/default/',
   ),
-  'databases' =>
-  array (
-    'default' =>
-    array (
-      'default' =>
-      array (
+  'databases' => array (
+    'default' => array (
+      'default' => array (
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
@@ -117,23 +115,23 @@ echo "<?php
     ),
   ),
 );
-\$aliases[\"dev\"] = array(
+\$aliases[\"dev\"] = array (
+  'remote-host' => 'dev.hackrobats.net',
+  'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
-  'uri' => 'http://dev.$domain',
+  'uri' => 'dev.$domain',
   '#name' => '$machine.dev',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
-  'path-aliases' => 
-  array (
+  'path-aliases' => array (
+    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
+    '%site' => 'sites/default/',
   ),
-  'databases' =>
-  array (
-    'default' =>
-    array (
-      'default' =>
-      array (
+  'databases' => array (
+    'default' => array (
+      'default' => array (
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
@@ -145,23 +143,23 @@ echo "<?php
     ),
   ),
 );
-\$aliases[\"prod\"] = array(
+\$aliases[\"prod\"] = array (
+  'remote-host' => 'prod.hackrobats.net',
+  'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
-  'uri' => 'http://www.$domain',
+  'uri' => 'www.$domain',
   '#name' => '$machine.prod',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
-  'path-aliases' => 
-  array (
+  'path-aliases' => array (
+    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
+    '%site' => 'sites/default/',
   ),
-  'databases' =>
-  array (
-    'default' =>
-    array (
-      'default' =>
-      array (
+  'databases' => array (
+    'default' => array (
+      'default' => array (
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
@@ -278,10 +276,10 @@ sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db9\""
 #sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
 #sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
 # Clone site directory to Production
-sudo -u deploy rsync -avzh /var/www/$domain/ deploy@dev:/var/www/$domain/
+sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
 #sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 # Clone Drush aliases
-sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
 #sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
 sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
@@ -289,8 +287,8 @@ sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo ser
 #sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
 #sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
-drush sql-sync @$machine.local @$machine.dev -y
-#drush sql-sync @$machine.local @$machine.prod -y
+drush -y sql-sync @$machine.local @$machine.dev
+#drush -y sql-sync @$machine.local @$machine.prod
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
@@ -303,6 +301,7 @@ sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Clear Drupal cache, update database, run cron
 drush -y @$machine.local cc all && drush -y @$machine.local updb && drush -y @$machine.local cron
 # Push changes to Git directory
+cd /var/www/$domain/html
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
