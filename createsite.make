@@ -37,27 +37,7 @@ projects[] = date
 projects[] = devel
 projects[] = disqus
 projects[] = ds
-projects[] = references
-projects[] = rules
-projects[] = security_review
-projects[] = services
-projects[] = session_api
-projects[] = shs
-projects[] = special_menu_items
-projects[] = strongarm
-projects[] = system_stream_wrapper
-projects[] = term_reference_tree
-projects[] = token
-projects[] = translation_helpers
-projects[] = transliteration
-projects[] = uuid
-projects[] = uuid_features
-projects[] = variable
-projects[] = views
-projects[] = views_bulk_operations
-projects[] = views_data_export
-projects[] = views_date_format_sql
-projects[] = views_megarow
+
 
 ; Themes
 projects[xtheme][type] = theme
