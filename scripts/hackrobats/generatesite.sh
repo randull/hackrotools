@@ -189,7 +189,7 @@ drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
+drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y --debug
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
@@ -287,7 +287,7 @@ sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo ser
 #sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
 #sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
-drush -y sql-sync @$machine.local @$machine.dev
+drush -vy sql-sync @$machine.local @$machine.dev --debug
 #drush -y sql-sync @$machine.local @$machine.prod
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
