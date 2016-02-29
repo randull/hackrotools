@@ -27,6 +27,10 @@ projects[] = colorbox
 projects[] = content_access
 projects[] = context
 projects[] = ctools
+projects[] = date
+projects[] = devel
+projects[] = disqus
+projects[] = ds
 
 projects[] = nodeformsettings
 
