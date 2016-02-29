@@ -7,7 +7,7 @@ projects[] = drupal
 ; Dev Modules
 projects[advanced_help] = 1.x-dev
 projects[backup_migrate] = 3.x-dev
-
+projects[views_tree] = 2.x-dev
 
 ; Prod Modules
 projects[] = addressfield
