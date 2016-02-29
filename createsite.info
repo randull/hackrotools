@@ -26,4 +26,16 @@ dependencies[] = taxonomy
 dependencies[] = trigger
 
 ; Contrib Modules
+dependencies[] = actions_permissions
+dependencies[] = addressfield
+dependencies[] = admin_devel
 dependencies[] = admin_menu
+dependencies[] = admin_views
+dependencies[] = backup_migrate
+dependencies[] = better_exposed_filters
+dependencies[] = better_formats
+dependencies[] = block_class
+dependencies[] = blockcache_alter
+dependencies[] = blockreference
+dependencies[] = breakpoints
+dependencies[] = bulk_export
