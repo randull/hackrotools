@@ -71,6 +71,18 @@ sudo -u deploy ssh deploy@prod "if [ -d '/etc/cron.hourly/$machine' ]; then
   echo '$machine entry still exists in /etc/cron.hourly'
 fi"
 echo "$machine entry removed from /etc/cron.hourly on Prod"
+# Remove Drush alias
+cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php
+sudo -u deploy ssh deploy@dev "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
+sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
+# Delete Docroot excluding, Destroy anything except .git & .gitignore & readme.md
+cd /var/www/$domain/html/
+sudo rm -R !(.git|.gitignore|README.md)
+# Push Changes to Github
+git status
+git add . -A
+git commit -a -m "Purging"
+git push origin master
 # Delete File Structure
 cd $www
 sudo rm -R $domain
@@ -88,7 +100,3 @@ sudo -u deploy ssh deploy@prod "if [ -d '$www/$domain' ]; then
   echo '$domain directory still exists in /var/www'
 fi"
 echo "$domain directory removed from /var/www on Prod"
-# Remove Drush alias
-cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php
-sudo -u deploy ssh deploy@dev "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
-sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
