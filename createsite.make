@@ -28,6 +28,8 @@ projects[] = content_access
 projects[] = context
 projects[] = ctools
 
+projects[] = nodeformsettings
+
 projects[] = views
 projects[] = views_bulk_operations
 projects[] = views_data_export

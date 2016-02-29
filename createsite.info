@@ -53,6 +53,8 @@ dependencies[] = context_ui
 dependencies[] = ctools
 dependencies[] = ctools_access_ruleset
 
+dependencies[] = nodeformsettings
+
 dependencies[] = views
 dependencies[] = views_bulk_operations
 dependencies[] = views_content
