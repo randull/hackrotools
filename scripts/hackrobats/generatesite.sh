@@ -189,7 +189,7 @@ drush -y make https://raw.github.com/randull/createsite/master/createsite.make
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush -y si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
+drush -y site-install createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
