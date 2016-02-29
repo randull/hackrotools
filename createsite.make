@@ -34,6 +34,10 @@ projects[] = disqus
 projects[] = ds
 projects[] = email
 projects[] = entity
+projects[] = entity_rules
+projects[] = entity2text
+projects[] = entityform
+projects[] = entityreference
 
 projects[] = nodeformsettings
 

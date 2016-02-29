@@ -75,6 +75,13 @@ dependencies[] = disqus_ds
 dependencies[] = elysia_cron
 dependencies[] = email
 dependencies[] = entity
+dependencies[] = entity_rules
+dependencies[] = entity_token
+dependencies[] = entity2text
+dependencies[] = entityform
+dependencies[] = entityform_anonymous
+dependencies[] = entityform_notifications
+dependencies[] = entityreference
 
 dependencies[] = nodeformsettings
 
