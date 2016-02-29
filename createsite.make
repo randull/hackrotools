@@ -20,8 +20,11 @@ projects[] = block_class
 projects[] = blockcache_alter
 projects[] = blockreference
 projects[] = breakpoints
-
+projects[] = views
 projects[] = views_bulk_operations
+projects[] = views_data_export
+projects[] = views_date_format_sql
+projects[] = views_megarow
 
 ; Themes
 projects[xtheme][type] = theme
