@@ -41,6 +41,8 @@ projects[] = entityreference
 
 projects[] = nodeformsettings
 
+projects[] = rules
+
 projects[] = views
 projects[] = views_bulk_operations
 projects[] = views_data_export
