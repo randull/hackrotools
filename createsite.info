@@ -72,6 +72,8 @@ dependencies[] = ds_search
 dependencies[] = ds_ui
 dependencies[] = disqus
 dependencies[] = disqus_ds
+dependencies[] = elysia_cron
+dependencies[] = email
 
 dependencies[] = nodeformsettings
 
