@@ -74,6 +74,7 @@ dependencies[] = disqus
 dependencies[] = disqus_ds
 dependencies[] = elysia_cron
 dependencies[] = email
+dependencies[] = entity
 
 dependencies[] = nodeformsettings
 

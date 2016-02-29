@@ -33,6 +33,7 @@ projects[] = devel
 projects[] = disqus
 projects[] = ds
 projects[] = email
+projects[] = entity
 
 projects[] = nodeformsettings
 
