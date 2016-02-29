@@ -20,7 +20,12 @@ projects[] = block_class
 projects[] = blockcache_alter
 projects[] = blockreference
 projects[] = breakpoints
-
+projects[] = calendar
+projects[] = charts
+projects[] = ckeditor
+projects[] = colorbox
+projects[] = content_access
+projects[] = context
 projects[] = ctools
 
 projects[] = views

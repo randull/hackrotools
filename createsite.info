@@ -39,7 +39,17 @@ dependencies[] = blockcache_alter
 dependencies[] = blockreference
 dependencies[] = breakpoints
 dependencies[] = bulk_export
-
+dependencies[] = calendar
+dependencies[] = charts
+dependencies[] = charts_google
+dependencies[] = ckeditor
+dependencies[] = colorbox
+dependencies[] = commentformsettings
+dependencies[] = content_access
+dependencies[] = content_access_rules
+dependencies[] = context
+dependencies[] = context_layouts
+dependencies[] = context_ui
 dependencies[] = ctools
 dependencies[] = ctools_access_ruleset
 
