@@ -76,10 +76,12 @@ cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php
 sudo -u deploy ssh deploy@dev "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
 sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
 # Delete Docroot excluding, Destroy anything except .git & .gitignore & readme.md
-cd /var/www/$domain/html
-shopt -s extglob
-sudo rm -rf !(.git|.gitignore|README.md|.|..)
+cd /var/www/$domain
+sudo mv /var/www/$domain/html/README.md /var/www/$domain/README.md
+sudo rm -R html/*
+sudo mv /var/www/$domain/README.md /var/www/$domain/html/README.md
 # Push Changes to Github
+cd /var/www/$domain/html
 git status
 git add . -A
 git commit -a -m "Purging"
