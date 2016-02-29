@@ -277,18 +277,18 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
 sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
 # Clone site directory to Production
 sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
-#sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
+sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 # Clone Drush aliases
 sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
-#sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
 sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
-#sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-#sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
+sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
-drush -vy sql-sync @$machine.local @$machine.dev --debug
-#drush -y sql-sync @$machine.local @$machine.prod
+drush -vy sql-sync @$machine.local @$machine.dev
+#drush -vy sql-sync @$machine.local @$machine.prod
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
