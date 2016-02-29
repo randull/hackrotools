@@ -245,20 +245,20 @@ sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
         CustomLog /var/www/$domain/logs/access.log combined
         DirectoryIndex index.php
 </VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
-#sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
-#        ServerAdmin maintenance@hackrobats.net
-#        ServerName www.$domain
-#        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-#        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-#        DocumentRoot /var/www/$domain/html
-#        ErrorLog /var/www/$domain/logs/error.log
-#        CustomLog /var/www/$domain/logs/access.log combined
-#        DirectoryIndex index.php
-#</VirtualHost>
-#<VirtualHost *:80>
-#        ServerName $domain
-#        Redirect 301 / http://www.$domain/
-#</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
+        ServerName www.$domain
+        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        DocumentRoot /var/www/$domain/html
+        ErrorLog /var/www/$domain/logs/error.log
+        CustomLog /var/www/$domain/logs/access.log combined
+        DirectoryIndex index.php
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName $domain
+        Redirect 301 / http://www.$domain/
+</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
 # Create DB & user on Production
 db5="CREATE DATABASE IF NOT EXISTS $machine;"
 db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
@@ -270,11 +270,11 @@ sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db6\""
 sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db7\""
 sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db8\""
 sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db9\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
 # Clone site directory to Production
 sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
 #sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
