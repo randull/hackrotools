@@ -21,6 +21,7 @@ projects[] = blockcache_alter
 projects[] = blockreference
 projects[] = breakpoints
 
+projects[] = views_bulk_operations
 
 ; Themes
 projects[xtheme][type] = theme
