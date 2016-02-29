@@ -77,7 +77,7 @@ sudo -u deploy ssh deploy@dev "cd /home/deploy/.drush && sudo rm -R $machine.ali
 sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
 # Delete Docroot excluding, Destroy anything except .git & .gitignore & readme.md
 cd /var/www/$domain/html
-sudo rm -R !(.git|.gitignore|README.md)
+sudo rm -rf !(.git|.gitignore|README.md|.|..)
 # Push Changes to Github
 git status
 git add . -A
