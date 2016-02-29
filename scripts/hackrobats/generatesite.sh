@@ -180,7 +180,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -vy --concurrency=5 make https://raw.github.com/randull/createsite/master/createsite.make
+drush -y --concurrency=5 make https://raw.github.com/randull/createsite/master/createsite.make --debug
 
 
 

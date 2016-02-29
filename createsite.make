@@ -5,49 +5,9 @@ api = 2
 projects[] = drupal
 
 ; Dev Modules
-projects[advanced_help] = 1.x-dev
-projects[backup_migrate] = 3.x-dev
-projects[elysia_cron] = 2.x-dev
-projects[views_tree] = 2.x-dev
 
 ; Prod Modules
-projects[] = addressfield
 projects[] = admin_menu
-projects[] = admin_views
-projects[] = adminimal_admin_menu
-projects[] = better_exposed_filters
-projects[] = better_formats
-projects[] = block_class
-projects[] = blockcache_alter
-projects[] = blockreference
-projects[] = breakpoints
-projects[] = calendar
-projects[] = charts
-projects[] = ckeditor
-projects[] = colorbox
-projects[] = content_access
-projects[] = context
-projects[] = ctools
-projects[] = date
-projects[] = devel
-projects[] = disqus
-projects[] = ds
-projects[] = email
-projects[] = entity
-projects[] = entity_rules
-projects[] = entity2text
-projects[] = entityform
-projects[] = entityreference
-
-projects[] = nodeformsettings
-
-projects[] = rules
-
-projects[] = views
-projects[] = views_bulk_operations
-projects[] = views_data_export
-projects[] = views_date_format_sql
-projects[] = views_megarow
 
 ; Themes
 projects[xtheme][type] = theme
