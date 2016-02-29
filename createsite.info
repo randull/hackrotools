@@ -39,6 +39,10 @@ dependencies[] = blockcache_alter
 dependencies[] = blockreference
 dependencies[] = breakpoints
 dependencies[] = bulk_export
+
+dependencies[] = ctools
+dependencies[] = ctools_access_ruleset
+
 dependencies[] = views
 dependencies[] = views_bulk_operations
 dependencies[] = views_content

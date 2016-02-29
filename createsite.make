@@ -20,6 +20,9 @@ projects[] = block_class
 projects[] = blockcache_alter
 projects[] = blockreference
 projects[] = breakpoints
+
+projects[] = ctools
+
 projects[] = views
 projects[] = views_bulk_operations
 projects[] = views_data_export
