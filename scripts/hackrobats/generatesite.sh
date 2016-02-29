@@ -288,18 +288,18 @@ sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-av
 sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
 drush -vy sql-sync @$machine.local @$machine.dev
-#drush -vy sql-sync @$machine.local @$machine.prod
+drush -vy sql-sync @$machine.local @$machine.prod
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
-#sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
-#sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
+sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
+sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
 # Set permissions
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Clear Drupal cache, update database, run cron
-drush -y @$machine.local cc all && drush -y @$machine.local updb && drush -y @$machine.local cron
+drush -y @$machine cc all && drush -y @$machine updb && drush -y @$machine cron
 # Push changes to Git directory
 cd /var/www/$domain/html
 sudo -u deploy git add . -A
@@ -309,10 +309,8 @@ sudo -u deploy git push origin master
 cd /var/www/$domain/html
 drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
 drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-#drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
-drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
-# Take Dev & Prod sites out of Maintenance Mode
-drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
-drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
+drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
+# Take Local, Dev & Prod sites out of Maintenance Mode
+drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
