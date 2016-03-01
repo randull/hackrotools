@@ -82,6 +82,8 @@ dependencies[] = entityform_anonymous
 dependencies[] = entityform_notifications
 dependencies[] = entityreference
 
+dependencies[] = libraries
+
 dependencies[] = nodeformsettings
 
 dependencies[] = rules

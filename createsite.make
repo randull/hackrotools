@@ -38,6 +38,8 @@ projects[] = entity2text
 projects[] = entityform
 projects[] = entityreference
 
+projects[] = libraries
+
 projects[] = nodeformsettings
 
 projects[] = rules
