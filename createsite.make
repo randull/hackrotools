@@ -36,6 +36,17 @@ projects[] = entity
 projects[] = entity2text
 projects[] = entityform
 projects[] = entityreference
+projects[] = features
+projects[] = features_extra
+projects[] = feeds
+projects[] = field_group
+projects[] = field_placeholder
+projects[] = file_entity
+projects[] = flag
+projects[] = fontyourface
+projects[] = fpa
+projects[] = ga_push
+projects[] = google_analytics
 
 projects[] = libraries
 

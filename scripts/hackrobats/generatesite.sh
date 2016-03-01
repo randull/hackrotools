@@ -48,6 +48,8 @@ dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric pass
 #    Prepare Local Environment for Installation
 #############################################################
 
+# Clear Drush Cache
+drush cc drush
 # Create database and user
 db0="CREATE DATABASE IF NOT EXISTS $machine;"
 db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
