@@ -53,6 +53,8 @@ projects[] = libraries
 
 projects[] = nodeformsettings
 
+projects[] = picture
+
 projects[] = rules
 
 projects[] = views
