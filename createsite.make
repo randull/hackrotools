@@ -24,7 +24,6 @@ projects[] = breakpoints
 projects[] = calendar
 projects[] = charts
 projects[] = ckeditor
-projects[] = colorbox
 projects[] = content_access
 projects[] = context
 projects[] = ctools

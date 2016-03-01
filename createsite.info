@@ -43,7 +43,6 @@ dependencies[] = calendar
 dependencies[] = charts
 dependencies[] = charts_google
 dependencies[] = ckeditor
-dependencies[] = colorbox
 dependencies[] = commentformsettings
 dependencies[] = content_access
 dependencies[] = content_access_rules
