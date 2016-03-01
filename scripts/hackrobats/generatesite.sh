@@ -180,7 +180,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -y --concurrency=5 make https://raw.github.com/randull/createsite/master/createsite.make --debug
+drush -y --concurrency=5 make https://raw.github.com/randull/createsite/master/createsite.make
 
 
 
@@ -189,7 +189,7 @@ drush -y --concurrency=5 make https://raw.github.com/randull/createsite/master/c
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush -y site-install createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
+drush -y site-install createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" --notify
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
