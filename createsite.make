@@ -8,6 +8,7 @@ projects[] = drupal
 projects[advanced_help] = 1.x-dev
 projects[backup_migrate] = 3.x-dev
 projects[elysia_cron] = 2.x-dev
+projects[flexslider] = 2.x-dev
 projects[views_tree] = 2.x-dev
 
 ; Prod Modules
