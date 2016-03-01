@@ -299,8 +299,6 @@ sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
-# Clear Drupal cache, update database, run cron
-drush -y @$machine cc all && drush -y @$machine updb && drush -y @$machine cron
 # Push changes to Git directory
 cd /var/www/$domain/html
 sudo -u deploy git add . -A
