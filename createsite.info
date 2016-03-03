@@ -32,6 +32,7 @@ dependencies[] = addressfield
 dependencies[] = admin_devel
 dependencies[] = admin_menu
 dependencies[] = admin_views
+dependencies[] = adminimal_admin_menu
 dependencies[] = backup_migrate
 dependencies[] = better_exposed_filters
 dependencies[] = better_formats
