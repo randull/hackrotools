@@ -208,8 +208,8 @@ Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 # Enable Xtheme and set default
 drush -y @$machine.local cc all
 cd /var/www/$domain/html/sites/all/themes/xtheme
-npm install
-grunt sass
+#npm install
+#grunt sass
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
