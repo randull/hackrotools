@@ -232,6 +232,11 @@ drush secrev --store
 
 drush php-eval 'node_access_rebuild();'
 
+# Remove Drupal Install files after installation
+cd /var/www/$domain
+sudo chown -R deploy:www-data html logs private public tmp
+sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 
 
 #############################################################
