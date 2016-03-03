@@ -2,8 +2,28 @@ name = Hackrobats Create Site
 description = Custom Installation Profile for Hackrobats Clients
 version = "7.x-0.1"
 core = 7.x
+exclusive = true
 
 ; Core Modules
-
+dependencies[] = block
+dependencies[] = blog
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = dblog
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = locale
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = profile
+dependencies[] = rdf
+dependencies[] = shortcut
+dependencies[] = taxonomy
+dependencies[] = trigger
 
 ; Contrib Modules
