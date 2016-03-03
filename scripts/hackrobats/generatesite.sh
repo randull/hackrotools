@@ -182,7 +182,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -y make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
+drush -vy make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
 
 
 
@@ -208,8 +208,8 @@ Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 # Enable Xtheme and set default
 drush -y @$machine.local cc all
 cd /var/www/$domain/html/sites/all/themes/xtheme
-#npm install
-#grunt sass
+npm install
+grunt sass
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
