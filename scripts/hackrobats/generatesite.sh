@@ -228,6 +228,8 @@ drush vset maintenance_mode 1
 
 drush en advanced_help -y
 
+drush secrev --store
+
 drush php-eval 'node_access_rebuild();'
 
 
