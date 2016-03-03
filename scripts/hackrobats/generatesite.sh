@@ -182,7 +182,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -y make https://raw.github.com/randull/createsite/master/createsite.make --concurrency=8 --no-cache
+drush -y make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
 
 
 
@@ -225,7 +225,7 @@ drush vset jquery_update_jquery_version "1.8"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 
-drush en advanced_help -y
+drush -y @$machine.local en admin_menu advanced_help fpa module_filter
 
 drush php-eval 'node_access_rebuild();'
 
