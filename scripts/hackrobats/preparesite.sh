@@ -9,7 +9,7 @@ if [ "$1" == "" ];
     echo "No domain provided";
     read -p "Site domain to generate: " domain;
   else
-    echo $1;
+    echo Domain = $1;
     domain=$1;
 fi
 # Retrieve Business Name from command line argument OR Prompt user to enter
@@ -27,7 +27,7 @@ if [ "$3" == "" ];
     echo "Not Github account provided";
     read -p "Please provide Github account used to create Private Repository: " github;
   else
-    echo $3;
+    echo Github User = $3;
     github=$3;
 fi
 # Create variables from Domain Name
@@ -176,6 +176,7 @@ sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
 cd /var/www/$domain/html
 sudo -u deploy git init
 sudo -u deploy git remote add origin git@github.com:/randull/$name.git
+sudo -u deploy git reset --hard
 sudo -u deploy git pull origin master
 
 # Remove Drupal Install files after installation
