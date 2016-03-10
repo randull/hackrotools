@@ -13,7 +13,7 @@ if [ "$1" == "" ];
     domain=$1;
 fi
 PS3="Please choose Development Branding: "
-select option in 'Hackrobats' '510 Interactive'
+select option in "Hackrobats" "510 Interactive"
 do
     case $option in
         Hackrobats) 
