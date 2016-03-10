@@ -184,6 +184,11 @@ sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 cd /var/www/$domain/html
+echo "<html>
+  <body style="display: table; height:100%; width:100%; margin:0;">
+    <h1 style="font-family:helvetica, arial; font-size: 10em; text-align:center; margin:0; display: table-cell; vertical-align: middle;">$sitename</h1>
+  </body>
+</html>" > /var/www/$domain/html/index.html
 
 # Set owner of home directory to deploy:www-data
 sudo chown -R deploy:www-data /var/www/$domain
@@ -267,9 +272,14 @@ sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 
 # Display Docroot, URLs, Sitename, Github Repo, DB User & PW
-echo "Database password = $domain"
-echo "Database password = $sitename"
-echo "Database password = www.$domain"
-echo "Database password = dev.$domain"
-echo "Database password = local.$domain"
-echo "Database password = $dbpw"
+echo ""
+echo "Docroot            = /var/www/$domain/html"
+echo "Domain Name        = $domain"
+echo "Site Name          = $sitename"
+echo "Production URL     = www.$domain"
+echo "Staging URL        = stage.$domain"
+echo "Local URL          = local.$domain"
+echo "Github Repository  = $github"
+echo "Database Password  = $dbpw"
+echo "Database Name/User = $machine"
+echo "Database Password  = $dbpw"
