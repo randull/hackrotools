@@ -321,3 +321,6 @@ drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_
 drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
 drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
+
+
+echo "Database password = $dbpw"
