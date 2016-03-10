@@ -18,7 +18,7 @@ if [ "$2" == "" ];
     echo "No Business Name provided";
     read -p "Please provide user friendly Business Name: " sitename;
   else
-    echo $2;
+    echo Sitename = $2;
     sitename=$2;
 fi
 # Retrieve Github account from command line argument OR Prompt user to enter
@@ -186,12 +186,12 @@ sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 cd /var/www/$domain/html
 echo "<html>
   <body>
-    <div>$sitename</h1>
+    <div>$sitename</div>
   </body>
 </html>
 <style>
-html, body {height:100%; width:100%; margin:0;}
-div {display:block; position: relative; top: 50%; transform: translateY(-50%); font-size: 10em; text-align: center;}
+html, body {height: 100%; width: 100%; margin: 0; padding: 0; }
+div {display: block; position: relative; top: 50%; transform: translateY(-50%); font-size: 10em; text-align: center; }
 </style>" > /var/www/$domain/html/index.html
 
 # Set owner of home directory to deploy:www-data
@@ -283,6 +283,6 @@ echo "Site Name          = $sitename"
 echo "Production URL     = http://www.$domain"
 echo "Staging URL        = http://stage.$domain"
 echo "Local URL          = http://local.$domain"
-echo "Github Repository  = https://github.com/$github/$domain"
+echo "Github Repository  = https://github.com/$github/$machine.git"
 echo "Database Name/User = $machine"
 echo "Database Password  = $dbpw"
