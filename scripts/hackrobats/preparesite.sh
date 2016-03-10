@@ -12,6 +12,18 @@ if [ "$1" == "" ];
     echo $1;
     domain=$1;
 fi
+PS3="Please choose an option "
+select option in go stay wait quit
+do
+    case $option in
+        go) 
+            echo "Going";;
+        stay|wait) 
+            echo "Standing by";;
+        quit)
+            break;;
+     esac
+done
 # Create variables from Domain Name
 hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
 www=/var/www                          # Set variable for Drupal root directory
