@@ -195,7 +195,7 @@ echo "<html>
 </html>
 <style>
 html, body {height: 100%; width: 100%; margin: 0; padding: 0; }
-div {display: block; position: relative; top: 45%; transform: translateY(-50%); font-size: 8em; text-align: center; }
+div {display: block; position: relative; top: 45%; transform: translateY(-50%); font-size: 6em; text-align: center; }
 </style>" > /var/www/$domain/html/index.html
 echo "/var/www/$domain/html/index.html was created"
 
