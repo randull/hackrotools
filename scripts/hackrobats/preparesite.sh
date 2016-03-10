@@ -12,26 +12,6 @@ if [ "$1" == "" ];
     echo $1;
     domain=$1;
 fi
-# Retrieve Business Name from command line argument OR Prompt user to enter
-if [ "$2" == "" ]; 
-  then
-    echo "No Business Name provided";
-    read -p "Please provide user friendly Business Name: " sitename;
-  else
-    echo $2;
-    sitename=$2;
-fi
-# Prompt user to enter Password for User1(Hackrobats)
-while true
-do
-    read -s -p "User1 Password: " drupalpass
-    echo
-    read -s -p "User1 Password (again): " drupalpass2
-    echo
-    [ "$drupalpass" = "$drupalpass2" ] && break
-    echo "Please try again"
-done
-echo "Password Matches"
 # Create variables from Domain Name
 hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
 www=/var/www                          # Set variable for Drupal root directory
