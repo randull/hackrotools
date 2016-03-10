@@ -34,7 +34,7 @@ fi
 hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
 www=/var/www                          # Set variable for Drupal root directory
 tld=`echo $domain  |cut -d"." -f2,3`  # Generate tld (eg .com)
-name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com) 
+name=`echo $domain |cut -f1 -d"."`    # Remove last four characters (eg .com) 
 longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
@@ -85,7 +85,7 @@ echo "<VirtualHost *:80>
         DocumentRoot /var/www/$domain/html
         ErrorLog /var/www/$domain/logs/error.log
         CustomLog /var/www/$domain/logs/access.log combined
-        DirectoryIndex index.php
+        DirectoryIndex index.php index.html
 </VirtualHost>" > /etc/apache2/sites-available/$machine.conf
 sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf
 sudo a2ensite $machine.conf && sudo service apache2 reload
@@ -195,8 +195,9 @@ echo "<html>
 </html>
 <style>
 html, body {height: 100%; width: 100%; margin: 0; padding: 0; }
-div {display: block; position: relative; top: 50%; transform: translateY(-50%); font-size: 10em; text-align: center; }
+div {display: block; position: relative; top: 45%; transform: translateY(-50%); font-size: 8em; text-align: center; }
 </style>" > /var/www/$domain/html/index.html
+echo "/var/www/$domain/html/index.html was created"
 
 # Set owner of home directory to deploy:www-data
 sudo chown -R deploy:www-data /var/www/$domain
@@ -221,7 +222,7 @@ sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
         DocumentRoot /var/www/$domain/html
         ErrorLog /var/www/$domain/logs/error.log
         CustomLog /var/www/$domain/logs/access.log combined
-        DirectoryIndex index.php
+        DirectoryIndex index.php index.html
 </VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
@@ -231,7 +232,7 @@ sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
         DocumentRoot /var/www/$domain/html
         ErrorLog /var/www/$domain/logs/error.log
         CustomLog /var/www/$domain/logs/access.log combined
-        DirectoryIndex index.php
+        DirectoryIndex index.php index.html
 </VirtualHost>
 <VirtualHost *:80>
         ServerName $domain
