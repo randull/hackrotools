@@ -18,7 +18,7 @@ do
     case $option in
         Hackrobats) 
             echo "Hackrobats";;
-        510) 
+        510 Interactive) 
             echo "510 Interactive";;
      esac
 done
