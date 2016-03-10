@@ -48,6 +48,7 @@ dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric pass
 
 # Clear Drush Cache
 drush cc drush
+
 # Create database and user
 db0="CREATE DATABASE IF NOT EXISTS $machine;"
 db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
@@ -59,15 +60,22 @@ mysql -u deploy -e "$db1"
 mysql -u deploy -e "$db2"
 mysql -u deploy -e "$db3"
 mysql -u deploy -e "$db4"
+
 # Create directories necessary for Drupal installation
-cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data /var/www/$domain && sudo chmod 755 /var/www/$domain
-cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
-cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
-cd /var/www/$domain && sudo touch logs/access.log logs/error.log public/readme.md tmp/readme.md
-cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
-cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
-sudo chmod -R u=rw,go=r,a+X html/*
-sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
+mkdir -p /var/www/$domain/html
+cd /var/www/$domain && mkdir logs private public tmp
+
+# Initialize Git directory
+cd /var/www/$domain/html
+sudo -u deploy git init
+sudo -u deploy git remote add origin git@github.com:/randull/$name.gits
+sudo -u deploy git pull origin master
+
+# Create extra necessary Files and Directories
+cd /var/www/$domain/html && mkdir -p sites/default && ln -s /var/www/$domain/public sites/default/files
+cd /var/www/$domain && touch logs/access.log logs/error.log public/readme.md tmp/readme.md
+cd /var/www/$domain/private && mkdir -p backup_migrate/manual backup_migrate/scheduled
+
 # Create virtual host file on Dev, enable and restart apache
 echo "<VirtualHost *:80>
         ServerAdmin maintenance@hackrobats.net
@@ -172,19 +180,14 @@ echo "<?php
 );" > /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chmod 664  /home/deploy/.drush/$machine.aliases.drushrc.php
 sudo chown deploy:www-data /home/deploy/.drush/$machine.aliases.drushrc.php
-# Initialize Git directory
-cd /var/www/$domain/html
-sudo -u deploy git init
-sudo -u deploy git remote add origin git@github.com:/randull/$name.git
-sudo -u deploy git reset --hard
-sudo -u deploy git pull origin master
 
-# Remove Drupal Install files after installation
+# Cleanup Permissions after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
-cd /var/www/$domain/html
+
+# Create Temporary index.html to show Virtual Hosts are working
 echo "<html>
   <body>
     <div>$sitename</div>
