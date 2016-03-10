@@ -12,16 +12,24 @@ if [ "$1" == "" ];
     echo $1;
     domain=$1;
 fi
-PS3="Please choose Development Branding: "
-select option in Hackrobats 510
-do
-    case $option in
-        Hackrobats) 
-            echo "Hackrobats";;
-        510) 
-            echo "510 Interactive";;
-     esac
-done
+# Retrieve Business Name from command line argument OR Prompt user to enter
+if [ "$2" == "" ]; 
+  then
+    echo "No Business Name provided";
+    read -p "Please provide user friendly Business Name: " sitename;
+  else
+    echo $2;
+    sitename=$2;
+fi
+# Retrieve Github account from command line argument OR Prompt user to enter
+if [ "$3" == "" ]; 
+  then
+    echo "Not Github account provided";
+    read -p "Please provide Github account used to create Private Repository: " github;
+  else
+    echo $3;
+    github=$3;
+fi
 # Create variables from Domain Name
 hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
 www=/var/www                          # Set variable for Drupal root directory
@@ -258,5 +266,10 @@ sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 
-# Display Database Password
+# Display Docroot, URLs, Sitename, Github Repo, DB User & PW
+echo "Database password = $domain"
+echo "Database password = $sitename"
+echo "Database password = www.$domain"
+echo "Database password = dev.$domain"
+echo "Database password = local.$domain"
 echo "Database password = $dbpw"
