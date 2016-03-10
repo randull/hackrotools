@@ -12,14 +12,14 @@ if [ "$1" == "" ];
     echo $1;
     domain=$1;
 fi
-PS3="Please choose an option "
-select option in Hackrobats 510
+PS3="Please choose Development Branding: "
+select option in 'Hackrobats' '510 Interactive'
 do
     case $option in
         Hackrobats) 
-            echo "Going";;
+            echo "Hackrobats";;
         510) 
-            echo "Standing by";;
+            echo "510 Interactive";;
      esac
 done
 # Create variables from Domain Name
