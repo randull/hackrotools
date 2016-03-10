@@ -186,12 +186,12 @@ sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 cd /var/www/$domain/html
 echo "<html>
   <body>
-    <h1>$sitename</h1>
+    <div>$sitename</h1>
   </body>
 </html>
 <style>
-body {display: table; height:100%; width:100%; margin:0;}
-h1 {font-family:helvetica, arial; font-size: 10em; text-align:center; margin:0; display: table-cell; vertical-align: middle;}
+html, body {height:100%; width:100%; margin:0;}
+div {display:block; position: relative; top: 50%; transform: translateY(-50%); font-size: 10em; text-align: center;}
 </style>" > /var/www/$domain/html/index.html
 
 # Set owner of home directory to deploy:www-data
