@@ -13,12 +13,12 @@ if [ "$1" == "" ];
     domain=$1;
 fi
 PS3="Please choose Development Branding: "
-select option in "Hackrobats" "510 Interactive"
+select option in Hackrobats 510
 do
     case $option in
         Hackrobats) 
             echo "Hackrobats";;
-        510 Interactive) 
+        510) 
             echo "510 Interactive";;
      esac
 done
