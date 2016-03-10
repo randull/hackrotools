@@ -13,15 +13,13 @@ if [ "$1" == "" ];
     domain=$1;
 fi
 PS3="Please choose an option "
-select option in go stay wait quit
+select option in Hackrobats 510
 do
     case $option in
-        go) 
+        Hackrobats) 
             echo "Going";;
-        stay|wait) 
+        510) 
             echo "Standing by";;
-        quit)
-            break;;
      esac
 done
 # Create variables from Domain Name
