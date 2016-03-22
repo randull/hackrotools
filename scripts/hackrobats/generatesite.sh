@@ -323,4 +323,14 @@ drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
 drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
 
 
-echo "Database password = $dbpw"
+# Display Docroot, URLs, Sitename, Github Repo, DB User & PW
+echo ""
+echo "Docroot            = /var/www/$domain/html"
+echo "Domain Name        = $domain"
+echo "Site Name          = $sitename"
+echo "Production URL     = http://www.$domain"
+echo "Staging URL        = http://stage.$domain"
+echo "Local URL          = http://local.$domain"
+echo "Github Repository  = https://github.com/$github/$machine.git"
+echo "Database Name/User = $machine"
+echo "Database Password  = $dbpw"
