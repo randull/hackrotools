@@ -182,7 +182,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -vy make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
+drush -y make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
 
 
 
@@ -296,8 +296,8 @@ sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo ser
 sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
-drush -vy sql-sync @$machine.local @$machine.dev
-drush -vy sql-sync @$machine.local @$machine.prod
+drush -y sql-sync @$machine.local @$machine.dev
+drush -y sql-sync @$machine.local @$machine.prod
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
