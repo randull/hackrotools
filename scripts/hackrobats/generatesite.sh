@@ -312,6 +312,8 @@ cd /var/www/$domain/html
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
+# Take Local, Dev & Prod sites out of Maintenance Mode
+drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
