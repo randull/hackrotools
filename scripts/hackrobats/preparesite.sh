@@ -68,7 +68,7 @@ cd /var/www/$domain && mkdir logs private public tmp
 # Initialize Git directory
 cd /var/www/$domain/html
 sudo -u deploy git init
-sudo -u deploy git remote add origin git@github.com:/randull/$name.git
+sudo -u deploy git remote add origin git@github.com:/$github/$name.git
 sudo -u deploy git pull origin master
 
 # Create extra necessary Files and Directories
