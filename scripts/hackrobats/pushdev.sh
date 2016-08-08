@@ -61,13 +61,13 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo -u deploy rm -f 
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html/sites && sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
-# Prepare site for Live Environment
-drush -y @$machine.local cron
-drush -y @$machine.local updb
-drush -y @$machine.dev cron
-drush -y @$machine.dev updb
 # Take Local & Dev sites out of Maintenance Mode and Clear Cache
 drush -y @$machine.local vset maintenance_mode 0
 drush -y @$machine.local cc all
 drush -y @$machine.dev vset maintenance_mode 0
 drush -y @$machine.dev cc all
+# Prepare site for Live Environment
+drush -y @$machine.local cron
+drush -y @$machine.local updb
+drush -y @$machine.dev cron
+drush -y @$machine.dev updb
