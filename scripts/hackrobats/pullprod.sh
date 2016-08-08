@@ -62,13 +62,13 @@ cd /var/www/$domain/html
 
 drush @$machine.local pm-disable cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot prod_check -y
 drush @$machine.local en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel -y
-# Prepare site for Development
-drush -y @$machine.local cron
-drush -y @$machine.local updb
-drush -y @$machine.prod cron
-drush -y @$machine.prod updb
 # Take Local & Prod sites out of Maintenance Mode
 drush -y @$machine.local vset maintenance_mode 0
 drush -y @$machine.local cc all
 drush -y @$machine.prod vset maintenance_mode 0
 drush -y @$machine.prod cc all
+# Prepare site for Development
+drush -y @$machine.local cron
+drush -y @$machine.local updb
+drush -y @$machine.prod cron
+drush -y @$machine.prod updb
