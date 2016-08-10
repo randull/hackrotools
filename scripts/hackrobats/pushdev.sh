@@ -35,7 +35,7 @@ drush -y @$machine.dev vset maintenance_mode 1
 drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain/html
-if [ -d "$www/$domain/README.md" ]
+if [ -f "$www/$domain/README.md" ]
 then
   sudo mv README.md readme.md
 fi
