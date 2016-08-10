@@ -36,7 +36,7 @@ drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain/html
 sudo mv README.md readme.md
-if [ -d "$www/$domain/README\.md" ]; then
+if [ -f "$www/$domain/README\.md" ]; then
   echo "README.md has already been changed to readme.md"
 fi
 sudo mv README.txt readme.md
