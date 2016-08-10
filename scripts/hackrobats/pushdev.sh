@@ -53,7 +53,11 @@ git commit -a -m "$commit"
 git push origin master
 # Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.local:%files @$machine.dev:%files
@@ -63,12 +67,12 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html/sites && sudo -u deploy 
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
 # Take Local & Dev sites out of Maintenance Mode and Clear Cache
-drush -y @$machine.local vset maintenance_mode 0 -y
-drush -y @$machine.local cc all -y
-drush -y @$machine.dev vset maintenance_mode 0 -y
-drush -y @$machine.dev cc all -y
+drush -y @$machine.local vset maintenance_mode 0
+drush -y @$machine.local cc all
+drush -y @$machine.dev vset maintenance_mode 0
+drush -y @$machine.dev cc all
 # Prepare site for Live Environment
-drush -y @$machine.local cron -y
-drush -y @$machine.local updb -y
-drush -y @$machine.dev cron -y
-drush -y @$machine.dev updb -y
+drush -y @$machine.local cron
+drush -y @$machine.local updb
+drush -y @$machine.dev cron
+drush -y @$machine.dev updb
