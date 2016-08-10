@@ -35,7 +35,7 @@ drush -y @$machine.dev vset maintenance_mode 1
 drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain/html
-if [ -f "$www/$domain/README.md" ]; then
+if [ -f "$www/$domain/html/README.md" ]; then
   sudo mv README.md readme.md
 fi
 sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
