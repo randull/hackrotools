@@ -35,11 +35,10 @@ drush -y @$machine.dev vset maintenance_mode 1
 drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain/html
-sudo mv README.md readme.md
 if [ -f "$www/$domain/README\.md" ]; then
   echo "README.md has already been changed to readme.md"
+  sudo mv README.md readme.md;
 fi
-sudo mv README.txt readme.md
 sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
 cd /var/www/$domain/html/sites
 sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php
