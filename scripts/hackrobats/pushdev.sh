@@ -37,6 +37,8 @@ drush -y @$machine.dev cc all
 cd /var/www/$domain/html
 if [ -f "$www/$domain/html/README.md" ]; then
   sudo mv README.md readme.md
+  echo "README.md has been changed to readme.md"
+else
   echo "README.md has already been changed to readme.md"
 fi
 sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
