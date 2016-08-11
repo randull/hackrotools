@@ -59,7 +59,6 @@ drush -y rsync -avz @$machine.prod:%files @$machine.local:%files
 drush -y sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-
 drush @$machine.local pm-disable cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot prod_check -y
 drush @$machine.local en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel -y
 # Take Local & Prod sites out of Maintenance Mode

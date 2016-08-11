@@ -59,7 +59,11 @@ git commit -a -m "$commit"
 git push origin master
 # Git steps on Production
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git reset --hard"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
 # Fix File and Directory Permissions on Prod
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt"
