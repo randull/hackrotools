@@ -74,9 +74,9 @@ drush -y @$machine.prod cc all
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush @$machine.local en admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
-drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.prod en cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
 drush -y @$machine.local cron
 drush -y @$machine.local updb
