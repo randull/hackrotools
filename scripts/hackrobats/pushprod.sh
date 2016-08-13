@@ -29,9 +29,9 @@ longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
 # Put Local & Prod sites into Maintenance Mode
-drush -y @$machine.local vset maintenance_mode 0
+drush -y @$machine.local vset maintenance_mode 1
 drush -y @$machine.local cc all
-drush -y @$machine.prod vset maintenance_mode 0
+drush -y @$machine.prod vset maintenance_mode 1
 drush -y @$machine.prod cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain/html
@@ -78,8 +78,8 @@ drush -y @$machine.prod cc all
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush @$machine.local en admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
-drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.prod en cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.local dis cdn googleanalytics honeypot_entityform honeypot prod_check -y
+drush @$machine.prod en cdn googleanalytics honeypot_entityform honeypot prod_check -y
 drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
 drush -y @$machine.local cron
