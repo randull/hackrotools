@@ -78,10 +78,10 @@ drush -y @$machine.prod vset maintenance_mode 0
 drush -y @$machine.prod cc all
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush @$machine.local en admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
-drush @$machine.local dis cdn googleanalytics honeypot_entityform honeypot prod_check -y
-drush @$machine.prod en cdn googleanalytics honeypot_entityform honeypot prod_check -y
-drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush -y @$machine.local en admin_devel devel_generate devel_node_access ds_devel metatag_devel devel
+drush -y @$machine.local dis cdn googleanalytics honeypot_entityform honeypot prod_check
+drush -y @$machine.prod en cdn googleanalytics honeypot_entityform honeypot prod_check
+drush -y @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel
 # Prepare site for Live Environment
 drush -y @$machine.local cron
 drush -y @$machine.local updb
