@@ -25,7 +25,7 @@ drush -y @$machine.local cc all
 drush -y @$machine.prod vset maintenance_mode 0
 drush -y @$machine.prod cc all 
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:www-data html/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:www-data html/* logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
 # Fix File and Directory Permissions on Local
@@ -34,7 +34,7 @@ sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql
 cd /var/www/$domain/html/sites
 sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php
 cd /var/www/$domain
-sudo chown -R deploy:www-data html/*
+sudo chown -R deploy:www-data html/* logs/* private/* public/* tmp/*
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Checkout all changes on Local Environment
