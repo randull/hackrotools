@@ -33,6 +33,7 @@ sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql
 cd /var/www/$domain/html/sites
 sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php
 cd /var/www/$domain
+sudo chown -R deploy:www-data html/*
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Checkout all changes on Local Environment
@@ -55,6 +56,8 @@ git diff
 git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avz @$machine.prod:%files @$machine.local:%files
+drush -y rsync -avO @$machine.prod:%files @$machine.local:%files
+drush -y rsync -avzO @$machine.prod:%files @$machine.local:%files
 # Export DB from Prod to Local using Drush
 drush -y sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Prepare site for Maintenance
