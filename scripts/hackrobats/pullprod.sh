@@ -61,6 +61,7 @@ drush -y rsync -avzz @$machine.prod:%files @$machine.local:%files
 drush -y rsync -avO @$machine.prod:%files @$machine.local:%files
 drush -y rsync -avzO @$machine.prod:%files @$machine.local:%files
 drush -y rsync -avzzO @$machine.prod:%files @$machine.local:%files
+drush -y rsync -avO -zz @$machine.prod:%files @$machine.local:%files
 # Export DB from Prod to Local using Drush
 drush -y sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Prepare site for Maintenance
