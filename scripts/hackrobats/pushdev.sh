@@ -66,10 +66,13 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
+drush -y rsync -avz @$machine.local:%files @$machine.dev:%files
+drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 drush -y rsync -avzO @$machine.local:%files @$machine.dev:%files
 # Fix File and Directory Permissions on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html/sites && sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -R deploy:www-data html/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
 # Take Local & Dev sites out of Maintenance Mode and Clear Cache
