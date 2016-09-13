@@ -29,6 +29,7 @@ longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
 # Put Local & Dev sites into Maintenance Mode
+cd /var/www/$domain/html
 drush -y @$machine.local vset maintenance_mode 1
 drush -y @$machine.local cc all
 drush -y @$machine.dev vset maintenance_mode 1
