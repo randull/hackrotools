@@ -17,6 +17,6 @@ sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt
 sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
 sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
 cd /var/www/$domain
-sudo chown -R deploy:www-data html/* logs/* private/* public/* tmp/*
-sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
+sudo chown -R deploy:www-data * html/* logs/* private/* public/* tmp/*
+sudo chmod -R ug=rw,o=r,a+X * public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X * html/* logs/* private/*
