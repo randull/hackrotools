@@ -19,7 +19,9 @@ fi
 cd /var/www/$domain
 sudo -u deploy chown -R deploy:www-data *
 echo "File Ownership changed"
-sudo -u deploy chmod -R u=rw,go=r,a+X html/* logs/*
-echo "File Permissions changed for html & logs"
+sudo -u deploy chmod -R u=rw,go=r,a+X html/*
+echo "File Permissions changed for html"
+sudo -u deploy chmod -R u=rw,go=r,a+X logs/*
+echo "File Permissions changed for logs"
 #sudo -u deploy chmod -R ug=rw,o=r,a+X private public tmp private/* public/* tmp/*
 #sudo -u deploy chmod 775 html logs private public tmp
