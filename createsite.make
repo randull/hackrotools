@@ -25,6 +25,7 @@ projects[] = block_class
 projects[] = blockcache_alter
 projects[] = blockreference
 projects[] = breakpoints
+projects[] = browsersync
 projects[] = calendar
 projects[] = charts
 projects[] = ckeditor

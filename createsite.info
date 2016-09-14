@@ -40,6 +40,7 @@ dependencies[] = block_class
 dependencies[] = blockcache_alter
 dependencies[] = blockreference
 dependencies[] = breakpoints
+dependencies[] = browsersync
 dependencies[] = bulk_export
 dependencies[] = calendar
 dependencies[] = charts
