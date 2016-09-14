@@ -18,6 +18,8 @@ fi
 #sudo -u deploy rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
 cd /var/www/$domain
 sudo -u deploy chown -R deploy:www-data *
+echo "File Ownership changed"
 sudo -u deploy chmod -R u=rw,go=r,a+X html/* logs/*
+echo "File Permissions changed for html & logs"
 #sudo -u deploy chmod -R ug=rw,o=r,a+X private public tmp private/* public/* tmp/*
 #sudo -u deploy chmod 775 html logs private public tmp
