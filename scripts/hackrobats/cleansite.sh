@@ -20,4 +20,3 @@ cd /var/www/$domain
 sudo -u deploy chown -R deploy:www-data * html/* logs/* private/* public/* tmp/*
 sudo -u deploy chmod -R ug=rw,o=r,a+X public private tmp
 sudo -u deploy chmod -R u=rw,go=r,a+X html logs
-sudo -u deploy chmod 775 html logs private public tmp
