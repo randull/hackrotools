@@ -19,5 +19,5 @@ sudo -u deploy rm -rf sites/README.txt sites/example.sites.php sites/all/librari
 cd /var/www/$domain
 sudo -u deploy chown -R deploy:www-data *
 sudo -u deploy chmod -R u=rw,go=r,a+X html logs
-sudo -u deploy chmod -R ug=rw,o=r,a+X privatepublic tmp
+sudo -u deploy chmod -R ug=rw,o=r,a+X private public tmp
 sudo -u deploy chmod 775 html logs private public tmp
