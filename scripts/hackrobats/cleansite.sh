@@ -17,7 +17,8 @@ sudo chown -Rf deploy:www-data *
 sudo chown -Rf deploy:www-data html/* logs/* private/* public/* tmp/*
 echo "File Ownership fixed"
 # Fix file permissions
-sudo chmod -Rf u=rw,go=r,a+X html/* logs/*
+sudo chmod -Rf u=rw,go=r,a+X html/*
+sudo chmod -Rf u=rw,go=r,a+X logs/*
 sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*
 sudo chmod 775 *
 echo "File Permissions fixed"
