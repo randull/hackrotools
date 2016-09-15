@@ -30,4 +30,4 @@ sudo -u deploy chmod -R ug=rw,o=r,a+X public/*
 echo "File Permissions changed for public"
 sudo -u deploy chmod -R ug=rw,o=r,a+X tmp/*
 echo "File Permissions changed for tmp"
-#sudo -u deploy chmod 775 html logs private public tmp
+sudo -u deploy chmod 775 html logs private public tmp
