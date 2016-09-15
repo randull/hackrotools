@@ -26,18 +26,27 @@ drush -y @$machine.local cc all
 drush -y @$machine.prod vset maintenance_mode 1
 drush -y @$machine.prod cc all 
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:www-data html/* logs/* private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*"
-# Fix File and Directory Permissions on Local
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:www-data *"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R u=rw,go=r,a+X html/* logs/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -R ug=rw,o=r,a+X private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 html logs private public tmp"
+# Remove unecessary files
 cd /var/www/$domain/html
 sudo -u deploy rm -rf modules/README.txt profiles/README.txt themes/README.txt
 sudo -u deploy rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
 sudo -u deploy rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
+echo "Unecessary files removed"
+# Fix file ownership
 cd /var/www/$domain
-sudo chown -R deploy:www-data html/* logs/* private/* public/* tmp/*
-sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
+sudo -u deploy chown -R deploy:www-data *
+sudo -u deploy chown -R deploy:www-data html logs private public tmp
+echo "File Ownership fixed"
+# Fix file permissions
+sudo -u deploy chmod -R u=rw,go=r,a+X html/* logs/*
+sudo -u deploy chmod -R ug=rw,o=r,a+X private/* public/* tmp/*
+sudo -u deploy chmod 775 html logs private public tmp
+echo "File Permissions fixed"
 # Checkout all changes on Local Environment
 cd /var/www/$domain/html
 git status
