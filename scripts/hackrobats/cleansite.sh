@@ -25,5 +25,5 @@ echo "File Ownership fixed"
 # Fix file permissions
 sudo chmod -Rf u=rw,go=r,a+X html/* logs/*
 sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*
-sudo chmod 775 html logs private public tmp
+sudo chmod 775 *
 echo "File Permissions fixed"
