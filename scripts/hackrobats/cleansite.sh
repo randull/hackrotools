@@ -21,7 +21,7 @@ sudo chmod -R u=rw,go=r,a+X html/*
 sudo chmod -R u=rw,go=r,a+X logs/*
 sudo chmod -R ug=rw,o=r,a+X private/*
 sudo chmod -R ug=rw,o=r,a+X public/*
-sudo chmod -R ug=rw,o=r,a+X tmp/*
+sudo chmod -Rf ug=rw,o=r,a+X tmp/*
 sudo chmod 775 *
 echo "File Permissions fixed"
 # Remove unecessary files
