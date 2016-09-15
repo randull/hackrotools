@@ -24,5 +24,10 @@ sudo -u deploy chmod -R u=rw,go=r,a+X html/*
 echo "File Permissions changed for html"
 sudo -u deploy chmod -R u=rw,go=r,a+X logs/*
 echo "File Permissions changed for logs"
-#sudo -u deploy chmod -R ug=rw,o=r,a+X private public tmp private/* public/* tmp/*
+sudo -u deploy chmod -R ug=rw,o=r,a+X private/*
+echo "File Permissions changed for private"
+sudo -u deploy chmod -R ug=rw,o=r,a+X public/*
+echo "File Permissions changed for public"
+sudo -u deploy chmod -R ug=rw,o=r,a+X tmp/*
+echo "File Permissions changed for tmp"
 #sudo -u deploy chmod 775 html logs private public tmp
