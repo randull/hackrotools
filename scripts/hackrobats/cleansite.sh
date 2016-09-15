@@ -20,7 +20,7 @@ echo "File Ownership fixed"
 sudo chmod -R u=rw,go=r,a+X html/* logs/*
 sudo chmod -R ug=rw,o=r,a+X private/* public/* tmp/*
 sudo chmod 775 *
-sudo chmod 644 html/.htaccess logs/.htaccess private/.htaccess public/.htaccess tmp/.htaccess
+sudo chmod 644 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess
 echo "File Permissions fixed"
 # Remove unecessary files
 cd /var/www/$domain/html
