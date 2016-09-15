@@ -91,8 +91,8 @@ drush -y @$machine.dev vset maintenance_mode 0
 drush -y @$machine.dev cc all
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush -y @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check
-drush -y @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check
+drush -y @$machine.local pm-disable cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check
+drush -y @$machine.dev pm-disable cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check
 # Prepare site for Live Environment
 drush -y @$machine.local cron
 drush -y @$machine.local updb
