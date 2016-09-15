@@ -20,7 +20,7 @@ echo "Unecessary files removed"
 # Fix file ownership
 cd /var/www/$domain
 sudo -u deploy chown -R deploy:www-data *
-sudo -u deploy chown -R deploy:www-data html logs private public tmp
+sudo -u deploy chown -R deploy:www-data html/* logs/* private/* public/* tmp/*
 echo "File Ownership fixed"
 # Fix file permissions
 sudo -u deploy chmod -R u=rw,go=r,a+X html/* logs/*
