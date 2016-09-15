@@ -19,11 +19,11 @@ sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/pluploa
 echo "Unecessary files removed"
 # Fix file ownership
 cd /var/www/$domain
-sudo chown -R deploy:www-data *
-sudo chown -R deploy:www-data html/* logs/* private/* public/* tmp/*
+sudo chown -Rf deploy:www-data *
+sudo chown -Rf deploy:www-data html/* logs/* private/* public/* tmp/*
 echo "File Ownership fixed"
 # Fix file permissions
-sudo chmod -R u=rw,go=r,a+X html/* logs/*
-sudo chmod -R ug=rw,o=r,a+X private/* public/* tmp/*
+sudo chmod -Rf u=rw,go=r,a+X html/* logs/*
+sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*
 sudo chmod 775 html logs private public tmp
 echo "File Permissions fixed"
