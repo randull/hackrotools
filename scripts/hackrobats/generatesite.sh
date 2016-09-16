@@ -240,7 +240,8 @@ drush vset jquery_update_jquery_version "1.8"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 
-drush en advanced_help -y
+drush -y utf8mb4-convert-databases
+drush -y en advanced_help
 
 drush secrev --store
 
