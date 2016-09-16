@@ -110,9 +110,9 @@ projects[] = views_megarow
 
 ; Themes
 projects[xtheme][type] = theme
-projects[xtheme][version] = 2
+projects[xtheme][version] = 2.x-dev
 projects[xtheme][download][type] = git
-projects[xtheme][download][url] = http://git.drupal.org/project/xtheme.git
+projects[xtheme][download][url] = https://git.drupal.org/project/xtheme.git
 projects[xtheme][download][branch] = 7.x-2.x
 projects[adminimal_theme][type] = theme
 projects[adminimal_theme][version] = 1.24
