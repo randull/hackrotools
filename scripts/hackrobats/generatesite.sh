@@ -248,6 +248,11 @@ sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 
+# Update settings.php
+sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
+
 
 #############################################################
 #    Prepare Development & Production to Clone
@@ -297,6 +302,9 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
 # Clone site directory to Production
 sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
+# Change settings.php to be Dev & WWW
+sudo -u deploy ssh deploy@dev "sed -i 's/local.$domain/dev.$domain/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@prod "sed -i 's/local.$domain/www.$domain/g' /var/www/$domain/html/sites/default/settings.php"
 # Clone Drush aliases
 sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
 sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
