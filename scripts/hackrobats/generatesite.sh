@@ -201,11 +201,7 @@ drush -y make https://raw.github.com/randull/createsite/master/createsite.make -
 
 # Deploy site using Drush Site-Install
 drush -y site-install createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
-# Update settings.php
-sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
-sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
-sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php# Remove Drupal Install files after installation
-# Cleanup docroot
+# Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
@@ -219,6 +215,10 @@ sudo -u deploy rm -rf sites/README.txt sites/example.sites.php sites/all/librari
 echo "
 # Prohibit Search Engines from randomly Flagging/Unflagging content
 Disallow: /flag/" >> /var/www/$domain/html/robots.txt
+# Update settings.php
+sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
 # Enable Xtheme and set default
 drush -y @$machine.local cc all
 cd /var/www/$domain/html/sites/all/themes/xtheme
@@ -240,8 +240,7 @@ drush vset jquery_update_jquery_version "1.8"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 
-drush -y utf8mb4-convert-databases
-drush -y en advanced_help
+drush en advanced_help -y
 
 drush secrev --store
 
