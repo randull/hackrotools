@@ -304,9 +304,9 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
 sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 # Change settings.php to be Dev & WWW
-sudo -u deploy ssh deploy@dev "sed -i 's/$base_url/# $base_url/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@dev "sed -i 's/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
 sudo -u deploy ssh deploy@dev "sed -i 's/local.$domain/dev.$domain/g' /var/www/$domain/html/sites/default/settings.php"
-sudo -u deploy ssh deploy@prod "sed -i 's/$base_url/# $base_url/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@prod "sed -i 's/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
 sudo -u deploy ssh deploy@prod "sed -i 's/local.$domain/www.$domain/g' /var/www/$domain/html/sites/default/settings.php"
 # Clone Drush aliases
 sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
