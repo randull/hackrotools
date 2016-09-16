@@ -218,7 +218,7 @@ Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 # Enable Xtheme and set default
 drush -y @$machine.local cc all
 cd /var/www/$domain/html/sites/all/themes/xtheme
-npm install --save-dev gulp-sass
+npm install -g npm
 grunt sass
 # Set owner of entire directory to deploy:www-data
 cd /var/www
