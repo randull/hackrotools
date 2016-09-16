@@ -7,10 +7,9 @@ projects[] = drupal
 ; Dev Modules
 projects[advanced_help] = 1.x-dev
 projects[backup_migrate] = 3.x-dev
-projects[elysia_cron] = 2.x-dev
+projects[flag] = 3.x-dev
 projects[flexslider] = 2.x-dev
 projects[media] = 2.x-dev
-projects[media_browser_plus] = 3.x-dev
 projects[multiform] = 2.x-dev
 projects[views_tree] = 2.x-dev
 
@@ -37,6 +36,7 @@ projects[] = date
 projects[] = devel
 projects[] = disqus
 projects[] = ds
+projects[] = elysia_cron
 projects[] = email
 projects[] = entity
 projects[] = entity_rules
@@ -68,6 +68,7 @@ projects[] = libraries
 projects[] = link
 projects[] = linkit
 projects[] = logintoboggan
+projects[] = media_browser_plus
 projects[] = menu_block
 projects[] = menu_position
 projects[] = message
