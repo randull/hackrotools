@@ -201,7 +201,11 @@ drush -y make https://raw.github.com/randull/createsite/master/createsite.make -
 
 # Deploy site using Drush Site-Install
 drush -y site-install createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
-# Remove Drupal Install files after installation
+# Update settings.php
+sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php# Remove Drupal Install files after installation
+# Cleanup docroot
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
@@ -236,7 +240,8 @@ drush vset jquery_update_jquery_version "1.8"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 
-drush en advanced_help -y
+drush -y utf8mb4-convert-databases
+drush -y en advanced_help
 
 drush secrev --store
 
@@ -248,10 +253,6 @@ sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 
-# Update settings.php
-sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
-sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
-sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
 
 
 #############################################################
