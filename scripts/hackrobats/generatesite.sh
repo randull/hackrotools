@@ -221,9 +221,12 @@ sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www
 sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
 # Enable Xtheme and set default
 drush -y @$machine.local cc all
-cd /var/www/$domain/html/sites/all/themes/xtheme
-#npm install -g npm
-#grunt sass
+cd /var/www/$domain/html/sites/all/themes/ztheme
+npm install browser-sync --save-dev
+npm install gulp --save-dev
+npm install gulp-autoprefixer --save-dev
+npm install gulp-sass --save-dev
+npm install gulp-shell --save-dev
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
