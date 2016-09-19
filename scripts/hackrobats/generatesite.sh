@@ -219,15 +219,6 @@ Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
 sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
 sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
-# Enable Xtheme and set default
-#drush -y @$machine.local cc all
-cd /var/www/$domain/html/sites/all/themes/ztheme
-sudo -u deploy npm install gulp --save-dev
-sudo -u deploy npm install gulp-autoprefixer --save-dev
-sudo -u deploy npm install gulp-sass --save-dev
-sudo -u deploy npm install gulp-shell --save-dev
-sudo -u deploy npm install browser-sync --save-dev
-#sudo -u deploy gulp sass
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
@@ -251,6 +242,15 @@ drush secrev --store
 
 drush php-eval 'node_access_rebuild();'
 
+# Enable Xtheme and set default
+#drush -y @$machine.local cc all
+cd /var/www/$domain/html/sites/all/themes/ztheme
+sudo -u deploy npm install gulp --save-dev
+sudo -u deploy npm install gulp-autoprefixer --save-dev
+sudo -u deploy npm install gulp-sass --save-dev
+sudo -u deploy npm install gulp-shell --save-dev
+sudo -u deploy npm install browser-sync --save-dev
+sudo -u deploy gulp sass
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
