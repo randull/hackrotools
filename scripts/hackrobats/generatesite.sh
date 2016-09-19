@@ -312,7 +312,7 @@ sudo -u deploy ssh deploy@prod "sed -i '318s/\$base_url/# \$base_url/g' /var/www
 sudo -u deploy ssh deploy@prod "sed -i '318s/local.$domain/www.$domain/g' /var/www/$domain/html/sites/default/settings.php"
 # Clone Drush aliases
 sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
-sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
+sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
 sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
@@ -334,6 +334,7 @@ sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Push changes to Git directory
 cd /var/www/$domain/html
+sudo -u deploy git status
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
@@ -341,9 +342,9 @@ sudo -u deploy git push origin master
 drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
 drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
