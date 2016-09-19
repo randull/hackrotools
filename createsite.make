@@ -109,11 +109,11 @@ projects[] = views_date_format_sql
 projects[] = views_megarow
 
 ; Themes
-projects[ytheme][type] = theme
-projects[ytheme][version] = 1.x
-projects[ytheme][download][type] = git
-projects[ytheme][download][url] = https://github.com/randull/ytheme.git
-projects[ytheme][download][branch] = 7.x-1.x
+projects[ztheme][type] = theme
+projects[ztheme][version] = 1.x
+projects[ztheme][download][type] = git
+projects[ztheme][download][url] = https://github.com/randull/ztheme.git
+projects[ztheme][download][branch] = 7.x-1.x
 projects[adminimal_theme][type] = theme
 projects[adminimal_theme][version] = 1.24
 projects[adminimal_theme][download][type] = git

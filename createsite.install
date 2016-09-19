@@ -384,9 +384,9 @@ function createsite_install() {
   
   // Enable the default theme.
   $enable = array(
-    'theme_default' => 'ytheme',
+    'theme_default' => 'ztheme',
     'admin_theme' => 'adminimal',
-    //'ytheme'
+    //'ztheme'
   );
   theme_enable($enable);
 
