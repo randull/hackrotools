@@ -333,6 +333,44 @@ sudo -u deploy git status
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
+# Git steps on Dev
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
+# Git steps on Production
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git reset --hard"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git checkout -- ."
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
+# Fix File and Directory Permissions on Dev
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 *"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php"
+# Fix File and Directory Permissions on Prod
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 *"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php"
+# Rsync steps for sites/default/files
+drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 # Take Local, Dev & Prod sites out of Maintenance Mode
 drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
 # Prepare site for Maintenance
