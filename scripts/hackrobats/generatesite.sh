@@ -327,20 +327,6 @@ sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
-# Enable Xtheme and set default
-cd /var/www/$domain/html
-drush -y @$machine.local cc all
-cd /var/www/$domain/html/sites/all/themes/ztheme
-npm install gulp --save-dev
-npm install gulp-autoprefixer --save-dev
-npm install gulp-sass --save-dev
-npm install gulp-shell --save-dev
-npm install browser-sync --save-dev
-gulp sass
-# Set permissions
-cd /var/www/$domain
-sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Push changes to Git directory
 cd /var/www/$domain/html
 sudo -u deploy git status

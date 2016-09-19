@@ -110,7 +110,7 @@ projects[] = views_megarow
 
 ; Themes
 projects[ztheme][type] = theme
-projects[ztheme][version] = 1.x
+projects[ztheme][version] = 1.0.0
 projects[ztheme][download][type] = git
 projects[ztheme][download][url] = https://github.com/randull/ztheme.git
 projects[ztheme][download][branch] = 7.x-1.x
