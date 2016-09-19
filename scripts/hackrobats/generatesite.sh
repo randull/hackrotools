@@ -323,15 +323,20 @@ sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
+# Set permissions
+cd /var/www/$domain
+sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # Enable Xtheme and set default
+cd /var/www/$domain/html
 drush -y @$machine.local cc all
 cd /var/www/$domain/html/sites/all/themes/ztheme
-sudo -u deploy npm install gulp --save-dev
-sudo -u deploy npm install gulp-autoprefixer --save-dev
-sudo -u deploy npm install gulp-sass --save-dev
-sudo -u deploy npm install gulp-shell --save-dev
-sudo -u deploy npm install browser-sync --save-dev
-sudo -u deploy gulp sass
+npm install gulp --save-dev
+npm install gulp-autoprefixer --save-dev
+npm install gulp-sass --save-dev
+npm install gulp-shell --save-dev
+npm install browser-sync --save-dev
+gulp sass
 # Set permissions
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
