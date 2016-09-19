@@ -235,22 +235,12 @@ drush vset jquery_update_jquery_version "1.8"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 
-drush -y utf8mb4-convert-databases
 drush -y en advanced_help
 
 drush secrev --store
 
 drush php-eval 'node_access_rebuild();'
 
-# Enable Xtheme and set default
-#drush -y @$machine.local cc all
-cd /var/www/$domain/html/sites/all/themes/ztheme
-sudo -u deploy npm install gulp --save-dev
-sudo -u deploy npm install gulp-autoprefixer --save-dev
-sudo -u deploy npm install gulp-sass --save-dev
-sudo -u deploy npm install gulp-shell --save-dev
-sudo -u deploy npm install browser-sync --save-dev
-sudo -u deploy gulp sass
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
@@ -323,6 +313,7 @@ sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo ser
 sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
 sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
 # Clone DB
+drush -y @$machine.local utf8mb4-convert-databases
 drush -y sql-sync @$machine.local @$machine.dev
 drush -y @$machine.dev utf8mb4-convert-databases
 drush -y sql-sync @$machine.local @$machine.prod
@@ -332,6 +323,15 @@ sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
+# Enable Xtheme and set default
+drush -y @$machine.local cc all
+cd /var/www/$domain/html/sites/all/themes/ztheme
+sudo -u deploy npm install gulp --save-dev
+sudo -u deploy npm install gulp-autoprefixer --save-dev
+sudo -u deploy npm install gulp-sass --save-dev
+sudo -u deploy npm install gulp-shell --save-dev
+sudo -u deploy npm install browser-sync --save-dev
+sudo -u deploy gulp sass
 # Set permissions
 cd /var/www/$domain
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
