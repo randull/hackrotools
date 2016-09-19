@@ -328,14 +328,6 @@ cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
-# Enable Xtheme and set default
-cd /var/www/$domain/html/sites/all/themes/ztheme
-npm install gulp --save-dev
-npm install gulp-autoprefixer --save-dev
-npm install gulp-sass --save-dev
-npm install gulp-shell --save-dev
-npm install browser-sync --save-dev
-gulp sass
 # Push changes to Git directory
 cd /var/www/$domain/html
 sudo -u deploy git status
@@ -391,6 +383,15 @@ drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel m
 drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
 drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
+# Enable Xtheme and set default
+cd /var/www/$domain/html/sites/all/themes/ztheme
+npm install gulp --save-dev
+npm install gulp-autoprefixer --save-dev
+npm install gulp-sass --save-dev
+npm install gulp-shell --save-dev
+npm install browser-sync --save-dev
+gulp sass
+drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
 
 # Display Docroot, URLs, Sitename, Github Repo, DB User & PW
 echo ""
