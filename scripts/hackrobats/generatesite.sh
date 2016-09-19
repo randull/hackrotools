@@ -227,7 +227,7 @@ sudo -u deploy npm install gulp-autoprefixer --save-dev
 sudo -u deploy npm install gulp-sass --save-dev
 sudo -u deploy npm install gulp-shell --save-dev
 sudo -u deploy npm install browser-sync --save-dev
-sudo -u deploy gulp sass
+#sudo -u deploy gulp sass
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
