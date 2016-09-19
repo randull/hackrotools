@@ -377,16 +377,16 @@ function createsite_install() {
   db_update('system')
     ->fields(array('status' => 1))
     ->condition('type', 'theme')
-    ->condition('name', 'adminimal_theme')
+    ->condition('name', 'adminimal')
     ->execute();
-  variable_set('admin_theme', 'adminimal_theme');
+  variable_set('admin_theme', 'adminimal');
   variable_set('node_admin_theme', '1');
   
   // Enable the default theme.
   $enable = array(
-    'theme_default' => 'xtheme',
-    'admin_theme' => 'adminimal_theme',
-    //'xtheme'
+    'theme_default' => 'neato',
+    'admin_theme' => 'adminimal',
+    //'neato'
   );
   theme_enable($enable);
 

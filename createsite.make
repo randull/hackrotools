@@ -109,11 +109,11 @@ projects[] = views_date_format_sql
 projects[] = views_megarow
 
 ; Themes
-projects[xtheme][type] = theme
-projects[xtheme][version] = 2.x-dev
-projects[xtheme][download][type] = git
-projects[xtheme][download][url] = https://git.drupal.org/project/xtheme.git
-projects[xtheme][download][branch] = 7.x-2.x
+projects[neato][type] = theme
+projects[neato][version] = 1.x
+projects[neato][download][type] = git
+projects[neato][download][url] = https://git.drupal.org/project/neato.git
+projects[neato][download][branch] = 7.x-1.x
 projects[adminimal_theme][type] = theme
 projects[adminimal_theme][version] = 1.24
 projects[adminimal_theme][download][type] = git
