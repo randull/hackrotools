@@ -6,6 +6,7 @@ projects[] = drupal
 
 ; Dev Modules
 projects[advanced_help] = 1.x-dev
+projects[entityform] = 2.x-dev
 projects[multiform] = 2.x-dev
 projects[views_tree] = 2.x-dev
 
@@ -38,7 +39,6 @@ projects[] = email
 projects[] = entity
 projects[] = entity_rules
 projects[] = entity2text
-projects[] = entityform
 projects[] = entityreference
 projects[] = features
 projects[] = features_extra
