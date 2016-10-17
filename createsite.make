@@ -6,10 +6,6 @@ projects[] = drupal
 
 ; Dev Modules
 projects[advanced_help] = 1.x-dev
-projects[backup_migrate] = 3.x-dev
-projects[flag] = 3.x-dev
-projects[flexslider] = 2.x-dev
-projects[media] = 2.x-dev
 projects[multiform] = 2.x-dev
 projects[views_tree] = 2.x-dev
 
@@ -18,6 +14,7 @@ projects[] = addressfield
 projects[] = admin_menu
 projects[] = admin_views
 projects[] = adminimal_admin_menu
+projects[] = backup_migrate
 projects[] = better_exposed_filters
 projects[] = better_formats
 projects[] = block_class
@@ -50,6 +47,7 @@ projects[] = field_group
 projects[] = field_placeholder
 projects[] = file_entity
 projects[] = flag
+projects[] = flexslider
 projects[] = fontyourface
 projects[] = fpa
 projects[] = ga_push
@@ -68,6 +66,7 @@ projects[] = libraries
 projects[] = link
 projects[] = linkit
 projects[] = logintoboggan
+projects[] = media
 projects[] = media_browser_plus
 projects[] = menu_block
 projects[] = menu_position
