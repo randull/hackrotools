@@ -51,16 +51,8 @@ dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric pass
 # Clear Drush Cache
 drush cc drush
 # Create database and user
-db0="CREATE DATABASE IF NOT EXISTS $machine;"
-db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
-db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
-db3="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
-db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
-mysql -u deploy -e "$db0"
+db1="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
 mysql -u deploy -e "$db1"
-mysql -u deploy -e "$db2"
-mysql -u deploy -e "$db3"
-mysql -u deploy -e "$db4"
 # Create directories necessary for Drupal installation
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data /var/www/$domain && sudo chmod 755 /var/www/$domain
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
@@ -279,21 +271,9 @@ sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
         Redirect 301 / http://www.$domain/
 </VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
 # Create DB & user on Production
-db5="CREATE DATABASE IF NOT EXISTS $machine;"
-db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
-db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
-db8="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
-db9="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db5\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db6\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db7\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db8\""
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db9\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
+db2="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
+sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db2\""
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db2\""
 # Clone site directory to Production
 sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
