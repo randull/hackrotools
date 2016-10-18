@@ -354,16 +354,16 @@ sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # # Rsync steps for sites/default/files
 # drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 # Take Local, Dev & Prod sites out of Maintenance Mode
-drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
+# drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
 # Prepare site for Maintenance
-cd /var/www/$domain/html
+# cd /var/www/$domain/html
 # drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
 # drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
 # drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
+# drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
-drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
+# drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
 # Enable Xtheme and set default
 # cd /var/www/$domain/html/sites/all/themes/ztheme
 # npm install gulp --save-dev
@@ -372,7 +372,7 @@ drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
 # npm install gulp-shell --save-dev
 # npm install browser-sync --save-dev
 # gulp sass
-drush -y @$machine.local rc && drush -y @$machine.local updb && drush -y @$machine.local cron
+# drush -y @$machine.local rc && drush -y @$machine.local updb && drush -y @$machine.local cron
 
 # Display Docroot, URLs, Sitename, Github Repo, DB User & PW
 echo ""
