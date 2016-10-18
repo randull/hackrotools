@@ -36,7 +36,7 @@ echo "Password Matches"
 hosts=/etc/apache2/sites-available    # Set variable for Apache Host config
 www=/var/www                          # Set variable for Drupal root directory
 tld=`echo $domain  |cut -d"." -f2,3`  # Generate tld (eg .com)
-name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com) 
+name=`echo $domain |cut -f1 -d"."`    # Remove last four characters (eg .com) 
 longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
@@ -48,19 +48,13 @@ dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric pass
 #    Prepare Local Environment for Installation
 #############################################################
 
+# Clear Drush Cache
+drush cc drush
 # Create database and user
-db0="CREATE DATABASE IF NOT EXISTS $machine;"
-db1="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
-db2="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
-db3="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw'; GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
-db4="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
-mysql -u deploy -e "$db0"
+db1="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
 mysql -u deploy -e "$db1"
-mysql -u deploy -e "$db2"
-mysql -u deploy -e "$db3"
-mysql -u deploy -e "$db4"
 # Create directories necessary for Drupal installation
-cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data $domain
+cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data /var/www/$domain && sudo chmod 755 /var/www/$domain
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
 cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
 cd /var/www/$domain/html && sudo mkdir -p scripts/hackrobats && sudo mkdir -p profiles/hackrobats
@@ -89,86 +83,93 @@ sudo chown deploy:www-data /etc/cron.hourly/$machine
 sudo chmod 775 /etc/cron.hourly/$machine
 # Create Drush Aliases
 echo "<?php
-\$aliases[\"local\"] = array(
+\$aliases[\"local\"] = array (
   'root' => '/var/www/$domain/html',
-  'uri' => 'http://local.$domain',
+  'uri' => 'local.$domain',
   '#name' => '$machine.local',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
-  'path-aliases' => 
-  array (
+  'path-aliases' => array (
+    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
+    '%all' => 'sites/all/',
+    '%site' => 'sites/default/',
   ),
-  'databases' =>
-  array (
-    'default' =>
-    array (
-      'default' =>
-      array (
+  'databases' => array (
+    'default' => array (
+      'default' => array (
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
         'host' => 'localhost',
-        'port' => '',
+        'port' => '3306',
         'driver' => 'mysql',
         'prefix' => '',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_general_ci',
       ),
     ),
   ),
 );
-\$aliases[\"dev\"] = array(
+\$aliases[\"dev\"] = array (
+  'remote-host' => 'dev.hackrobats.net',
+  'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
-  'uri' => 'http://dev.$domain',
+  'uri' => 'dev.$domain',
   '#name' => '$machine.dev',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
-  'path-aliases' => 
-  array (
+  'path-aliases' => array (
+    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
+    '%all' => 'sites/all/',
+    '%site' => 'sites/default/',
   ),
-  'databases' =>
-  array (
-    'default' =>
-    array (
-      'default' =>
-      array (
+  'databases' => array (
+    'default' => array (
+      'default' => array (
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
         'host' => 'localhost',
-        'port' => '',
+        'port' => '3306',
         'driver' => 'mysql',
         'prefix' => '',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_general_ci',
       ),
     ),
   ),
 );
-\$aliases[\"prod\"] = array(
+\$aliases[\"prod\"] = array (
+  'remote-host' => 'prod.hackrobats.net',
+  'remote-user' => 'deploy',
   'root' => '/var/www/$domain/html',
-  'uri' => 'http://www.$domain',
+  'uri' => 'www.$domain',
   '#name' => '$machine.prod',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
-  'path-aliases' => 
-  array (
+  'path-aliases' => array (
+    '%drush' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
+    '%all' => 'sites/all/',
+    '%site' => 'sites/default/',
   ),
-  'databases' =>
-  array (
-    'default' =>
-    array (
-      'default' =>
-      array (
+  'databases' => array (
+    'default' => array (
+      'default' => array (
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
         'host' => 'localhost',
-        'port' => '',
+        'port' => '3306',
         'driver' => 'mysql',
         'prefix' => '',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_general_ci',
       ),
     ),
   ),
@@ -182,7 +183,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush make https://raw.github.com/randull/createsite/master/createsite.make -y
+# drush -y make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
 
 
 
@@ -191,44 +192,52 @@ drush make https://raw.github.com/randull/createsite/master/createsite.make -y
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush si createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net" -y
+# drush -y site-install createsite --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
 # Remove Drupal Install files after installation
+cd /var/www/$domain
+sudo chown -R deploy:www-data html logs private public tmp
+sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 cd /var/www/$domain/html
-sudo -u deploy rm -f CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
-cd /var/www/$domain/html/sites
-sudo -u deploy rm -f example.sites.php README.txt all/modules/README.txt all/themes/README.txt default/default.settings.php
-sudo chown -R deploy:www-data all default
-sudo chmod 755 all default
-sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
-#sudo chmod 644 /var/www/$domain/public/.htaccess
-#sudo -u deploy rm -R all/libraries/plupload/examples
+sudo mv README.txt readme.md
+sudo -u deploy rm -rf modules/README.txt profiles/README.txt themes/README.txt
+sudo -u deploy rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.md UPGRADE.txt
+sudo -u deploy rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
 # Prohibit Search Engines from Flagging
-#echo "
-## Prohibit Search Engines from randomly Flagging/Unflagging content
-#Disallow: /flag/" >> /var/www/$domain/html/robots.txt
-# Enable Xtheme and set default
-#drush cc all && cd /var/www/$domain/html/sites/all/themes/xtheme
-#npm install
-#grunt sass
+echo "
+# Prohibit Search Engines from randomly Flagging/Unflagging content
+Disallow: /flag/" >> /var/www/$domain/html/robots.txt
+# Update settings.php
+sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
 # Set owner of entire directory to deploy:www-data
-#cd /var/www
-#sudo chown -R deploy:www-data $domain
-#sudo chown -R deploy:www-data /home/deploy
+cd /var/www
+sudo chown -R deploy:www-data $domain
+sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
-#cd /var/www/$domain/html
-#drush vset cron_key $machine
-#drush vset cron_safe_threshold 0
-#drush vset error_level 0
-#drush vset file_private_path /var/www/$domain/private
-#drush vset file_temporary_path /var/www/$domain/tmp
-#drush vset jquery_update_jquery_cdn "google"
-#drush vset jquery_update_jquery_version "1.8"
-#drush vset prod_check_sitemail "maintenance@hackrobats.net"
-#drush vset maintenance_mode 1
+cd /var/www/$domain/html
+drush vset cron_key $machine
+drush vset cron_safe_threshold 0
+drush vset error_level 0
+drush vset file_private_path /var/www/$domain/private
+drush vset file_temporary_path /var/www/$domain/tmp
+drush vset jquery_update_jquery_cdn "google"
+drush vset jquery_update_jquery_version "1.8"
+drush vset prod_check_sitemail "maintenance@hackrobats.net"
+drush vset maintenance_mode 1
 
-#drush en advanced_help -y
+drush -y en advanced_help
 
-#drush php-eval 'node_access_rebuild();'
+drush secrev --store
+
+drush php-eval 'node_access_rebuild();'
+
+# Remove Drupal Install files after installation
+cd /var/www/$domain
+sudo chown -R deploy:www-data html logs private public tmp
+sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 
 
 
@@ -237,81 +246,142 @@ sudo chmod 644 /var/www/$domain/html/sites/default/settings.php
 #############################################################
 
 # Create virtual host file on Prod, enable and restart apache
-#sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
-#        ServerAdmin maintenance@hackrobats.net
-#        ServerName dev.$domain
-#        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-#        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-#        DocumentRoot /var/www/$domain/html
-#        ErrorLog /var/www/$domain/logs/error.log
-#        CustomLog /var/www/$domain/logs/access.log combined
-#        DirectoryIndex index.php
-#</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
-#sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
-#        ServerAdmin maintenance@hackrobats.net
-#        ServerName www.$domain
-#        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-#        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-#        DocumentRoot /var/www/$domain/html
-#        ErrorLog /var/www/$domain/logs/error.log
-#        CustomLog /var/www/$domain/logs/access.log combined
-#        DirectoryIndex index.php
-#</VirtualHost>
-#<VirtualHost *:80>
-#        ServerName $domain
-#        Redirect 301 / http://www.$domain/
-#</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
-# Create DB & user on Production
-#db5="CREATE DATABASE IF NOT EXISTS $machine;"
-#db6="GRANT ALL PRIVILEGES ON $machine.* TO $machine@local IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@local.hackrobats.net IDENTIFIED BY '$dbpw';"
-#db7="GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@dev.hackrobats.net IDENTIFIED BY '$dbpw';"
-#db8="GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod IDENTIFIED BY '$dbpw';GRANT ALL PRIVILEGES ON $machine.* TO $machine@prod.hackrobats.net IDENTIFIED BY '$dbpw';"
-#db9="GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
-#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db5\""
-#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db6\""
-#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db7\""
-#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db8\""
-#sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db9\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db5\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db6\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db7\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db8\""
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db9\""
-# Clone site directory to Production
-#sudo -u deploy rsync -avzh /var/www/$domain/ deploy@dev:/var/www/$domain/
-#sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
-# Clone Drush aliases
-#sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
-#sudo -u deploy rsync -avzh /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
-# Clone Apache config & reload apache
-#sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-#sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
-#sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-#sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
-# Clone DB
-#drush sql-sync @$machine.local @$machine.dev -y
-#drush sql-sync @$machine.local @$machine.prod -y
-# Clone cron entry
-#sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
-#sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
-#sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
-#sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
-# Set permissions
-cd /var/www/$domain
-sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
-# Clear Drupal cache, update database, run cron
-drush -y @$machine.local cc all && drush -y @$machine.local updb && drush -y @$machine.local cron
-# Push changes to Git directory
-sudo -u deploy git add . -A
-sudo -u deploy git commit -a -m "initial commit"
-sudo -u deploy git push origin master
+# sudo -u deploy ssh deploy@dev "echo '<VirtualHost *:80>
+        # ServerAdmin maintenance@hackrobats.net
+        # ServerName dev.$domain
+        # ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        # ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        # DocumentRoot /var/www/$domain/html
+        # ErrorLog /var/www/$domain/logs/error.log
+        # CustomLog /var/www/$domain/logs/access.log combined
+        # DirectoryIndex index.php
+# </VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+# sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
+        # ServerAdmin maintenance@hackrobats.net
+        # ServerName www.$domain
+        # ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        # ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        # DocumentRoot /var/www/$domain/html
+        # ErrorLog /var/www/$domain/logs/error.log
+        # CustomLog /var/www/$domain/logs/access.log combined
+        # DirectoryIndex index.php
+# </VirtualHost>
+# <VirtualHost *:80>
+        # ServerName $domain
+        # Redirect 301 / http://www.$domain/
+# </VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+# # Create DB & user on Production
+# db2="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
+# sudo -u deploy ssh deploy@dev "mysql -u deploy -e \"$db2\""
+# sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db2\""
+# # Clone site directory to Production
+# sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
+# sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
+# # Change settings.php to be Dev & WWW
+# sudo -u deploy ssh deploy@dev "sed -i '318s/http/https/g' /var/www/$domain/html/sites/default/settings.php"
+# sudo -u deploy ssh deploy@dev "sed -i '318s/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
+# sudo -u deploy ssh deploy@dev "sed -i '318s/local.$domain/dev.$domain/g' /var/www/$domain/html/sites/default/settings.php"
+# sudo -u deploy ssh deploy@prod "sed -i '318s/http/https/g' /var/www/$domain/html/sites/default/settings.php"
+# sudo -u deploy ssh deploy@prod "sed -i '318s/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
+# sudo -u deploy ssh deploy@prod "sed -i '318s/local.$domain/www.$domain/g' /var/www/$domain/html/sites/default/settings.php"
+# # Clone Drush aliases
+# sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
+# sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
+# # Clone Apache config & reload apache
+# sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+# sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
+# sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+# sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf && sudo service apache2 reload"
+# # Clone DB
+# drush -y @$machine.local utf8mb4-convert-databases
+# drush -y sql-sync @$machine.local @$machine.dev
+# drush -y @$machine.dev utf8mb4-convert-databases
+# drush -y sql-sync @$machine.local @$machine.prod
+# drush -y @$machine.prod utf8mb4-convert-databases
+# # Clone cron entry
+# sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
+# sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/http/ --user=dev --password=dev --auth-no-challenge http/g' /etc/cron.hourly/$machine"
+# sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
+# sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
+# sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
+# # Set permissions
+# cd /var/www/$domain
+# sudo chown -R deploy:www-data html logs private public tmp
+# sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
+# sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
+# # Push changes to Git directory
+# cd /var/www/$domain/html
+# sudo -u deploy git status
+# sudo -u deploy git add . -A
+# sudo -u deploy git commit -a -m "initial commit"
+# sudo -u deploy git push origin master
+# # Git steps on Dev
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
+# # Git steps on Production
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git reset --hard"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash drop"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git checkout -- ."
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
+# # Fix File and Directory Permissions on Dev
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 *"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+# sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php"
+# # Fix File and Directory Permissions on Prod
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 *"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+# sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php"
+# # Rsync steps for sites/default/files
+# drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
+# Take Local, Dev & Prod sites out of Maintenance Mode
+drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
 # Prepare site for Maintenance
-#cd /var/www/$domain/html
-#drush @$machine.local pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-#drush @$machine.dev pm-disable cdn googleanalytics google_analytics hidden_captcha honeypot_entityform honeypot prod_check -y
-#drush @$machine.prod pm-disable admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+cd /var/www/$domain/html
+# drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+# drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+# drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-#drush @$machine.local cron -y && drush @$machine.local updb -y && drush @$machine.local cron -y
-# Take Dev & Prod sites out of Maintenance Mode
-drush @$machine.local vset maintenance_mode 0 -y && drush @$machine.local cc all -y
+drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
+# Take Local, Dev & Prod sites out of Maintenance Mode
+drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
+# Enable Xtheme and set default
+# cd /var/www/$domain/html/sites/all/themes/ztheme
+# npm install gulp --save-dev
+# npm install gulp-autoprefixer --save-dev
+# npm install gulp-sass --save-dev
+# npm install gulp-shell --save-dev
+# npm install browser-sync --save-dev
+# gulp sass
+drush -y @$machine.local rc && drush -y @$machine.local updb && drush -y @$machine.local cron
+
+# Display Docroot, URLs, Sitename, Github Repo, DB User & PW
+echo ""
+echo "Docroot            = /var/www/$domain/html"
+echo "Domain Name        = $domain"
+echo "Site Name          = $sitename"
+echo "Production URL     = http://www.$domain"
+echo "Staging URL        = http://stage.$domain"
+echo "Local URL          = http://local.$domain"
+echo "Github Repository  = https://github.com/$github/$machine.git"
+echo "Database Name/User = $machine"
+echo "Database Password  = $dbpw"
