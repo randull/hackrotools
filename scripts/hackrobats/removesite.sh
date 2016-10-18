@@ -88,6 +88,7 @@ git status
 git add . -A
 git commit -a -m "Purging"
 git push origin master
+git gc
 # Delete File Structure
 cd $www
 sudo rm -R $domain
