@@ -186,9 +186,9 @@ cd /var/www/$domain/html
 composer create-project drupal/drupal:^8.2.1 temporary --no-interaction
 rsync -avzO /var/www/$domain/html/temporary/ /var/www/$domain/html/
 sudo -u deploy rm -R temporary
-# cd /var/www/$domain/html/profiles
-# git clone https://github.com/randull/sasstastic
-
+cd /var/www/$domain/html/profiles
+git clone https://github.com/randull/sasstastic
+cd /var/www/$domain/html/profiles/sasstastic && sudo rm -R .git
 
 
 #############################################################
@@ -206,7 +206,7 @@ cd /var/www/$domain/html
 sudo mv README.txt readme.md
 sudo -u deploy rm -rf modules/README.txt profiles/README.txt themes/README.txt
 sudo -u deploy rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.md UPGRADE.txt
-sudo -u deploy rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
+# sudo -u deploy rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
 # Prohibit Search Engines from Flagging
 echo "
 # Prohibit Search Engines from randomly Flagging/Unflagging content
@@ -242,6 +242,13 @@ cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
 sudo chmod -R ug=rw,o=r,a+X public/* tmp/*
 sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
+
+
+
+cd /var/www/$domain/html/sites
+chmod 775 default
+cd default
+chmod 664 settings.php
 
 
 
