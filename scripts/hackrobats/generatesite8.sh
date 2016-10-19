@@ -186,9 +186,9 @@ cd /var/www/$domain/html
 composer create-project drupal/drupal:^8.2.1 temporary --no-interaction
 rsync -avzO /var/www/$domain/html/temporary/ /var/www/$domain/html/
 sudo -u deploy rm -R temporary
-cd /var/www/$domain/html/profiles
-git clone https://github.com/randull/sasstastic
-cd /var/www/$domain/html/profiles/sasstastic && sudo rm -R .git
+#cd /var/www/$domain/html/profiles
+#git clone https://github.com/randull/sasstastic
+#cd /var/www/$domain/html/profiles/sasstastic && sudo rm -R .git
 
 
 #############################################################
