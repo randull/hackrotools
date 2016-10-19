@@ -184,7 +184,9 @@ sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
 # drush -y make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
-
+composer create-project drupal/drupal temporary 8.2.1
+mv /var/www/$domain/html/temporary/* /var/www/$domain/html/
+sudo -u deploy rm -R temporary
 
 
 #############################################################
@@ -354,16 +356,16 @@ sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 # # Rsync steps for sites/default/files
 # drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 # Take Local, Dev & Prod sites out of Maintenance Mode
-# drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
+# drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cr
 # Prepare site for Maintenance
 # cd /var/www/$domain/html
 # drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
 # drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
 # drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-# drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
+# drush -y @$machine.local cr && drush -y @$machine.local updb && drush -y @$machine.local cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
-# drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local rc
+# drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cr
 # Enable Xtheme and set default
 # cd /var/www/$domain/html/sites/all/themes/ztheme
 # npm install gulp --save-dev
