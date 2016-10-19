@@ -248,7 +248,10 @@ sudo chmod -R u=rw,go=r,a+X html/* logs/* private/*
 cd /var/www/$domain/html/sites
 chmod 775 default
 cd default
+cp default.settings.php settings.php
 chmod 664 settings.php
+cd /var/www/$domain
+sudo chown -R deploy:www-data html logs private public tmp
 
 
 
