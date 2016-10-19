@@ -185,9 +185,10 @@ sudo -u deploy git pull origin master
 cd /var/www/$domain/html
 # drush -y make https://raw.github.com/randull/createsite/master/createsite.make --contrib-destination=sites/all --concurrency=8 --no-cache
 composer create-project drupal/drupal temporary 8.2.1
-mv /var/www/$domain/html/temporary/* /var/www/$domain/html/
+rsync -avzO /var/www/$domain/html/temporary/ /var/www/$domain/html/
 sudo -u deploy rm -R temporary
-
+cd profiles
+git clone https://github.com/randull/sasstastic
 
 #############################################################
 #    Install Drupal on Local
