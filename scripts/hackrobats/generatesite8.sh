@@ -57,7 +57,6 @@ mysql -u deploy -e "$db1"
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data /var/www/$domain && sudo chmod 755 /var/www/$domain
 cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R deploy:www-data html logs private public tmp
 cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
-cd /var/www/$domain/html && sudo mkdir -p scripts/hackrobats && sudo mkdir -p profiles/hackrobats
 cd /var/www/$domain && sudo touch logs/access.log logs/error.log public/readme.md tmp/readme.md
 cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
 cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
@@ -187,7 +186,7 @@ cd /var/www/$domain/html
 composer create-project drupal/drupal temporary 8.2.1
 rsync -avzO /var/www/$domain/html/temporary/ /var/www/$domain/html/
 sudo -u deploy rm -R temporary
-cd profiles
+cd /var/www/$domain/html/profiles
 git clone https://github.com/randull/sasstastic
 
 #############################################################
