@@ -95,7 +95,7 @@ drush -y @$machine.prod cc all
 cd /var/www/$domain/html
 drush -y @$machine.local en admin_devel devel_generate devel_node_access ds_devel metatag_devel devel
 drush -y @$machine.local dis cdn googleanalytics honeypot_entityform honeypot prod_check
-drush -y @$machine.prod en cdn googleanalytics honeypot_entityform honeypot prod_check
+drush -y @$machine.prod en cdn googleanalytics prod_check
 drush -y @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel
 # Prepare site for Live Environment
 drush -y @$machine.local cron
