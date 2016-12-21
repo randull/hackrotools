@@ -78,6 +78,8 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
 drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
+# Export DB from Dev to Local using Drush
+drush -y sql-sync --skip-tables-key=common @$machine.local @$machine.dev
 # Fix File and Directory Permissions on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
