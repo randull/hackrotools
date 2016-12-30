@@ -103,6 +103,11 @@ drush -y @$machine.prod updb
 cd /var/www/$domain/html
 drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot prod_check
 drush -y @$machine.local en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel
+# List and Remove Missing Modules
+drush -y @$machine.local lmm
+drush -y @$machine.prod lmm
+drush -y @$machine.local rmm
+drush -y @$machine.prod rmm
 # Take Local & Prod sites out of Maintenance Mode
 drush -y @$machine.local vset maintenance_mode 0
 drush -y @$machine.local cc all
