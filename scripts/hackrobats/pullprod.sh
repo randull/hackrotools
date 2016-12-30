@@ -63,6 +63,7 @@ git stash drop
 git checkout -- .
 git status
 # Git steps on Production Web Server
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git gc"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
@@ -71,6 +72,7 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin mast
 git status
 git diff
 git pull origin master
+git gc
 # Rsync steps for sites/default/files
 drush -y rsync -avO @$machine.prod:%files @$machine.local:%files
 # Clear Cache & Run Cron
