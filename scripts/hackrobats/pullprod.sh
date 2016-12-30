@@ -73,6 +73,13 @@ git diff
 git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avO @$machine.prod:%files @$machine.local:%files
+# Clear Cache & Run Cron
+drush -y @$machine.local cc all
+drush -y @$machine.local cron
+drush -y @$machine.local updb
+drush -y @$machine.prod cc all
+drush -y @$machine.prod cron
+drush -y @$machine.prod updb
 # Export DB from Prod to Local using Drush
 drush -y sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Clear Cache & Run Cron
