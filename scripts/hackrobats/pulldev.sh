@@ -73,8 +73,28 @@ git diff
 git pull origin master
 # Rsync steps for sites/default/files
 drush -y rsync -avO @$machine.dev:%files @$machine.local:%files
+# Clear Cache & Run Cron
+drush -y @$machine.local cc all
+drush -y @$machine.local updb
+drush -y @$machine.dev cc all
+drush -y @$machine.dev updb
 # Export DB from Dev to Local using Drush
 drush -y sql-sync --skip-tables-key=common @$machine.dev @$machine.local
+# Clear Cache & Run Cron
+drush -y @$machine.local cc all
+drush -y @$machine.local updb
+drush -y @$machine.dev cc all
+drush -y @$machine.dev updb
+# List and Remove Missing Modules
+drush -y @$machine.local lmm
+drush -y @$machine.local rmm
+drush -y @$machine.dev lmm
+drush -y @$machine.dev rmm
+# Clear Cache & Run Cron
+drush -y @$machine.local cc all
+drush -y @$machine.local updb
+drush -y @$machine.dev cc all
+drush -y @$machine.dev updb
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot dev_check
@@ -87,5 +107,7 @@ drush -y @$machine.dev cc all
 # Prepare site for Development
 drush -y @$machine.local cron
 drush -y @$machine.local updb
+drush -y @$machine.local cc all
 drush -y @$machine.dev cron
 drush -y @$machine.dev updb
+drush -y @$machine.dev cc all

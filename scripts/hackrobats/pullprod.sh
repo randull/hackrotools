@@ -103,8 +103,8 @@ drush -y @$machine.prod cc all
 drush -y @$machine.prod updb
 # List and Remove Missing Modules
 drush -y @$machine.local lmm
-drush -y @$machine.prod lmm
 drush -y @$machine.local rmm
+drush -y @$machine.prod lmm
 drush -y @$machine.prod rmm
 # Clear Cache & Run Cron
 drush -y @$machine.local cc all
