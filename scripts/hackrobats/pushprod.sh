@@ -28,12 +28,6 @@ name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com)
 longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
-# Put Local & Prod sites into Maintenance Mode
-cd /var/www/$domain/html
-drush -y @$machine.local vset maintenance_mode 1
-drush -y @$machine.local cc all
-drush -y @$machine.prod vset maintenance_mode 1
-drush -y @$machine.prod cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain/html
 if [ -f "$www/$domain/html/README.md" ]; then
@@ -68,6 +62,12 @@ git status
 git add . -A
 git commit -a -m "$commit"
 git push origin master
+# Put Local & Prod sites into Maintenance Mode
+cd /var/www/$domain/html
+drush -y @$machine.local vset maintenance_mode 1
+drush -y @$machine.local cc all
+drush -y @$machine.prod vset maintenance_mode 1
+drush -y @$machine.prod cc all
 # Git steps on Production
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
