@@ -93,6 +93,9 @@ drush -y @$machine.prod cc all
 drush -y @$machine.prod updb
 # Export DB from Prod to Local using Drush
 drush -y sql-sync --skip-tables-key=common @$machine.prod @$machine.local
+# Flush Image Styles & Generate new ones
+drush -y @machine.local image-flush --all
+drush -y @machine.local image-generate all all
 # Clear Cache & Run Cron
 drush -y @$machine.local cc all
 drush -y @$machine.local updb
