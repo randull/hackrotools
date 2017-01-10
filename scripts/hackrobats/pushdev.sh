@@ -73,7 +73,10 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
-drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
+drush -y rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.dev:%files
+# Flush Image Styles & Generate Styles on Local
+drush -y @$machine.dev image-flush --all
+drush -y @$machine.dev image-generate all all
 # Export DB from Dev to Local using Drush
 drush -y sql-sync --skip-tables-key=common @$machine.local @$machine.dev
 # Fix File and Directory Permissions on Dev
