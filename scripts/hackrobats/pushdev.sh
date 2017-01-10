@@ -28,12 +28,6 @@ name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com)
 longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
-# Put Local & Dev sites into Maintenance Mode
-cd /var/www/$domain/html
-drush -y @$machine.local vset maintenance_mode 1
-drush -y @$machine.local cc all
-drush -y @$machine.dev vset maintenance_mode 1
-drush -y @$machine.dev cc all
 # Fix File and Directory Permissions on Local
 cd /var/www/$domain/html
 if [ -f "$www/$domain/html/README.md" ]; then
@@ -58,8 +52,10 @@ echo "File Permissions fixed"
 # Remove unecessary files
 cd /var/www/$domain/html
 sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt
-sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
-sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
+sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
+sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt
+sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt
+sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php
 echo "Unecessary files removed"
 # Git steps on Local
 cd /var/www/$domain/html
@@ -88,14 +84,10 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 *"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt install.php INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
-# Take Local & Dev sites out of Maintenance Mode and Clear Cache
-drush -y @$machine.local vset maintenance_mode 0
-drush -y @$machine.local cc all
-drush -y @$machine.dev vset maintenance_mode 0
-drush -y @$machine.dev cc all
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush -y @$machine.local pm-disable cdn googleanalytics honeypot_entityform honeypot prod_check

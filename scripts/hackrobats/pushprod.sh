@@ -52,8 +52,10 @@ echo "File Permissions fixed"
 # Remove unecessary files
 cd /var/www/$domain/html
 sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt
-sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
-sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
+sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
+sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php install.php INSTALL.sqlite.txt INSTALL.txt
+sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt
+sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php
 echo "Unecessary files removed"
 # Git steps on Local
 cd /var/www/$domain/html
@@ -62,12 +64,6 @@ git status
 git add . -A
 git commit -a -m "$commit"
 git push origin master
-# Put Local & Prod sites into Maintenance Mode
-cd /var/www/$domain/html
-drush -y @$machine.local vset maintenance_mode 1
-drush -y @$machine.local cc all
-drush -y @$machine.prod vset maintenance_mode 1
-drush -y @$machine.prod cc all
 # Git steps on Production
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
@@ -84,13 +80,10 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 *"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php"
-# Take Local & Prod sites out of Maintenance Mode and Clear Cache
-drush -y @$machine.local vset maintenance_mode 0
-drush -y @$machine.local cc all
-drush -y @$machine.prod vset maintenance_mode 0
-drush -y @$machine.prod cc all
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txtLICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush -y @$machine.local en admin_devel devel_generate devel_node_access ds_devel metatag_devel devel

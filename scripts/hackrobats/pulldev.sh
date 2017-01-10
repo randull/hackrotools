@@ -19,12 +19,6 @@ name=`echo $domain |cut -f1 -d"."`    # Remove last for characters (eg .com)
 longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
-# Put Local & Dev sites into Maintenance Mode
-cd /var/www/$domain/html
-drush -y @$machine.local vset maintenance_mode 1
-drush -y @$machine.local cc all
-drush -y @$machine.dev vset maintenance_mode 1
-drush -y @$machine.dev cc all 
 # Fix File and Directory Permissions on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
@@ -33,9 +27,10 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 *"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php"
-# Remove unecessary files
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Fix file ownership
 cd /var/www/$domain
 sudo chown -Rf deploy:www-data *
@@ -50,8 +45,10 @@ echo "File Permissions fixed"
 # Remove unecessary files
 cd /var/www/$domain/html
 sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt
-sudo rm -rf CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
-sudo rm -rf sites/README.txt sites/example.sites.php sites/all/libraries/plupload/examples sites/all/modules/README.txt sites/all/themes/README.txt sites/default/default.settings.php
+sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
+sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt
+sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt
+sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php
 echo "Unecessary files removed"
 # Checkout all changes on Local Environment
 cd /var/www/$domain/html
@@ -99,11 +96,6 @@ drush -y @$machine.dev updb
 cd /var/www/$domain/html
 drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot dev_check
 drush -y @$machine.local en devel admin_devel devel_generate devel_node_access ds_devel metatag_devel
-# Take Local & Dev sites out of Maintenance Mode
-drush -y @$machine.local vset maintenance_mode 0
-drush -y @$machine.local cc all
-drush -y @$machine.dev vset maintenance_mode 0
-drush -y @$machine.dev cc all
 # Prepare site for Development
 drush -y @$machine.local cron
 drush -y @$machine.local updb
