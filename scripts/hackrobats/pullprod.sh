@@ -71,7 +71,7 @@ git diff
 git pull origin master
 git gc
 # Rsync steps for sites/default/files
-drush -y rsync -avO @$machine.prod:%files @$machine.local:%files
+drush -y rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.prod:%files @$machine.local:%files
 # Clear Cache & Run Cron
 drush -y @$machine.local cc all
 drush -y @$machine.local updb
