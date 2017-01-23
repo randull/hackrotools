@@ -84,15 +84,6 @@ drush -y @$machine.local cc all
 drush -y @$machine.local updb
 drush -y @$machine.prod cc all
 drush -y @$machine.prod updb
-# Rsync steps for sites/default/files
-drush -y rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.prod:%files @$machine.local:%files
-# Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.prod cc all
-drush -y @$machine.prod updb
-# Export DB from Prod to Local using Drush
-drush -y sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Flush Image Styles & Generate Styles on Local
 drush -y @$machine.local image-flush --all
 drush -y @$machine.local image-generate all all
