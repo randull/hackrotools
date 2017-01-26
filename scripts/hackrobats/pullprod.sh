@@ -24,7 +24,8 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 *"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 755 html logs private"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 public tmp"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
@@ -39,7 +40,8 @@ echo "File Ownership fixed"
 # Fix file permissions
 sudo chmod -Rf u=rw,go=r,a+X html/* logs/*
 sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*
-sudo chmod 775 *
+sudo chmod 755 html logs private
+sudo chmod 775 public tmp
 sudo chmod 644 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess
 echo "File Permissions fixed"
 # Remove unecessary files
