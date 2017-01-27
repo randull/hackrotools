@@ -60,7 +60,7 @@ cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$
 cd /var/www/$domain/html && sudo mkdir -p scripts/hackrobats && sudo mkdir -p profiles/hackrobats
 cd /var/www/$domain && sudo touch logs/access.log logs/error.log public/readme.md tmp/readme.md
 cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
-cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
+cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 755 html logs && sudo chmod 775 private public tmp
 sudo chmod -R u=rw,go=r,a+X html/*
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
 # Create virtual host file on Dev, enable and restart apache
@@ -338,7 +338,8 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 *"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 755 html logs"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 private public tmp"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
@@ -350,7 +351,8 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 *"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 755 html logs"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 private public tmp"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"

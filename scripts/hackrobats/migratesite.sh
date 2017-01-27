@@ -30,16 +30,26 @@ shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
 # Put Dev & Prod sites into Maintenance Mode
 drush @$machine vset maintenance_mode 1 -y && drush @$machine cc all -y
-# Fix File and Directory Permissions on Dev
-cd /var/www/$domain/html
-sudo -u deploy rm CHANGELOG.txt COPYRIGHT.txt install.php INSTALL.mysql.txt INSTALL.pgsql.txt INSTALL.sqlite.txt INSTALL.txt LICENSE.txt MAINTAINERS.txt README.txt UPGRADE.txt
-cd /var/www/$domain/html/sites
-sudo -u deploy rm README.txt all/modules/README.txt all/themes/README.txt
+# Fix file ownership
 cd /var/www/$domain
-sudo chown -R deploy:deploy html/* logs/*
-sudo chown -R www-data:www-data public/* private/* tmp/*
-sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
-sudo chmod -R u=rw,go=r,a+X html/*
+sudo chown -Rf deploy:www-data *
+sudo chown -Rf deploy:www-data html/* logs/* private/* public/* tmp/*
+echo "File Ownership fixed"
+# Fix file permissions
+sudo chmod -Rf u=rw,go=r,a+X html/* logs/*
+sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*
+sudo chmod 755 html logs
+sudo chmod 775 private public tmp
+sudo chmod 644 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess
+echo "File Permissions fixed"
+# Remove unecessary files
+cd /var/www/$domain/html
+sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt
+sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt
+sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt
+sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt
+sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php
+echo "Unecessary files removed"
 # Git steps on Development
 cd /var/www/$domain/html
 git add . -A

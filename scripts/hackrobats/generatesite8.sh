@@ -59,7 +59,7 @@ cd /var/www/$domain && sudo mkdir html logs private public tmp && sudo chown -R 
 cd /var/www/$domain/html && sudo mkdir -p sites/default && sudo ln -s /var/www/$domain/public sites/default/files
 cd /var/www/$domain && sudo touch logs/access.log logs/error.log public/readme.md tmp/readme.md
 cd /var/www/$domain/private && sudo mkdir -p backup_migrate/manual backup_migrate/scheduled
-cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 775 html logs private public tmp
+cd /var/www/$domain && sudo chown -R deploy:www-data html logs private public tmp && sudo chmod 755 html logs && sudo chmod 775 private public tmp
 sudo chmod -R u=rw,go=r,a+X html/*
 sudo chmod -R ug=rw,o=r,a+X logs/* private/* public/* tmp/*
 # Create virtual host file on Dev, enable and restart apache

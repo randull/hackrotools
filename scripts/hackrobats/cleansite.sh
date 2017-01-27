@@ -20,7 +20,8 @@ echo "File Ownership fixed on Local"
 # Fix file permissions on Local
 sudo chmod -Rf u=rw,go=r,a+X html/* logs/*
 sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*
-sudo chmod 775 *
+sudo chmod 755 html logs
+sudo chmod 775 private public tmp
 sudo chmod 644 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess
 echo "File Permissions fixed on Local"
 # Remove unecessary files on Local
