@@ -87,8 +87,8 @@ drush -y @$machine.local updb
 drush -y @$machine.prod cc all
 drush -y @$machine.prod updb
 # Flush Image Styles & Generate Styles on Local
-drush -y @$machine.local image-flush --all
-drush -y @$machine.local image-generate all all
+#drush -y @$machine.local image-flush --all
+#drush -y @$machine.local image-generate all all   //This takes 10+ minutes for Yosemite
 # Clear Cache & Run Cron
 drush -y @$machine.local cc all
 drush -y @$machine.local updb
