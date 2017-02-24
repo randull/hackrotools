@@ -300,9 +300,7 @@ sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
 # Clone DB
 drush -y @$machine.local utf8mb4-convert-databases
 drush -y sql-sync @$machine.local @$machine.dev
-drush -y @$machine.dev utf8mb4-convert-databases
 #drush -y sql-sync @$machine.local @$machine.prod
-#drush -y @$machine.prod utf8mb4-convert-databases
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/http/ --user=dev --password=dev --auth-no-challenge http/g' /etc/cron.hourly/$machine"
