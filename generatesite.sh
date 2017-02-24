@@ -213,7 +213,7 @@ Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
 sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
 sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
-sudo -u deploy sed -i "377i\$cookie_domain = \'.$domain\';" /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "376i\$cookie_domain = \'.$domain\';" /var/www/$domain/html/sites/default/settings.php
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
