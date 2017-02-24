@@ -213,6 +213,7 @@ Disallow: /flag/" >> /var/www/$domain/html/robots.txt
 sudo -u deploy sed -i "259i\      'charset' => 'utf8mb4'," /var/www/$domain/html/sites/default/settings.php
 sudo -u deploy sed -i "260i\      'collation' => 'utf8mb4_general_ci'," /var/www/$domain/html/sites/default/settings.php
 sudo -u deploy sed -i "318i\$base_url = \'http://local.$domain\';" /var/www/$domain/html/sites/default/settings.php
+sudo -u deploy sed -i "344i\$cookie_domain = \'.$domain\';" /var/www/$domain/html/sites/default/settings.php
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
@@ -280,7 +281,7 @@ sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db2\""
 sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
 sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
 # Change settings.php to be Dev & WWW
-sudo -u deploy ssh deploy@dev "sed -i '318s/http/https/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@dev "sed -i '318s/http/http/g' /var/www/$domain/html/sites/default/settings.php"
 sudo -u deploy ssh deploy@dev "sed -i '318s/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
 sudo -u deploy ssh deploy@dev "sed -i '318s/local.$domain/dev.$domain/g' /var/www/$domain/html/sites/default/settings.php"
 sudo -u deploy ssh deploy@prod "sed -i '318s/http/https/g' /var/www/$domain/html/sites/default/settings.php"
