@@ -258,7 +258,7 @@ sudo -u deploy git status
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
-drush -y @$machine.local utf8mb4-convert-databases
+#drush -y @$machine.local utf8mb4-convert-databases
 db2="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
 
 
