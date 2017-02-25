@@ -217,7 +217,6 @@ sudo -u deploy sed -i "376i\$cookie_domain = \'.$domain\';" /var/www/$domain/htm
 # Set owner of entire directory to deploy:www-data
 cd /var/www
 sudo chown -R deploy:www-data $domain
-sudo chown -R deploy:www-data /home/deploy
 # Set Cron Key & Private File Path
 cd /var/www/$domain/html
 drush vset cron_key $machine
