@@ -290,8 +290,8 @@ sudo -u deploy ssh deploy@dev "sed -i '318s/local.$domain/dev.$domain/g' /var/ww
 sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
 sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-sudo -H ssh deploy@dev "sudo -u deploy a2ensite $machine.conf"
-sudo -H ssh deploy@dev "sudo service apache2 reload"
+sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf"
+sudo -u deploy ssh deploy@dev "sudo service apache2 reload"
 # Clone DB
 drush -y sql-sync @$machine.local @$machine.dev
 # Clone cron entry
