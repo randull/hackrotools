@@ -184,7 +184,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -y make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --contrib-destination=sites/all --concurrency=8 --no-cache
+drush -y make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --concurrency=8 --no-cache --notify
 
 
 
