@@ -184,7 +184,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -y make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --concurrency=8 --no-cache --verbose
+drush -y make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --concurrency=8 --no-cache --notify --verbose
 
 
 
@@ -193,7 +193,7 @@ drush -y make https://raw.github.com/randull/hackroprofile/master/hackroprofile.
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush -y site-install hackroprofile  --verbose --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
+drush -y site-install hackroprofile  --notify --verbose --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
