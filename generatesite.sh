@@ -399,16 +399,21 @@ drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 #############################################################
 
 # Take Local, Dev & Prod sites out of Maintenance Mode
-drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
+drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
+drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
+#drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
 # Prepare site for Maintenance
-cd /var/www/$domain/html
 drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
-#drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
+drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
 #drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
-drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
+drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
+drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
+#drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
-drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
+drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
+drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
+#drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
 # Enable Xtheme and set default
 #cd /var/www/$domain/html/sites/all/themes/ztheme
 #npm install gulp --save-dev
@@ -417,7 +422,9 @@ drush -y @$machine vset maintenance_mode 0 && drush -y @$machine cc all
 #npm install gulp-shell --save-dev
 #npm install browser-sync --save-dev
 #gulp sass
-drush -y @$machine cron && drush -y @$machine updb && drush -y @$machine cron
+drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
+drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
+#drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
 
 
 # Display Docroot, URLs, Sitename, Github Repo, DB User & PW
@@ -427,7 +434,7 @@ echo "Domain Name        = $domain"
 echo "Site Name          = $sitename"
 echo "Production URL     = http://www.$domain"
 echo "Staging URL        = http://stage.$domain"
-echo "Dev URL            = http://dev.$domain"
+echo "Development URL    = http://dev.$domain"
 echo "Local URL          = http://local.$domain"
 echo "Github Repository  = https://github.com/$github/$machine.git"
 echo "Database Name/User = $machine"
