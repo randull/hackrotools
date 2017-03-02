@@ -35,9 +35,9 @@ sudo service apache2 reload
 sudo -u deploy ssh deploy@dev "sudo service apache2 reload"
 sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
 # Restart Apache2
-sudo service apache2 restart
-sudo -u deploy ssh deploy@dev "sudo service apache2 restart"
-sudo -u deploy ssh deploy@prod "sudo service apache2 restart"
+#sudo service apache2 restart
+#sudo -u deploy ssh deploy@dev "sudo service apache2 restart"
+#sudo -u deploy ssh deploy@prod "sudo service apache2 restart"
 # Remove Virtual Host entry
 sudo rm -R $hosts/$machine.conf
 if [ -d "$hosts/$machine\.conf" ]; then
