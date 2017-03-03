@@ -90,7 +90,7 @@ echo "<?php
   '#name' => '$machine.local',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
   'path-aliases' => array (
-    '%drush' => '/usr/share/php/drush',
+    '%drush-script' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
@@ -134,7 +134,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'localhost',
+        'host' => 'dev.hackrobats.net',
         'port' => '3306',
         'driver' => 'mysql',
         'prefix' => '',
