@@ -165,7 +165,7 @@ echo "<?php
         'database' => '$machine',
         'username' => '$machine',
         'password' => '$dbpw',
-        'host' => 'localhost',
+        'host' => 'prod.hackrobats.net',
         'port' => '3306',
         'driver' => 'mysql',
         'prefix' => '',
