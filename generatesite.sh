@@ -152,7 +152,7 @@ echo "<?php
   '#name' => '$machine.prod',
   '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
   'path-aliases' => array (
-    '%drush' => '/usr/share/php/drush',
+    '%drush-script' => '/usr/share/php/drush',
     '%dump-dir' => '/var/www/$domain/tmp',
     '%private' => '/var/www/$domain/private',
     '%files' => '/var/www/$domain/public',
@@ -287,6 +287,7 @@ sudo -u deploy rsync -avzO /var/www/$domain/ deploy@dev:/var/www/$domain/
 sudo -u deploy ssh deploy@dev "sed -i '318s/http/http/g' /var/www/$domain/html/sites/default/settings.php"
 sudo -u deploy ssh deploy@dev "sed -i '318s/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
 sudo -u deploy ssh deploy@dev "sed -i '318s/local.$domain/dev.$domain/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@dev "sed -i '376s/\$cookie_domain/# \$cookie_domain/g' /var/www/$domain/html/sites/default/settings.php"
 # Clone Drush aliases
 sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@dev:/home/deploy/.drush/$machine.aliases.drushrc.php
 # Clone Apache config & reload apache
@@ -351,6 +352,7 @@ drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 #sudo -u deploy ssh deploy@prod "sed -i '318s/http/https/g' /var/www/$domain/html/sites/default/settings.php"
 #sudo -u deploy ssh deploy@prod "sed -i '318s/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
 #sudo -u deploy ssh deploy@prod "sed -i '318s/local.$domain/www.$domain/g' /var/www/$domain/html/sites/default/settings.php"
+#sudo -u deploy ssh deploy@prod "sed -i '376s/\$cookie_domain/# \$cookie_domain/g' /var/www/$domain/html/sites/default/settings.php"
 ## Clone Drush aliases
 #sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
 ## Clone Apache config & reload apache
@@ -385,14 +387,6 @@ drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 #sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 ## Rsync steps for sites/default/files on Prod
 #drush -y rsync -avO @$machine.local:%files @$machine.prod:%files
-
-
-
-
-
-
-
-
 
 
 #############################################################
