@@ -259,7 +259,8 @@ sudo -u deploy git status
 sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
-#drush -y @$machine.local utf8mb4-convert-databases
+# Convert utf8 to mb4 & Create DB bash line
+drush -y @$machine.local utf8mb4-convert-databases
 db2="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
 
 
@@ -298,29 +299,29 @@ drush -y sql-sync @$machine.local @$machine.dev
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/http/ --user=dev --password=dev --auth-no-challenge http/g' /etc/cron.hourly/$machine"
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/local./dev./g' /etc/cron.hourly/$machine"
-## Git steps
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
-## Fix File and Directory Permissions
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 755 html logs"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 private public tmp"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
-#sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
-## Rsync steps for sites/default/files on Dev
-#drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
+# Git steps
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
+# Fix File and Directory Permissions
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 755 html logs"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 775 private public tmp"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
+# Rsync steps for sites/default/files on Dev
+drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 
 
 #############################################################
