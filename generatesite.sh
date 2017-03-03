@@ -329,64 +329,64 @@ drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 #    Clone to Production
 #############################################################
 
-## Create virtual host file on Prod, enable and restart apache
-#sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
-#        ServerAdmin maintenance@hackrobats.net
-#        ServerName www.$domain
-#        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
-#        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
-#        DocumentRoot /var/www/$domain/html
-#        ErrorLog /var/www/$domain/logs/error.log
-#        CustomLog /var/www/$domain/logs/access.log combined
-#        DirectoryIndex index.php
-#</VirtualHost>
-#<VirtualHost *:80>
-#        ServerName $domain
-#        Redirect 301 / http://www.$domain/
-#</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
-## Create DB & user on Production
-#sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db2\""
-## Clone site directory to Production
-#sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
-## Change settings.php to be Dev & WWW
-#sudo -u deploy ssh deploy@prod "sed -i '318s/http/https/g' /var/www/$domain/html/sites/default/settings.php"
-#sudo -u deploy ssh deploy@prod "sed -i '318s/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
-#sudo -u deploy ssh deploy@prod "sed -i '318s/local.$domain/www.$domain/g' /var/www/$domain/html/sites/default/settings.php"
-#sudo -u deploy ssh deploy@prod "sed -i '376s/\$cookie_domain/# \$cookie_domain/g' /var/www/$domain/html/sites/default/settings.php"
-## Clone Drush aliases
-#sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
-## Clone Apache config & reload apache
-#sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
-#sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf"
-#sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
-## Clone DB
-#drush -y sql-sync @$machine.local @$machine.prod
-## Clone cron entry
-#sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
-#sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
-## Git steps on Production
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git reset --hard"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash drop"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git checkout -- ."
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
-## Fix File and Directory Permissions on Prod
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 755 html logs"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 private public tmp"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
-#sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
-## Rsync steps for sites/default/files on Prod
-#drush -y rsync -avO @$machine.local:%files @$machine.prod:%files
+# Create virtual host file on Prod, enable and restart apache
+sudo -u deploy ssh deploy@prod "echo '<VirtualHost *:80>
+        ServerAdmin maintenance@hackrobats.net
+        ServerName www.$domain
+        ServerAlias *.$domain $name.510interactive.com $name.hackrobats.net
+        ServerAlias $name.5ten.co $name.cascadiaweb.com $name.cascadiaweb.net
+        DocumentRoot /var/www/$domain/html
+        ErrorLog /var/www/$domain/logs/error.log
+        CustomLog /var/www/$domain/logs/access.log combined
+        DirectoryIndex index.php
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName $domain
+        Redirect 301 / http://www.$domain/
+</VirtualHost>' > /etc/apache2/sites-available/$machine.conf"
+# Create DB & user on Production
+sudo -u deploy ssh deploy@prod "mysql -u deploy -e \"$db2\""
+# Clone site directory to Production
+sudo -u deploy rsync -avzh /var/www/$domain/ deploy@prod:/var/www/$domain/
+# Change settings.php to be Dev & WWW
+sudo -u deploy ssh deploy@prod "sed -i '318s/http/https/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@prod "sed -i '318s/\$base_url/# \$base_url/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@prod "sed -i '318s/local.$domain/www.$domain/g' /var/www/$domain/html/sites/default/settings.php"
+sudo -u deploy ssh deploy@prod "sed -i '376s/\$cookie_domain/# \$cookie_domain/g' /var/www/$domain/html/sites/default/settings.php"
+# Clone Drush aliases
+sudo -u deploy rsync -avzO /home/deploy/.drush/$machine.aliases.drushrc.php deploy@prod:/home/deploy/.drush/$machine.aliases.drushrc.php
+# Clone Apache config & reload apache
+sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-available/$machine.conf"
+sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf"
+sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
+# Clone DB
+drush -y sql-sync @$machine.local @$machine.prod
+# Clone cron entry
+sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
+sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
+# Git steps on Production
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git reset --hard"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git checkout -- ."
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
+# Fix File and Directory Permissions on Prod
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 755 html logs"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 private public tmp"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
+# Rsync steps for sites/default/files on Prod
+drush -y rsync -avO @$machine.local:%files @$machine.prod:%files
 
 
 #############################################################
@@ -396,30 +396,30 @@ drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
 # Take Local, Dev & Prod sites out of Maintenance Mode
 drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
 drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
-#drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
+drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
 # Prepare site for Maintenance
 drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
 drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
-#drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
 # Prepare site for Live Environment
 drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
 drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
-#drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
+drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
 drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
 drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
-#drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
+drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
 # Enable Xtheme and set default
-#cd /var/www/$domain/html/sites/all/themes/ztheme
-#npm install gulp --save-dev
-#npm install gulp-autoprefixer --save-dev
-#npm install gulp-sass --save-dev
-#npm install gulp-shell --save-dev
-#npm install browser-sync --save-dev
-#gulp sass
+cd /var/www/$domain/html/sites/all/themes/ztheme
+npm install gulp --save-dev
+npm install gulp-autoprefixer --save-dev
+npm install gulp-sass --save-dev
+npm install gulp-shell --save-dev
+npm install browser-sync --save-dev
+gulp sass
 drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
 drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
-#drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
+drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
 
 
 # Display Docroot, URLs, Sitename, Github Repo, DB User & PW
