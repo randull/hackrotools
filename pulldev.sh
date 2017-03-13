@@ -56,7 +56,7 @@ echo "Unecessary files removed"
 cd /var/www/$domain/html
 git status
 git add . -A
-git reset --hard
+git reset --hard origin/master
 git stash
 git stash drop
 git checkout -- .
