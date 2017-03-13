@@ -68,7 +68,7 @@ git push origin master
 # Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/master"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
