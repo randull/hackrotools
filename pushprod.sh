@@ -89,8 +89,8 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/ex
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 drush -y @$machine.local en admin_devel devel_generate devel_node_access ds_devel metatag_devel devel
-drush -y @$machine.local dis cdn googleanalytics honeypot_entityform honeypot prod_check
-drush -y @$machine.prod en cdn googleanalytics prod_check
+drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+drush -y @$machine.prod en captcha honeypot cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
 drush -y @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel browsersync
 # Prepare site for Live Environment
 drush -y @$machine.local cron

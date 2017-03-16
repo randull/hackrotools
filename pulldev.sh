@@ -99,7 +99,7 @@ drush -y @$machine.dev cc all
 drush -y @$machine.dev updb
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics honeypot_entityform honeypot dev_check
+drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
 drush -y @$machine.local en devel admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel
 # Prepare site for Development
 drush -y @$machine.local cron

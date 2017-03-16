@@ -95,8 +95,8 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/REA
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush -y @$machine.local pm-disable cdn googleanalytics honeypot_entityform honeypot prod_check
-drush -y @$machine.dev pm-disable cdn googleanalytics honeypot_entityform honeypot prod_check
+drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+drush -y @$machine.dev dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
 # Prepare site for Live Environment
 drush -y @$machine.local cron
 drush -y @$machine.local updb
