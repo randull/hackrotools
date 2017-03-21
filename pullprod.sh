@@ -73,45 +73,45 @@ git diff
 git pull origin master
 git gc
 # Rsync steps for sites/default/files
-drush -y rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.prod:%files @$machine.local:%files
+drush rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.prod:%files @$machine.local:%files
 # Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.prod cc all
-drush -y @$machine.prod updb
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.prod cc all
+drush @$machine.prod updb
 # Export DB from Prod to Local using Drush
-drush -y sql-sync --skip-tables-key=common @$machine.prod @$machine.local
+drush sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.prod cc all
-drush -y @$machine.prod updb
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.prod cc all
+drush @$machine.prod updb
 # Flush Image Styles & Generate Styles on Local
-#drush -y @$machine.local image-flush --all
-#drush -y @$machine.local image-generate all all   //This takes 10+ minutes for Yosemite
+#drush @$machine.local image-flush --all
+#drush @$machine.local image-generate all all   //This takes 10+ minutes for Yosemite
 # Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.prod cc all
-drush -y @$machine.prod updb
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.prod cc all
+drush @$machine.prod updb
 # List and Remove Missing Modules
-drush -y @$machine.local lmm
-drush -y @$machine.local rmm
-drush -y @$machine.prod lmm
-drush -y @$machine.prod rmm
+drush @$machine.local lmm
+drush @$machine.local rmm
+drush @$machine.prod lmm
+drush @$machine.prod rmm
 # Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.prod cc all
-drush -y @$machine.prod updb
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.prod cc all
+drush @$machine.prod updb
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
-#drush -y @$machine.local en devel admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel
+drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+#drush @$machine.local en devel admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel
 # Prepare site for Development
-drush -y @$machine.local cron
-drush -y @$machine.local updb
-drush -y @$machine.local cc all
-drush -y @$machine.prod cron
-drush -y @$machine.prod updb
-drush -y @$machine.prod cc all
+drush @$machine.local cron
+drush @$machine.local updb
+drush @$machine.local cc all
+drush @$machine.prod cron
+drush @$machine.prod updb
+drush @$machine.prod cc all
