@@ -71,40 +71,40 @@ git status
 git diff
 git pull origin master
 # Rsync steps for sites/default/files
-drush -y rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.dev:%files @$machine.local:%files
+drush rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.dev:%files @$machine.local:%files
 # Flush Image Styles & Generate Styles on Local
-drush -y @$machine.local image-flush --all
-drush -y @$machine.local image-generate all all
+drush @$machine.local image-flush --all
+drush @$machine.local image-generate all all
 # Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.dev cc all
-drush -y @$machine.dev updb
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.dev cc all
+drush @$machine.dev updb
 # Export DB from Dev to Local using Drush
-drush -y sql-sync --skip-tables-key=common @$machine.dev @$machine.local
+drush sql-sync --skip-tables-key=common @$machine.dev @$machine.local
 # Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.dev cc all
-drush -y @$machine.dev updb
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.dev cc all
+drush @$machine.dev updb
 # List and Remove Missing Modules
-drush -y @$machine.local lmm
-drush -y @$machine.local rmm
-drush -y @$machine.dev lmm
-drush -y @$machine.dev rmm
+drush @$machine.local lmm
+drush @$machine.local rmm
+drush @$machine.dev lmm
+drush @$machine.dev rmm
 # Clear Cache & Run Cron
-drush -y @$machine.local cc all
-drush -y @$machine.local updb
-drush -y @$machine.dev cc all
-drush -y @$machine.dev updb
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.dev cc all
+drush @$machine.dev updb
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
-#drush -y @$machine.local en devel admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel
+drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+#drush @$machine.local en devel admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel
 # Prepare site for Development
-drush -y @$machine.local cron
-drush -y @$machine.local updb
-drush -y @$machine.local cc all
-drush -y @$machine.dev cron
-drush -y @$machine.dev updb
-drush -y @$machine.dev cc all
+drush @$machine.local cron
+drush @$machine.local updb
+drush @$machine.local cc all
+drush @$machine.dev cron
+drush @$machine.dev updb
+drush @$machine.dev cc all

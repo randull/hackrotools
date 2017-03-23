@@ -88,12 +88,22 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/RE
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-#drush -y @$machine.local en admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel devel
-drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
-drush -y @$machine.prod en captcha honeypot cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot
-drush -y @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel browsersync
+#drush @$machine.local en admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel devel
+drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+drush @$machine.prod en captcha honeypot cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot
+drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel browsersync
+# Clear Cache & Run Cron
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.prod cc all
+drush @$machine.prod updb
+# List and Remove Missing Modules
+drush @$machine.local lmm
+drush @$machine.local rmm
+drush @$machine.prod lmm
+drush @$machine.prod rmm
 # Prepare site for Live Environment
-drush -y @$machine.local cron
-drush -y @$machine.local updb
-drush -y @$machine.prod cron
-drush -y @$machine.prod updb
+drush @$machine.local cron
+drush @$machine.local updb
+drush @$machine.prod cron
+drush @$machine.prod updb

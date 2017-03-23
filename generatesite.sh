@@ -184,7 +184,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush -y make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --concurrency=8 --no-cache --notify --verbose
+drush make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --concurrency=8 --no-cache --notify --verbose
 
 
 
@@ -193,7 +193,7 @@ drush -y make https://raw.github.com/randull/hackroprofile/master/hackroprofile.
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush -y site-install hackroprofile  --notify --verbose --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
+drush site-install hackroprofile  --notify --verbose --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
@@ -231,7 +231,7 @@ drush vset jquery_update_jquery_admin_version "1.8"
 drush vset prod_check_sitemail "maintenance@hackrobats.net"
 drush vset maintenance_mode 1
 
-drush -y en advanced_help
+drush en advanced_help
 
 drush secrev --store
 
@@ -261,7 +261,7 @@ sudo -u deploy git add . -A
 sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 # Convert utf8 to mb4 & Create DB bash line
-drush -y @$machine.local utf8mb4-convert-databases
+drush @$machine.local utf8mb4-convert-databases
 db2="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
 
 
@@ -296,7 +296,7 @@ sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-ava
 sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf"
 sudo -u deploy ssh deploy@dev "sudo service apache2 reload"
 # Clone DB
-drush -y sql-sync @$machine.local @$machine.dev
+drush sql-sync @$machine.local @$machine.dev
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/http/ --user=dev --password=dev --auth-no-challenge http/g' /etc/cron.hourly/$machine"
@@ -323,7 +323,7 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf INSTALL.m
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Rsync steps for sites/default/files on Dev
-drush -y rsync -avO @$machine.local:%files @$machine.dev:%files
+drush rsync -avO @$machine.local:%files @$machine.dev:%files
 
 
 #############################################################
@@ -361,7 +361,7 @@ sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-av
 sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf"
 sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
 # Clone DB
-drush -y sql-sync @$machine.local @$machine.prod
+drush sql-sync @$machine.local @$machine.prod
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
@@ -387,7 +387,7 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Rsync steps for sites/default/files on Prod
-drush -y rsync -avO @$machine.local:%files @$machine.prod:%files
+drush rsync -avO @$machine.local:%files @$machine.prod:%files
 
 
 #############################################################
@@ -395,21 +395,21 @@ drush -y rsync -avO @$machine.local:%files @$machine.prod:%files
 #############################################################
 
 # Take Local, Dev & Prod sites out of Maintenance Mode
-drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
-drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
-drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
+drush @$machine.local vset maintenance_mode 0 && drush @$machine.local cc all
+drush @$machine.dev vset maintenance_mode 0 && drush @$machine.dev cc all
+drush @$machine.prod vset maintenance_mode 0 && drush @$machine.prod cc all
 # Prepare site for Maintenance
-drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check -y
-drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel -y
+drush @$machine.local dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check
+drush @$machine.dev dis cdn googleanalytics hidden_captcha honeypot_entityform honeypot prod_check
+drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel
 # Prepare site for Live Environment
-drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
-drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
-drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
+drush @$machine.local cron && drush @$machine.local updb && drush @$machine.local cron
+drush @$machine.dev cron && drush @$machine.dev updb && drush @$machine.dev cron
+drush @$machine.prod cron && drush @$machine.prod updb && drush @$machine.prod cron
 # Take Local, Dev & Prod sites out of Maintenance Mode
-drush -y @$machine.local vset maintenance_mode 0 && drush -y @$machine.local cc all
-drush -y @$machine.dev vset maintenance_mode 0 && drush -y @$machine.dev cc all
-drush -y @$machine.prod vset maintenance_mode 0 && drush -y @$machine.prod cc all
+drush @$machine.local vset maintenance_mode 0 && drush @$machine.local cc all
+drush @$machine.dev vset maintenance_mode 0 && drush @$machine.dev cc all
+drush @$machine.prod vset maintenance_mode 0 && drush @$machine.prod cc all
 # Enable Xtheme and set default
 cd /var/www/$domain/html/sites/all/themes/ztheme
 npm install gulp --save-dev
@@ -418,9 +418,9 @@ npm install gulp-sass --save-dev
 npm install gulp-shell --save-dev
 npm install browser-sync --save-dev
 gulp sass
-drush -y @$machine.local cron && drush -y @$machine.local updb && drush -y @$machine.local cron
-drush -y @$machine.dev cron && drush -y @$machine.dev updb && drush -y @$machine.dev cron
-drush -y @$machine.prod cron && drush -y @$machine.prod updb && drush -y @$machine.prod cron
+drush @$machine.local cron && drush @$machine.local updb && drush @$machine.local cron
+drush @$machine.dev cron && drush @$machine.dev updb && drush @$machine.dev cron
+drush @$machine.prod cron && drush @$machine.prod updb && drush @$machine.prod cron
 
 
 # Display Docroot, URLs, Sitename, Github Repo, DB User & PW

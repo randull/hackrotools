@@ -74,12 +74,12 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
-drush -y rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.dev:%files
+drush rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.dev:%files
 # Flush Image Styles & Generate Styles on Local
-#drush -y @$machine.dev image-flush --all
-#drush -y @$machine.dev image-generate all all    //Takes 10+ minutes for Yosemite 
+#drush @$machine.dev image-flush --all
+#drush @$machine.dev image-generate all all    //Takes 10+ minutes for Yosemite 
 # Export DB from Dev to Local using Drush
-drush -y sql-sync --skip-tables-key=common @$machine.local @$machine.dev
+drush sql-sync --skip-tables-key=common @$machine.local @$machine.dev
 # Fix File and Directory Permissions on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
@@ -95,10 +95,20 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/REA
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
-drush -y @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
-drush -y @$machine.dev dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+drush @$machine.dev dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
+# List and Remove Missing Modules
+drush @$machine.local lmm
+drush @$machine.local rmm
+drush @$machine.dev lmm
+drush @$machine.dev rmm
+# Clear Cache & Run Cron
+drush @$machine.local cc all
+drush @$machine.local updb
+drush @$machine.dev cc all
+drush @$machine.dev updb
 # Prepare site for Live Environment
-drush -y @$machine.local cron
-drush -y @$machine.local updb
-drush -y @$machine.dev cron
-drush -y @$machine.dev updb
+drush @$machine.local cron
+drush @$machine.local updb
+drush @$machine.dev cron
+drush @$machine.dev updb
