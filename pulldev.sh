@@ -73,8 +73,8 @@ git pull origin master
 # Rsync steps for sites/default/files
 drush rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.dev:%files @$machine.local:%files
 # Flush Image Styles & Generate Styles on Local
-drush @$machine.local image-flush --all
-drush @$machine.local image-generate all all
+#drush @$machine.local image-flush --all
+#drush @$machine.local image-generate all all
 # Clear Cache & Run Cron
 drush @$machine.local cc all
 drush @$machine.local updb
