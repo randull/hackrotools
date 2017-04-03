@@ -184,7 +184,7 @@ sudo -u deploy git remote add origin git@github.com:/randull/$name.git
 sudo -u deploy git pull origin master
 # Create site structure using Drush Make
 cd /var/www/$domain/html
-drush make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --concurrency=8 --no-cache --notify --verbose
+drush make https://raw.github.com/randull/hackroprofile/master/hackroprofile.make --concurrency=8 --no-cache --verbose
 
 
 
@@ -193,7 +193,7 @@ drush make https://raw.github.com/randull/hackroprofile/master/hackroprofile.mak
 #############################################################
 
 # Deploy site using Drush Site-Install
-drush site-install hackroprofile  --notify --verbose --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
+drush site-install hackroprofile --verbose --db-url="mysql://$machine:$dbpw@localhost/$machine" --site-name="$sitename" --account-name="hackrobats" --account-pass="$drupalpass" --account-mail="maintenance@hackrobats.net"
 # Remove Drupal Install files after installation
 cd /var/www/$domain
 sudo chown -R deploy:www-data html logs private public tmp
@@ -296,7 +296,7 @@ sudo -u deploy ssh deploy@dev "sudo chown deploy:www-data /etc/apache2/sites-ava
 sudo -u deploy ssh deploy@dev "sudo -u deploy a2ensite $machine.conf"
 sudo -u deploy ssh deploy@dev "sudo service apache2 reload"
 # Clone DB
-drush sql-sync @$machine.local @$machine.dev
+drush -v sql-sync @$machine.local @$machine.dev
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@dev:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@dev "sudo -u deploy sed -i -e 's/http/ --user=dev --password=dev --auth-no-challenge http/g' /etc/cron.hourly/$machine"
@@ -323,7 +323,7 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf INSTALL.m
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Rsync steps for sites/default/files on Dev
-drush rsync -avO @$machine.local:%files @$machine.dev:%files
+drush -v rsync -avO @$machine.local:%files @$machine.dev:%files
 
 
 #############################################################
@@ -361,7 +361,7 @@ sudo -u deploy ssh deploy@prod "sudo chown deploy:www-data /etc/apache2/sites-av
 sudo -u deploy ssh deploy@prod "sudo -u deploy a2ensite $machine.conf"
 sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
 # Clone DB
-drush sql-sync @$machine.local @$machine.prod
+drush -v sql-sync @$machine.local @$machine.prod
 # Clone cron entry
 sudo -u deploy rsync -avz -e ssh /etc/cron.hourly/$machine deploy@prod:/etc/cron.hourly/$machine
 sudo -u deploy ssh deploy@prod "sudo -u deploy sed -i -e 's/local./www./g' /etc/cron.hourly/$machine"
@@ -387,7 +387,7 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Rsync steps for sites/default/files on Prod
-drush rsync -avO @$machine.local:%files @$machine.prod:%files
+drush -v rsync -avO @$machine.local:%files @$machine.prod:%files
 
 
 #############################################################

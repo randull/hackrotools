@@ -80,7 +80,7 @@ drush @$machine.local updb
 drush @$machine.prod cc all
 drush @$machine.prod updb
 # Export DB from Prod to Local using Drush
-drush sql-sync --skip-tables-key=common @$machine.prod @$machine.local
+drush -v sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Clear Cache & Run Cron
 drush @$machine.local cc all
 drush @$machine.local updb
