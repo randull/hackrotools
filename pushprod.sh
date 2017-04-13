@@ -102,7 +102,7 @@ drush @$machine.local lmm
 drush @$machine.local rmm
 drush @$machine.prod lmm
 drush @$machine.prod rmm
-# Prepare site for Live Environment
+# Prepare site for Production Environment
 drush @$machine.local cron
 drush @$machine.local updb
 drush @$machine.prod cron
