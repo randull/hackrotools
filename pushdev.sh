@@ -74,12 +74,12 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
 # Rsync steps for sites/default/files
-drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.dev:%files
-# Flush Image Styles & Generate Styles on Local
-#drush @$machine.dev image-flush --all
-#drush @$machine.dev image-generate all all    //Takes 10+ minutes for Yosemite 
+drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.dev:%files 
 # Export DB from Dev to Local using Drush
 drush -v sql-sync --skip-tables-key=common @$machine.local @$machine.dev
+# Flush Image Styles & Generate Styles on Local
+#drush @$machine.dev image-flush --all
+#drush @$machine.dev image-generate all all    //Takes 10+ minutes for Yosemite
 # Fix File and Directory Permissions on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
