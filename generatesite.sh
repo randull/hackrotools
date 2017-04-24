@@ -51,7 +51,7 @@ dbpw=$(pwgen -n 16)                   # Generate 16 character alpha-numeric pass
 # Clear Drush Cache
 drush cc drush
 # Create database and user
-db1="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
+db1="CREATE DATABASE $machine CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
 mysql -u deploy -e "$db1"
 # Create directories necessary for Drupal installation
 cd /var/www && sudo mkdir $domain && sudo chown -R deploy:www-data /var/www/$domain && sudo chmod 755 /var/www/$domain
@@ -135,6 +135,37 @@ echo "<?php
         'username' => '$machine',
         'password' => '$dbpw',
         'host' => 'dev.hackrobats.net',
+        'port' => '3306',
+        'driver' => 'mysql',
+        'prefix' => '',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_general_ci',
+      ),
+    ),
+  ),
+);
+\$aliases[\"stage\"] = array (
+  'remote-host' => 'stage.hackrobats.net',
+  'remote-user' => 'deploy',
+  'root' => '/var/www/$domain/html',
+  'uri' => 'stage.$domain',
+  '#name' => '$machine.stage',
+  '#file' => '/home/deploy/.drush/$machine.aliases.drushrc.php',
+  'path-aliases' => array (
+    '%drush-script' => '/usr/share/php/drush',
+    '%dump-dir' => '/var/www/$domain/tmp',
+    '%private' => '/var/www/$domain/private',
+    '%files' => '/var/www/$domain/public',
+    '%all' => 'sites/all/',
+    '%site' => 'sites/default/',
+  ),
+  'databases' => array (
+    'default' => array (
+      'default' => array (
+        'database' => '$machine',
+        'username' => '$machine',
+        'password' => '$dbpw',
+        'host' => 'stage.hackrobats.net',
         'port' => '3306',
         'driver' => 'mysql',
         'prefix' => '',
@@ -262,7 +293,7 @@ sudo -u deploy git commit -a -m "initial commit"
 sudo -u deploy git push origin master
 # Convert utf8 to mb4 & Create DB bash line
 drush @$machine.local utf8mb4-convert-databases
-db2="CREATE DATABASE IF NOT EXISTS $machine; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
+db2="CREATE DATABASE IF NOT EXISTS $machine CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL PRIVILEGES ON $machine.* TO $machine@localhost IDENTIFIED BY '$dbpw'; FLUSH PRIVILEGES;"
 
 
 #############################################################

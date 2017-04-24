@@ -95,6 +95,7 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/REA
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
+drush @$machine.local dis advagg_bundler advagg_css_compress advagg_validator advagg_ext_compress advagg_mod advagg_relocate advagg_sri advagg
 drush @$machine.local dis cdn ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
 drush @$machine.dev dis cdn ga_tokenizer googleanalytics prod_check
 # List and Remove Missing Modules

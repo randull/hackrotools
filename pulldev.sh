@@ -84,6 +84,7 @@ drush @$machine.dev cc all
 drush @$machine.dev updb
 # Prepare site for Maintenance
 cd /var/www/$domain/html
+drush @$machine.local dis advagg_bundler advagg_css_compress advagg_validator advagg_ext_compress advagg_mod advagg_relocate advagg_sri advagg
 drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
 #drush @$machine.local en devel admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel reroute_email
 # List and Remove Missing Modules
