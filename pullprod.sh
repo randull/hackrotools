@@ -20,18 +20,18 @@ longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data html logs private public tmp"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 755 html logs"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 private public tmp"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
+sudo -H ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data html logs private public tmp"
+sudo -H ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+sudo -H ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+sudo -H ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+sudo -H ssh deploy@prod "cd /var/www/$domain && sudo chmod 755 html logs"
+sudo -H ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 private public tmp"
+sudo -H ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txt LICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Fix file ownership
 cd /var/www/$domain
 sudo chown -Rf deploy:www-data html logs private public tmp
@@ -62,11 +62,11 @@ git stash drop
 git checkout -- .
 git status
 # Git steps on Production Web Server
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git gc"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && git gc"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && git status"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
+sudo -H ssh deploy@prod "cd /var/www/$domain/html && git push origin master"
 # Git steps on Local
 git status
 git diff
