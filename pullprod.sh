@@ -20,7 +20,7 @@ longname=`echo $name |tr '-' '_'`     # Change hyphens (-) to underscores (_)
 shortname=`echo $name |cut -c -16`    # Shorten name to 16 characters for MySQL
 machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to underscores
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data html logs private public tmp"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
