@@ -34,7 +34,7 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/RE
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Fix file ownership
 cd /var/www/$domain
-sudo chown -Rf deploy:www-data *
+sudo chown -Rf deploy:www-data html logs private public tmp
 sudo chown -Rf deploy:www-data html/* logs/* private/* public/* tmp/*
 echo "File Ownership fixed"
 # Fix file permissions
