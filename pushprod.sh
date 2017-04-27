@@ -61,9 +61,10 @@ echo "Unecessary files removed"
 # Git steps on Local
 cd /var/www/$domain/html
 git checkout .gitignore
+git checkout master
 git status
-git add . -A
-git commit -a -m "$commit"
+git pull origin master
+git merge dev
 git push origin master
 # Git steps on Production
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
