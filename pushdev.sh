@@ -64,15 +64,15 @@ git checkout .gitignore
 git status
 git add . -A
 git commit -a -m "$commit"
-git push origin master
+git push origin dev
 # Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/master"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/dev"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout -- ."
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin master"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin dev"
 # Rsync steps for sites/default/files
 drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.dev:%files 
 # Export DB from Dev to Local using Drush

@@ -72,6 +72,7 @@ git status
 git diff
 git pull origin master
 git gc
+git checkout dev
 # Rsync steps for sites/default/files
 drush rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.prod:%files @$machine.local:%files
 # Export DB from Prod to Local using Drush
