@@ -64,7 +64,7 @@ git checkout .gitignore
 git status
 git add . -A
 git commit -a -m "$commit"
-git push origin master
+git push origin stage
 # Git steps on Staging
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git add . -A"
@@ -72,7 +72,7 @@ sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git reset --hard or
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git checkout -- ."
-sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git pull origin master"
+sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git pull origin stage"
 # Rsync steps for sites/default/files
 drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.stage:%files 
 # Export DB from Staging to Local using Drush

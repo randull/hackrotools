@@ -65,11 +65,13 @@ git status
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git push origin master"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git push origin dev"
 # Git steps on Development
 git status
 git diff
-git pull origin master
+git pull origin dev
+git gc
+git checkout dev
 # Rsync steps for sites/default/files
 drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.dev:%files @$machine.local:%files
 # Export DB from Dev to Local using Drush

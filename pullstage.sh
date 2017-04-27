@@ -65,11 +65,13 @@ git status
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
-sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git push origin master"
+sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git push origin stage"
 # Git steps on Staging
 git status
 git diff
-git pull origin master
+git pull origin stage
+git gc
+git checkout stage
 # Rsync steps for sites/default/files
 drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.stage:%files @$machine.local:%files
 # Export DB from Staging to Local using Drush
