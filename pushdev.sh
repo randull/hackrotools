@@ -61,7 +61,6 @@ echo "Unecessary files removed"
 # Git steps on Local
 cd /var/www/$domain/html
 git checkout .gitignore
-git checkout dev
 git status
 git add . -A
 git commit -a -m "$commit"
@@ -69,7 +68,7 @@ git push origin dev
 # Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/master"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard --force origin/master"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout dev"
