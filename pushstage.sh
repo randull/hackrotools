@@ -61,6 +61,7 @@ echo "Unecessary files removed"
 # Git steps on Local
 cd /var/www/$domain/html
 git checkout .gitignore
+git checkout stage
 git status
 git add . -A
 git commit -a -m "$commit"

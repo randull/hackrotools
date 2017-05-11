@@ -60,8 +60,8 @@ sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/
 echo "Unecessary files removed"
 # Git steps on Local
 cd /var/www/$domain/html
-git checkout dev
 git checkout .gitignore
+git checkout dev
 git status
 git add . -A
 git commit -a -m "$commit"

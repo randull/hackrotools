@@ -67,6 +67,7 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git commit -a -m \"Preparing Git Repo for Drupal Updates on Local Server\""
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git push origin dev"
 # Git steps on Development
+cd /var/www/$domain/html
 git status
 git diff
 git pull origin dev
