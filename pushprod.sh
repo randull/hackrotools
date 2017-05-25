@@ -67,45 +67,45 @@ git pull origin master
 git merge dev
 git push origin master
 # Git steps on Production
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git status"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git add . -A"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git reset --hard origin/master"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git stash drop"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git checkout -- ."
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && git pull origin master"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && git reset --hard origin/master"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && git checkout -- ."
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && git pull origin master"
 # Fix File and Directory Permissions on Prod
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 755 html logs"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 775 private public tmp"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txtLICENSE.txt MAINTAINERS.txt UPGRADE.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
-sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain && sudo chown -Rf deploy:www-data *"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain && sudo chown -Rf deploy:www-data  html/* logs/* private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain && sudo chmod -Rf u=rw,go=r,a+X html/* logs/*"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain && sudo chmod -Rf ug=rw,o=r,a+X private/* public/* tmp/*"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain && sudo chmod 755 html logs"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain && sudo chmod 775 private public tmp"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain && sudo chmod 664 html/.htaccess private/.htaccess public/.htaccess tmp/.htaccess"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && sudo rm -rf modules/README.txt profiles/README.txt themes/README.txt"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && sudo rm -rf CHANGELOG.txt COPYRIGHT.txtLICENSE.txt MAINTAINERS.txt UPGRADE.txt"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt INSTALL.txt"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt"
+sudo -u deploy ssh deploy@prod_old "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Prepare site for Maintenance
 cd /var/www/$domain/html
 #drush @$machine.local en admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel devel
 drush @$machine.local dis advagg_bundler advagg_css_compress advagg_validator advagg_ext_compress advagg_mod advagg_relocate advagg_sri advagg
 drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
-drush @$machine.prod en captcha honeypot cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot
-drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel browsersync
+drush @$machine.prod_old en captcha honeypot cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot
+drush @$machine.prod_old dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel browsersync
 # Clear Cache & Run Cron
 drush @$machine.local cc all
 drush @$machine.local updb
-drush @$machine.prod cc all
-drush @$machine.prod updb
+drush @$machine.prod_old cc all
+drush @$machine.prod_old updb
 # List and Remove Missing Modules
 drush @$machine.local lmm
 drush @$machine.local rmm
-drush @$machine.prod lmm
-drush @$machine.prod rmm
+drush @$machine.prod_old lmm
+drush @$machine.prod_old rmm
 # Prepare site for Production Environment
 drush @$machine.local cron
 drush @$machine.local updb
-drush @$machine.prod cron
-drush @$machine.prod updb
+drush @$machine.prod_old cron
+drush @$machine.prod_old updb
