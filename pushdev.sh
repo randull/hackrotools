@@ -58,6 +58,12 @@ sudo rm -rf INSTALL.mysql.txt INSTALL.pgsql.txt install.php INSTALL.sqlite.txt I
 sudo rm -rf sites/README.txt sites/all/modules/README.txt sites/all/themes/README.txt
 sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php
 echo "Unecessary files removed"
+# Git steps on Dev
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/master"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 # Git steps on Local
 cd /var/www/$domain/html
 git checkout .gitignore
@@ -66,12 +72,8 @@ git add . -A
 git commit -a -m "$commit"
 git pull origin master
 git push origin dev
-# Git steps on Dev
+# More Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/master"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
-sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout dev"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin dev"
 # Rsync steps for sites/default/files
