@@ -64,6 +64,8 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/master"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout dev"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin dev"
 # Git steps on Local
 cd /var/www/$domain/html
 git checkout .gitignore
@@ -74,6 +76,10 @@ git pull origin master
 git push origin dev
 # More Git steps on Dev
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git status"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git add . -A"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git reset --hard origin/master"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash"
+sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git stash drop"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git checkout dev"
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && git pull origin dev"
 # Rsync steps for sites/default/files
