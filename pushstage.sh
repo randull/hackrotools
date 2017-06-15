@@ -98,7 +98,7 @@ sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && sudo rm -rf sites/e
 cd /var/www/$domain/html
 #drush @$machine.local en admin_devel browsersync devel_generate devel_node_access ds_devel metatag_devel devel
 drush @$machine.local dis advagg_bundler advagg_css_compress advagg_validator advagg_ext_compress advagg_mod advagg_relocate advagg_sri advagg
-drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform stage_check recaptcha spambot captcha honeypot
+drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
 drush @$machine.stage en captcha honeypot cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform stage_check recaptcha spambot
 drush @$machine.stage dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel browsersync
 # Clear Cache & Run Cron
