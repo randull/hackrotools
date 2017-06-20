@@ -72,7 +72,7 @@ sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git add . -A"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git reset --hard origin/master"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git stash"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git stash drop"
-sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git checkout -- ."
+sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git checkout stage"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git pull origin stage"
 # Rsync steps for sites/default/files
 drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.stage:%files 
