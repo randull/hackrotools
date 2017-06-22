@@ -94,6 +94,7 @@ drush @$machine.local dis advagg_bundler advagg_css_compress advagg_validator ad
 drush @$machine.local dis cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot captcha honeypot
 drush @$machine.prod en captcha honeypot cdn contact_google_analytics ga_tokenizer googleanalytics hidden_captcha honeypot_entityform prod_check recaptcha spambot
 drush @$machine.prod dis admin_devel devel_generate devel_node_access ds_devel metatag_devel devel browsersync
+drush @$machine.prod dis cdn ga_tokenizer googleanalytics prod_check
 # Clear Cache & Run Cron
 drush @$machine.local cc all
 drush @$machine.local updb
