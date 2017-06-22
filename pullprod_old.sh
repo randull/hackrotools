@@ -59,6 +59,7 @@ git add . -A
 git reset --hard origin/master
 git stash
 git stash drop
+git pull origin master --rebase
 git checkout -- .
 git status
 # Git steps on Production Web Server
