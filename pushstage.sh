@@ -76,6 +76,7 @@ sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git checkout stage"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git pull origin stage"
 # Rsync steps for sites/default/files
 drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.local:%files @$machine.stage:%files 
+drush -v rsync -avO --exclude=backup_migrate/ @$machine.local:%private @$machine.stage:%private
 # Export DB from Staging to Local using Drush
 drush -v sql-sync --skip-tables-key=common @$machine.local @$machine.stage
 # Flush Image Styles & Generate Styles on Local

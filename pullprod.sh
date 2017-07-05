@@ -75,7 +75,8 @@ git pull origin master
 git gc
 git checkout dev
 # Rsync steps for sites/default/files
-drush rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.prod:%files @$machine.local:%files
+drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.prod:%files @$machine.local:%files
+drush -v rsync -avO --exclude=backup_migrate/ @$machine.prod:%private @$machine.local:%private
 # Export DB from Prod to Local using Drush
 drush -v sql-sync --skip-tables-key=common @$machine.prod @$machine.local
 # Flush Image Styles & Generate Styles on Local

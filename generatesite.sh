@@ -357,6 +357,7 @@ sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/REA
 sudo -u deploy ssh deploy@dev "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Rsync steps for sites/default/files on Dev
 drush -v rsync -avO @$machine.local:%files @$machine.dev:%files
+drush -v rsync -avO @$machine.local:%private @$machine.dev:%private
 
 
 #############################################################
@@ -421,6 +422,7 @@ sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/RE
 sudo -u deploy ssh deploy@prod "cd /var/www/$domain/html && sudo rm -rf sites/example.sites.php sites/all/libraries/plupload/examples sites/default/default.settings.php"
 # Rsync steps for sites/default/files on Prod
 drush -v rsync -avO @$machine.local:%files @$machine.prod:%files
+drush -v rsync -avO @$machine.local:%private @$machine.prod:%private
 
 
 #############################################################

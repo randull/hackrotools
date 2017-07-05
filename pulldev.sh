@@ -75,6 +75,7 @@ git gc
 git checkout dev
 # Rsync steps for sites/default/files
 drush -v rsync -avO --exclude=styles/ --exclude=js/ --exclude=css/ @$machine.dev:%files @$machine.local:%files
+drush -v rsync -avO --exclude=backup_migrate/ @$machine.dev:%private @$machine.local:%private
 # Export DB from Dev to Local using Drush
 drush -v sql-sync --skip-tables-key=common @$machine.dev @$machine.local
 # Flush Image Styles & Generate Styles on Local
