@@ -65,7 +65,7 @@ git checkout stage
 git status
 git add . -A
 git commit -a -m "$commit"
-git push -f origin stage
+git push origin stage -f
 # Git steps on Staging
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git status"
 sudo -u deploy ssh deploy@stage "cd /var/www/$domain/html && git add . -A"
