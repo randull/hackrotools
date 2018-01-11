@@ -23,34 +23,34 @@ machine=`echo $shortname |tr '-' '_'` # Replace hyphens in shortname to undersco
 echo "MySQL verification required."
 # Delete Database & User
 mysql -u deploy -e "drop database $machine; drop user $machine@localhost; flush privileges;"
-sudo -u deploy ssh deploy@dev "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; flush privileges;'"
-sudo -u deploy ssh deploy@prod "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; flush privileges;'"
+sudo -u deploy ssh deploy@stage "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; flush privileges;'"
+sudo -u deploy ssh deploy@prod_old "mysql -u deploy -e 'drop database $machine; drop user $machine@localhost; flush privileges;'"
 echo "$machine database and user dropped"
 # Disable sites-enabled symlink
 sudo a2dissite $machine.conf
-sudo -u deploy ssh deploy@dev "sudo a2dissite $machine.conf"
-sudo -u deploy ssh deploy@prod "sudo a2dissite $machine.conf"
+sudo -u deploy ssh deploy@stage "sudo a2dissite $machine.conf"
+sudo -u deploy ssh deploy@prod_old "sudo a2dissite $machine.conf"
 # Reload Apache2
 sudo service apache2 reload
-sudo -u deploy ssh deploy@dev "sudo service apache2 reload"
-sudo -u deploy ssh deploy@prod "sudo service apache2 reload"
+sudo -u deploy ssh deploy@stage "sudo service apache2 reload"
+sudo -u deploy ssh deploy@prod_old "sudo service apache2 reload"
 # Restart Apache2
 #sudo service apache2 restart
-#sudo -u deploy ssh deploy@dev "sudo service apache2 restart"
-#sudo -u deploy ssh deploy@prod "sudo service apache2 restart"
+#sudo -u deploy ssh deploy@stage "sudo service apache2 restart"
+#sudo -u deploy ssh deploy@prod_old "sudo service apache2 restart"
 # Remove Virtual Host entry
 sudo rm -R $hosts/$machine.conf
 if [ -d "$hosts/$machine\.conf" ]; then
   echo "$machine\.conf directory still exists in /etc/apache2/sites-available"
 fi
 echo "$domain Apache2 conf disabled and removed from Local"
-sudo -u deploy ssh deploy@dev "sudo rm -R $hosts/$machine.conf"
-sudo -u deploy ssh deploy@dev "if [ -d "$hosts/$machine\.conf" ]; then
+sudo -u deploy ssh deploy@stage "sudo rm -R $hosts/$machine.conf"
+sudo -u deploy ssh deploy@stage "if [ -d "$hosts/$machine\.conf" ]; then
   echo '$machine\.conf directory still exists in /etc/apache2/sites-available'
 fi"
 echo "$domain Apache2 conf disabled and removed from Dev"
-sudo -u deploy ssh deploy@prod "sudo rm -R $hosts/$machine.conf"
-sudo -u deploy ssh deploy@prod "if [ -d "$hosts/$machine\.conf" ]; then
+sudo -u deploy ssh deploy@prod_old "sudo rm -R $hosts/$machine.conf"
+sudo -u deploy ssh deploy@prod_old "if [ -d "$hosts/$machine\.conf" ]; then
   echo '$machine\.conf directory still exists in /etc/apache2/sites-available'
 fi"
 echo "$domain Apache2 conf disabled and removed from Prod"
@@ -61,20 +61,20 @@ if [ -d "/etc/cron.hourly/$machine" ]; then
   echo "$machine entry still exists in /etc/cron.hourly"
 fi
 echo "$machine entry removed from /etc/cron.hourly on Local"
-sudo -u deploy ssh deploy@dev "cd /etc/cron.hourly && sudo rm -R $machine"
-sudo -u deploy ssh deploy@dev "if [ -d '/etc/cron.hourly/$machine' ]; then
+sudo -u deploy ssh deploy@stage "cd /etc/cron.hourly && sudo rm -R $machine"
+sudo -u deploy ssh deploy@stage "if [ -d '/etc/cron.hourly/$machine' ]; then
   echo '$machine entry still exists in /etc/cron.hourly'
 fi"
 echo "$machine entry removed from /etc/cron.hourly on Dev"
-sudo -u deploy ssh deploy@prod "cd /etc/cron.hourly && sudo rm -R $machine"
-sudo -u deploy ssh deploy@prod "if [ -d '/etc/cron.hourly/$machine' ]; then
+sudo -u deploy ssh deploy@prod_old "cd /etc/cron.hourly && sudo rm -R $machine"
+sudo -u deploy ssh deploy@prod_old "if [ -d '/etc/cron.hourly/$machine' ]; then
   echo '$machine entry still exists in /etc/cron.hourly'
 fi"
 echo "$machine entry removed from /etc/cron.hourly on Prod"
 # Remove Drush alias
 cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php
-sudo -u deploy ssh deploy@dev "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
-sudo -u deploy ssh deploy@prod "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
+sudo -u deploy ssh deploy@stage "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
+sudo -u deploy ssh deploy@prod_old "cd /home/deploy/.drush && sudo rm -R $machine.aliases.drushrc.php"
 # Delete Docroot excluding, Destroy anything except .git & .gitignore & readme.md
 cd /var/www/$domain
 sudo mv /var/www/$domain/html/README.md /var/www/$domain/readme.md
@@ -96,13 +96,13 @@ if [ -d "$www/$domain" ]; then
   echo "$domain directory still exists in /var/www"
 fi
 echo "$domain directory removed from /var/www on Local"
-sudo -u deploy ssh deploy@dev "cd $www && sudo rm -R $domain"
-sudo -u deploy ssh deploy@dev "if [ -d '$www/$domain' ]; then
+sudo -u deploy ssh deploy@stage "cd $www && sudo rm -R $domain"
+sudo -u deploy ssh deploy@stage "if [ -d '$www/$domain' ]; then
   echo '$domain directory still exists in /var/www'
 fi"
 echo "$domain directory removed from /var/www on Dev"
-sudo -u deploy ssh deploy@prod "cd $www && sudo rm -R $domain"
-sudo -u deploy ssh deploy@prod "if [ -d '$www/$domain' ]; then
+sudo -u deploy ssh deploy@prod_old "cd $www && sudo rm -R $domain"
+sudo -u deploy ssh deploy@prod_old "if [ -d '$www/$domain' ]; then
   echo '$domain directory still exists in /var/www'
 fi"
 echo "$domain directory removed from /var/www on Prod"
